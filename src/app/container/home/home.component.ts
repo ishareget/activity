@@ -51,7 +51,7 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     this.error();
     this.router.queryParams.forEach(params => {
-
+      // 登入後 首頁重取資料
       this.reset();
       $('.carousel').carousel({
         interval: 2500

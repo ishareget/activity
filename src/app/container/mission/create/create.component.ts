@@ -397,7 +397,7 @@ export class CreateComponent implements OnInit {
       missioncreater: this.userData.username,
       missiongroup: this.userData.groupid,
       id: id,
-      signature: Number(this.isSignature === true ? 1 : 0)
+      // 暫時關閉簽到功能 signature: Number(this.isSignature === true ? 1 : 0)
     }
     return body;
   }

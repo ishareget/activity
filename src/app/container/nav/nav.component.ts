@@ -150,17 +150,7 @@ export class NavComponent implements OnInit {
     this.reset();
     this.isLogin = false;
     this.readyLogin = true;
-    this.swalDialogPassOut.show(); {
-      if (window.location.pathname === '/ome') {
-        setTimeout(() => {
-          this.route.navigate(['/home'], { queryParams: filter, skipLocationChange: true });
-        }, 1100);
-      } else {
-        setTimeout(() => {
-          this.route.navigate(['/home']);
-        }, 1100);
-      }
-    }
+    window.location.href = '/';
   }
   onNavClick() {
     $('#navbarBtn').click();
