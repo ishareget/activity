@@ -1,0 +1,435 @@
+<div class="user-profile bg-white pt-4 pb-4">
+  <div class="container">
+    <div class="row" [ngClass]="{ 'text-center': size < 576 }">
+      <div *ngIf="imgUrl" class="col-sm-3 col-lg-2">
+        <img class="user-photo img-thumbnail" [src]="imgUrl" alt="">
+      </div>
+      <div *ngIf="!imgUrl" class="col-sm-3 col-lg-2">
+        <img class="user-photo img-thumbnail" src="http://fakeimg.pl/200x200/?text=?" alt="">
+      </div>
+      <div class="col-sm-9 col-lg-10">
+        <h2 class="align-center" [ngClass]="{ 'align-center': size >= 576 }">{{ userName }}</h2>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container pt-3">
+  <div class="text-center mt-5" *ngIf="isLoading">
+    <div class="loader">Loading...</div>
+  </div>
+  <div class="w-100" *ngIf="!isLoading && size >= 992">
+    <ul class="nav nav-tabs user-tab" role="tablist">
+      <li class="nav-item">
+        <a class="nav-link active" id="mission-start-tab" data-toggle="tab" href="#start-tab" role="tab" aria-controls="start-tab"
+          aria-expanded="true">參加中的任務
+          <span class="text-secondary">({{ missionApply.length }})</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="mission-verify-tab" data-toggle="tab" href="#verify-tab" role="tab" aria-controls="verify-tab">審核中的任務
+          <span class="text-danger">({{ missionSubmit.length }})</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="mission-reject-tab" data-toggle="tab" href="#reject-tab" role="tab" aria-controls="reject-tab">被退回的任務
+          <span class="text-danger">
+            ({{ missionReject.length }})</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="mission-finish-tab" data-toggle="tab" href="#finish-tab" role="tab" aria-controls="all-tab">已完成的任務
+          <span class="text-secondary">
+            ({{ missionVerify.length }})</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="mission-all-tab" data-toggle="tab" href="#all-tab" role="tab" aria-controls="all-tab">所有參加的任務
+          <span class="text-secondary">
+            ({{ missionAll.length }})</span>
+        </a>
+      </li>
+    </ul>
+    <div class="tab-content user-tab-content row mb-5" *ngIf="!isLoading">
+      <div class="tab-pane fade show active col-md-12" id="start-tab" role="tabpanel" aria-labelledby="mission-start-tab">
+        <div class="row justify-content-center" *ngIf="missionApply.length === 0">
+          <div class="col-md-3 text-center mt-5">
+            <i class="fa fa-search fa-2x" aria-hidden="true"></i>
+            <span class="data-set"> 查無結果</span>
+          </div>
+        </div>
+        <div *ngIf="missionApply.length != 0">
+          <div class="col-md-4 mt-4" *ngFor="let mission of missionApply">
+            <div class="card-modal">
+              <a [routerLink]="['../mission/introduce']" [queryParams]="{id:mission.missionid}" target="_blank">
+                <img class="card-img-top" src="{{ mission.missionpicture }}">
+              </a>
+              <div class="card-body">
+                <a [routerLink]="['../mission/introduce']" [queryParams]="{id:mission.missionid}" target="_blank">
+                  <h4 class="card-title">{{ mission.missionname }}</h4>
+                </a>
+                <p class="card-time">{{ mission.missioncreatedate | date: 'yyyy/MM/dd' }}</p>
+                <p class="card-text">{{ mission.missioncontent }}</p>
+                <div class="row card-control">
+                  <div class="col-sm-6">
+                    <a class="img-thumbnail liked">
+                      <i class="fa fa-heart" aria-hidden="true"></i>
+                    </a>
+                    <span class="card-text">5</span>
+                  </div>
+                  <div class="col-sm-6 text-right">
+                    <a class="btn bg-blue text-white" [routerLink]="['../mission/introduce']" [queryParams]="{id:mission.missionid}" target="_blank">{{ mission.status }}</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="tab-pane fade col-md-12" id="verify-tab" role="tabpanel" aria-labelledby="mission-verify-tab">
+        <div class="row justify-content-center">
+          <div class="col-md-3 text-center mt-5" *ngIf="missionSubmit.length === 0">
+            <i class="fa fa-search fa-2x" aria-hidden="true"></i>
+            <span class="data-set"> 查無結果</span>
+          </div>
+        </div>
+        <div *ngIf="missionSubmit.length != 0">
+          <div class="col-md-4 mt-4" *ngFor="let mission of missionSubmit">
+            <div class="card-modal">
+              <a [routerLink]="['../mission/introduce']" [queryParams]="{id:mission.missionid}" target="_blank">
+                <img class="card-img-top" src="{{ mission.missionpicture }}">
+              </a>
+              <div class="card-body">
+                <a [routerLink]="['../mission/introduce']" [queryParams]="{id:mission.missionid}" target="_blank">
+                  <h4 class="card-title">{{ mission.missionname }}</h4>
+                </a>
+                <p class="card-time">{{ mission.missioncreatedate | date: 'yyyy/MM/dd' }}</p>
+                <p class="card-text">{{ mission.missioncontent }}</p>
+                <div class="row card-control">
+                  <div class="col-sm-6">
+                    <a class="img-thumbnail liked">
+                      <i class="fa fa-heart" aria-hidden="true"></i>
+                    </a>
+                    <span class="card-text">5</span>
+                  </div>
+                  <div class="col-sm-6 text-right">
+                    <a class="btn bg-blue text-white" [routerLink]="['../mission/introduce']" [queryParams]="{id:mission.missionid}" target="_blank">{{ mission.status }}</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="tab-pane fade col-md-12" id="reject-tab" role="tabpanel" aria-labelledby="mission-reject-tab">
+        <div class="row justify-content-center">
+          <div class="col-md-3 text-center mt-5" *ngIf="missionReject.length === 0">
+            <i class="fa fa-search fa-2x" aria-hidden="true"></i>
+            <span class="data-set"> 查無結果</span>
+          </div>
+        </div>
+        <div *ngIf="missionReject.length != 0">
+          <div class="col-md-4 mt-4" *ngFor="let mission of missionReject">
+            <div class="card-modal">
+              <a [routerLink]="['../mission/introduce']" [queryParams]="{id:mission.missionid}" target="_blank">
+                <img class="card-img-top" src="{{ mission.missionpicture }}">
+              </a>
+              <div class="card-body">
+                <a [routerLink]="['../mission/introduce']" [queryParams]="{id:mission.missionid}" target="_blank">
+                  <h4 class="card-title">{{ mission.missionname }}</h4>
+                </a>
+                <p class="card-time">{{ mission.missioncreatedate | date: 'yyyy/MM/dd' }}</p>
+                <p class="card-text">{{ mission.missioncontent }}</p>
+                <div class="row card-control">
+                  <div class="col-sm-6">
+                    <a class="img-thumbnail liked">
+                      <i class="fa fa-heart" aria-hidden="true"></i>
+                    </a>
+                    <span class="card-text">5</span>
+                  </div>
+                  <div class="col-sm-6 text-right">
+                    <a class="btn bg-blue text-white" [routerLink]="['../mission/introduce']" [queryParams]="{id:mission.missionid}" target="_blank">{{ mission.status }}</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="tab-pane fade col-md-12" id="finish-tab" role="tabpanel" aria-labelledby="mission-finish-tab">
+        <div class="row justify-content-center">
+          <div class="col-md-3 text-center mt-5" *ngIf="missionVerify.length === 0">
+            <i class="fa fa-search fa-2x" aria-hidden="true"></i>
+            <span class="data-set"> 查無結果</span>
+          </div>
+        </div>
+        <div *ngIf="missionVerify.length != 0">
+          <div class="col-md-4 mt-4" *ngFor="let mission of missionVerify">
+            <div class="card-modal">
+              <a [routerLink]="['../mission/introduce']" [queryParams]="{id:mission.missionid}" target="_blank">
+                <img class="card-img-top" src="{{ mission.missionpicture }}">
+              </a>
+              <div class="card-body">
+                <a [routerLink]="['../mission/introduce']" [queryParams]="{id:mission.missionid}" target="_blank">
+                  <h4 class="card-title">{{ mission.missionname }}</h4>
+                </a>
+                <p class="card-time">{{ mission.missioncreatedate | date: 'yyyy/MM/dd' }}</p>
+                <p class="card-text">{{ mission.missioncontent }}</p>
+                <div class="row card-control">
+                  <div class="col-sm-6">
+                    <a class="img-thumbnail liked">
+                      <i class="fa fa-heart" aria-hidden="true"></i>
+                    </a>
+                    <span class="card-text">5</span>
+                  </div>
+                  <div class="col-sm-6 text-right">
+                    <a class="btn bg-blue text-white" [routerLink]="['../mission/introduce']" [queryParams]="{id:mission.missionid}" target="_blank">{{ mission.status }}</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="tab-pane fade col-md-12" id="all-tab" role="tabpanel" aria-labelledby="mission-all-tab">
+        <div class="row justify-content-center">
+          <div class="col-md-3 text-center mt-5" *ngIf="missionAll.length === 0">
+            <i class="fa fa-search fa-2x" aria-hidden="true"></i>
+            <span class="data-set"> 查無結果</span>
+          </div>
+        </div>
+        <div *ngIf="missionAll.length != 0">
+          <div class="col-md-4 mt-4" *ngFor="let mission of missionAll">
+            <div class="card-modal">
+              <a [routerLink]="['../mission/introduce']" [queryParams]="{id:mission.missionid}" target="_blank">
+                <img class="card-img-top" src="{{ mission.missionpicture }}">
+              </a>
+              <div class="card-body">
+                <a [routerLink]="['../mission/introduce']" [queryParams]="{id:mission.missionid}" target="_blank">
+                  <h4 class="card-title">{{ mission.missionname }}</h4>
+                </a>
+                <p class="card-time">{{ mission.missioncreatedate | date: 'yyyy/MM/dd' }}</p>
+                <p class="card-text">{{ mission.missioncontent }}</p>
+                <div class="row card-control">
+                  <div class="col-sm-6">
+                    <a class="img-thumbnail liked">
+                      <i class="fa fa-heart" aria-hidden="true"></i>
+                    </a>
+                    <span class="card-text">5</span>
+                  </div>
+                  <div class="col-sm-6 text-right">
+                    <a class="btn bg-blue text-white" [routerLink]="['../mission/introduce']" [queryParams]="{id:mission.missionid}" target="_blank">{{ mission.status }}</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-12" *ngIf="!isLoading && size < 992">
+    <div class="text-center w-100">
+      <div class="dropdown w-50">
+        <div class="dropbtn w-100">
+          {{name}}
+        </div>
+        <div class="dropdown-content w-100 fade-in">
+          <a class="menu-item" (click)="tab = 1; name = '參加中的任務';">
+            參加中的任務 ({{ missionApply.length }})
+          </a>
+          <a class="menu-item" (click)="tab = 2; name = '審核中的任務'">
+            審核中的任務 ({{ missionSubmit.length }})
+          </a>
+          <a class="menu-item" (click)="tab = 3; name = '被退回的任務'">
+            被退回的任務 ({{ missionReject.length }})
+          </a>
+          <a class="menu-item" (click)="tab = 4; name = '已完成的任務'">
+            已完成的任務 ({{ missionVerify.length }})
+          </a>
+          <a class="menu-item" (click)="tab = 5; name = '所有參加的任務'">
+            所有參加的任務 ({{ missionAll.length }})</a>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="tab == 1">
+      <div class="row justify-content-center" *ngIf="missionApply.length === 0">
+        <div class="text-center mt-5">
+          <i class="fa fa-search fa-2x" aria-hidden="true"></i>
+          <span class="data-set"> 查無結果</span>
+        </div>
+      </div>
+      <div class="row" *ngIf="missionApply.length != 0">
+        <div class="col-md-6 mt-4" *ngFor="let mission of missionApply">
+          <div class="card-modal">
+            <a [routerLink]="['../mission/introduce']" [queryParams]="{id:mission.missionid}" target="_blank">
+              <img class="card-img-top" src="{{ mission.missionpicture }}">
+            </a>
+            <div class="card-body">
+              <a [routerLink]="['../mission/introduce']" [queryParams]="{id:mission.missionid}" target="_blank">
+                <h4 class="card-title">{{ mission.missionname }}</h4>
+              </a>
+              <p class="card-time">{{ mission.missioncreatedate | date: 'yyyy/MM/dd' }}</p>
+              <p class="card-text">{{ mission.missioncontent }}</p>
+              <div class="row card-control">
+                <div class="col-sm-6">
+                  <a class="img-thumbnail liked">
+                    <i class="fa fa-heart" aria-hidden="true"></i>
+                  </a>
+                  <span class="card-text">5</span>
+                </div>
+                <div class="col-sm-6 text-right">
+                  <a class="btn bg-blue text-white" [routerLink]="['../mission/introduce']" [queryParams]="{id:mission.missionid}" target="_blank">{{ mission.status }}</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="tab == 2">
+      <div class="row justify-content-center">
+        <div class="text-center mt-5" *ngIf="missionSubmit.length === 0">
+          <i class="fa fa-search fa-2x" aria-hidden="true"></i>
+          <span class="data-set"> 查無結果</span>
+        </div>
+      </div>
+      <div class="row" *ngIf="missionSubmit.length != 0">
+        <div class="col-md-6 mt-4" *ngFor="let mission of missionSubmit">
+          <div class="card-modal">
+            <a [routerLink]="['../mission/introduce']" [queryParams]="{id:mission.missionid}" target="_blank">
+              <img class="card-img-top" src="{{ mission.missionpicture }}">
+            </a>
+            <div class="card-body">
+              <a [routerLink]="['../mission/introduce']" [queryParams]="{id:mission.missionid}" target="_blank">
+                <h4 class="card-title">{{ mission.missionname }}</h4>
+              </a>
+              <p class="card-time">{{ mission.missioncreatedate | date: 'yyyy/MM/dd' }}</p>
+              <p class="card-text">{{ mission.missioncontent }}</p>
+              <div class="row card-control">
+                <div class="col-sm-6">
+                  <a class="img-thumbnail liked">
+                    <i class="fa fa-heart" aria-hidden="true"></i>
+                  </a>
+                  <span class="card-text">5</span>
+                </div>
+                <div class="col-sm-6 text-right">
+                  <a class="btn bg-blue text-white" [routerLink]="['../mission/introduce']" [queryParams]="{id:mission.missionid}" target="_blank">{{ mission.status }}</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="tab == 3">
+      <div class="row justify-content-center">
+        <div class="text-center mt-5" *ngIf="missionReject.length === 0">
+          <i class="fa fa-search fa-2x" aria-hidden="true"></i>
+          <span class="data-set"> 查無結果</span>
+        </div>
+      </div>
+      <div class="row" *ngIf="missionReject.length != 0">
+        <div class="col-md-6 mt-4" *ngFor="let mission of missionReject">
+          <div class="card-modal">
+            <a [routerLink]="['../mission/introduce']" [queryParams]="{id:mission.missionid}" target="_blank">
+              <img class="card-img-top" src="{{ mission.missionpicture }}">
+            </a>
+            <div class="card-body">
+              <a [routerLink]="['../mission/introduce']" [queryParams]="{id:mission.missionid}" target="_blank">
+                <h4 class="card-title">{{ mission.missionname }}</h4>
+              </a>
+              <p class="card-time">{{ mission.missioncreatedate | date: 'yyyy/MM/dd' }}</p>
+              <p class="card-text">{{ mission.missioncontent }}</p>
+              <div class="row card-control">
+                <div class="col-sm-6">
+                  <a class="img-thumbnail liked">
+                    <i class="fa fa-heart" aria-hidden="true"></i>
+                  </a>
+                  <span class="card-text">5</span>
+                </div>
+                <div class="col-sm-6 text-right">
+                  <a class="btn bg-blue text-white" [routerLink]="['../mission/introduce']" [queryParams]="{id:mission.missionid}" target="_blank">{{ mission.status }}</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="tab == 4">
+      <div class="row justify-content-center">
+        <div class="text-center mt-5" *ngIf="missionVerify.length === 0">
+          <i class="fa fa-search fa-2x" aria-hidden="true"></i>
+          <span class="data-set"> 查無結果</span>
+        </div>
+      </div>
+      <div class="row" *ngIf="missionVerify.length != 0">
+        <div class="col-md-6 mt-4" *ngFor="let mission of missionVerify">
+          <div class="card-modal">
+            <a [routerLink]="['../mission/introduce']" [queryParams]="{id:mission.missionid}" target="_blank">
+              <img class="card-img-top" src="{{ mission.missionpicture }}">
+            </a>
+            <div class="card-body">
+              <a [routerLink]="['../mission/introduce']" [queryParams]="{id:mission.missionid}" target="_blank">
+                <h4 class="card-title">{{ mission.missionname }}</h4>
+              </a>
+              <p class="card-time">{{ mission.missioncreatedate | date: 'yyyy/MM/dd' }}</p>
+              <p class="card-text">{{ mission.missioncontent }}</p>
+              <div class="row card-control">
+                <div class="col-sm-6">
+                  <a class="img-thumbnail liked">
+                    <i class="fa fa-heart" aria-hidden="true"></i>
+                  </a>
+                  <span class="card-text">5</span>
+                </div>
+                <div class="col-sm-6 text-right">
+                  <a class="btn bg-blue text-white" [routerLink]="['../mission/introduce']" [queryParams]="{id:mission.missionid}" target="_blank">{{ mission.status }}</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="tab == 5">
+      <div class="row justify-content-center">
+        <div class="text-center mt-5" *ngIf="missionAll.length === 0">
+          <i class="fa fa-search fa-2x" aria-hidden="true"></i>
+          <span class="data-set"> 查無結果</span>
+        </div>
+      </div>
+      <div class="row" *ngIf="missionAll.length != 0">
+        <div class="col-md-6 mt-4" *ngFor="let mission of missionAll">
+          <div class="card-modal">
+            <a [routerLink]="['../mission/introduce']" [queryParams]="{id:mission.missionid}" target="_blank">
+              <img class="card-img-top" src="{{ mission.missionpicture }}">
+            </a>
+            <div class="card-body">
+              <a [routerLink]="['../mission/introduce']" [queryParams]="{id:mission.missionid}" target="_blank">
+                <h4 class="card-title">{{ mission.missionname }}</h4>
+              </a>
+              <p class="card-time">{{ mission.missioncreatedate | date: 'yyyy/MM/dd' }}</p>
+              <p class="card-text">{{ mission.missioncontent }}</p>
+              <div class="row card-control">
+                <div class="col-sm-6">
+                  <a class="img-thumbnail liked">
+                    <i class="fa fa-heart" aria-hidden="true"></i>
+                  </a>
+                  <span class="card-text">5</span>
+                </div>
+                <div class="col-sm-6 text-right">
+                  <a class="btn bg-blue text-white" [routerLink]="['../mission/introduce']" [queryParams]="{id:mission.missionid}" target="_blank">{{ mission.status }}</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<swal #noPermission title="抱歉，您無權訪問這頁面" type="error"></swal>
+<swal type="error" title="登入逾時，請重新登入" #dialogPassError [options]="{ timer : '1000' }"></swal>

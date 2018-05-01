@@ -1,0 +1,86 @@
+#profile {
+    margin-top: 0.5rem;
+}
+
+#profile .navbar {
+    padding: 0;
+    margin-top: -12px;
+}
+
+#profile .navbar-nav a {
+    padding: 1.2rem;
+    color: #777;
+}
+
+#profile .navbar-nav a:hover {
+    color: #555;
+}
+
+#profile .navbar-nav .active a {
+    color: #555;
+    background-color: #eee;
+}
+
+#profile .group-title {
+    margin: 2rem 0 1rem;
+    font-size: 1.8rem;
+    font-weight: 300;
+    color: #666;
+}
+
+#profile .alert {
+    margin-bottom: 2rem;
+}
+
+#profile .create-photo {
+    width: 200px;
+    height: 200px;
+}
+
+#profile .img-thumbnail {
+    padding: 0;
+    border: 0;
+    width: 200px;
+    height: 200px;
+    border-radius: 0;
+    object-fit: cover;
+}
+
+#profile .create-photo span:first-child {
+    padding-top: 2rem;
+    font-size: 2rem;
+    letter-spacing: 10px;
+}
+
+#profile .create-photo span {
+    display: block;
+    font-size: 2rem;
+}
+
+#profile .container .create-photo .btn {
+    border-radius: 0;
+}
+
+#profile .upload-btn {
+    position: relative;
+    top: -36px;
+    width: 200px;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+#profile .upload-btn:hover {
+    background-color: rgba(0, 0, 0, 0.75);
+}
+
+.dropbtn {
+    background-color: #0088D2;
+    opacity: 0.9;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+}
+
+.f-white {
+    color: white;
+}

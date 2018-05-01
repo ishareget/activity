@@ -1,0 +1,101 @@
+#point {
+    margin-top: 0.5rem;
+}
+
+#point .table p {
+    line-height: 2rem;
+}
+
+#point .table .name {
+    font-size: 20px;
+}
+
+#point .table .first {
+    width: 50px;
+    text-align: center;
+}
+
+#point .table .secocnd {
+    width: 800px;
+}
+
+#point .navbar {
+    padding: 0;
+    margin-top: -12px;
+}
+
+#point .data-set {
+    font-size: 40px;
+}
+
+#point .group-title {
+    margin: 2rem 0 1rem;
+    font-size: 1.8rem;
+    font-weight: 300;
+    color: #666;
+}
+
+#point .point-font {
+    font-size: 30px;
+}
+
+#point .navbar-nav a {
+    padding: 1.2rem;
+    color: #777;
+}
+
+#point .navbar-nav a:hover {
+    color: #555;
+}
+
+#point .navbar-nav .active a {
+    color: #555;
+    background-color: #eee;
+}
+
+
+/* tab 選單區塊 */
+
+.table .point-title {
+    margin-bottom: 1rem;
+    color: #005685;
+    font-size: 1.2rem;
+    font-weight: 300;
+    text-decoration: unset;
+}
+
+#point .nav-link {
+    cursor: pointer;
+}
+
+.table td {
+    line-height: 30px;
+}
+
+.point-item .point-title:hover {
+    color: #00679f;
+}
+
+.point-item p {
+    margin: 0.6rem 0;
+}
+
+.point-item .point-info {
+    float: right;
+    padding: 1.6rem 0.6rem;
+    margin-right: 0.4rem;
+    line-height: 1rem;
+    color: #666;
+}
+
+.dropbtn {
+    background-color: #0088D2;
+    opacity: 0.9;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+}
+
+.f-white {
+    color: white;
+}

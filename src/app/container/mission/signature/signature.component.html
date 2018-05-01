@@ -1,0 +1,436 @@
+<div id="signature">
+  <!-- Loading -->
+  <div class="row loading mt-5 mb-2" *ngIf="isLoading">
+    <div class="col-md-12 text-center">
+      <div class="loader">Loading...</div>
+    </div>
+  </div>
+
+  <!--RWD-->
+  <div class="text-center w-100" *ngIf="!isLoading && size <= 762">
+    <div class="container-fluid navbar content navbar-collapse bg-light">
+      <div class="contenttext border border-info rounded">
+        <h4 class="mb-2">
+          {{ missions.missionname }}
+        </h4>
+        <div>
+          <!-- <div class="col-6"> -->
+          <h6>
+            <i class="fa fa-calendar-check-o mr-2" aria-hidden="true"></i>任務期間：
+          </h6>
+          <p>{{ missions.missionstartdate | date: 'yyyy/MM/dd' }} ~ {{ missions.missionfinaldate | date: 'yyyy/MM/dd' }}
+          </p>
+          <!-- </div> -->
+          <!-- <div class="col-6"> -->
+          <h6>
+            <i class="fa fa-map-marker mr-2" aria-hidden="true"></i>任務地點：
+          </h6>
+          <p>{{ missions.missionlocation }}</p>
+          <!-- </div> -->
+        </div>
+      </div>
+    </div>
+    <div class="signin" style="font-size: 20px">
+      <span class="text-warning">
+        已簽到：&nbsp;{{ checkinData.length }}
+      </span> &emsp;
+      <span class="text-danger">
+        未簽到：&nbsp;{{ checkoutData.length }}
+      </span>
+    </div>
+    <div class="dropdown w-50">
+      <div class="dropbtn w-100">
+        活動簽到表
+      </div>
+      <div class="dropdown-content w-100 fade-in">
+        <ul class="navbar-nav">
+          <li class="nav-item" [ngClass]="{ 'active': tab == 0 }">
+            <a class="nav-link" (click)="tab = 0">簽到狀況
+              <span class="text-danger">({{ allData.length }})</span>
+            </a>
+          </li>
+          <li class="nav-item" [ngClass]="{ 'active': tab == 1 }">
+            <a class="nav-link" (click)="tab = 1">已簽到
+              <span class="text-danger">({{ checkinData.length }})</span>
+            </a>
+          </li>
+          <li class="nav-item" [ngClass]="{ 'active': tab == 2 }">
+            <a class="nav-link" (click)="tab = 2">未簽到
+              <span class="text-danger">({{ checkoutData.length }})</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="!isLoading && size <= 762">
+    <div class="container-fluid pt-4 pb-4" *ngIf="tab == 0">
+      <div class="row justify-content-center" *ngIf="allData.length == 0">
+        <div class="col-md-3 text-center mt-3">
+          <i class="fa fa-search fa-2x" aria-hidden="true"></i>
+          <span class="nodata"> 尚無資料</span>
+        </div>
+      </div>
+      <div class="card mb-2">
+        <div class="card-footer small text-muted">
+          共 {{ allData.length }} 筆資料
+        </div>
+        <div class="card-body table-responsive">
+          <table class="table table-striped table-border table-button text-center">
+            <thead>
+              <tr>
+                <th>編號</th>
+                <th>姓名</th>
+                <th>狀態</th>
+                <th>簽到時間</th>
+                <th>備註</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let data of allData | paginate: { itemsPerPage: 10, currentPage: page } ; let i = index">
+                <th scope="row">00{{ i + ( page - 1 ) * 10 + 1 }}</th>
+                <td>
+                  <span>{{ data.name }}</span>
+                </td>
+                <td *ngIf="data.signaturestatus === '已簽到'">
+                  <img src="http://www.clker.com/cliparts/1/5/4/b/11949892282132520602led_circle_green.svg.med.png">
+                </td>
+                <td *ngIf="data.signaturestatus === '未簽到'">
+                  <img src="https://i.pinimg.com/originals/6e/3d/4a/6e3d4a2369cbd5b09ef0b51fe23d9e56.jpg">
+                </td>
+                <td>{{ data.signaturedate }}</td>
+                <td>{{ data.signaturemark }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card-footer small text-muted">
+          <div class="has-text-centered text-center">
+            <pagination-controls maxSize="5" (pageChange)="page = $event" *ngIf="allData.length > 0"></pagination-controls>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container-fluid pt-4 pb-4" *ngIf="tab == 1">
+      <div class="row justify-content-center" *ngIf="checkinData.length == 0">
+        <div class="col-md-3 text-center mt-3">
+          <i class="fa fa-search fa-2x" aria-hidden="true"></i>
+          <span class="nodata"> 尚無資料</span>
+        </div>
+      </div>
+      <div class="card mb-2">
+        <div class="card-footer small text-muted">
+          共 {{ checkinData.length }} 筆資料
+        </div>
+        <div class="card-body table-responsive">
+          <table class="table table-striped table-border table-button text-center">
+            <thead>
+              <tr>
+                <th>編號</th>
+                <th>姓名</th>
+                <th>狀態</th>
+                <th>簽到時間</th>
+                <th>備註</th>
+              </tr>
+            </thead>
+            <tbody *ngFor="let data of checkinData | paginate: { itemsPerPage: 10, currentPage: page } ; let i = index">
+              <tr>
+                <th scope="row">00{{ i + ( page - 1 ) * 10 + 1 }}</th>
+                <td>
+                  <span>{{ data.name }}</span>
+                </td>
+                <td *ngIf="data.signaturestatus === '已簽到'">
+                  <img src="http://www.clker.com/cliparts/1/5/4/b/11949892282132520602led_circle_green.svg.med.png">
+                </td>
+                <td *ngIf="data.signaturestatus === '未簽到'">
+                  <img src="https://i.pinimg.com/originals/6e/3d/4a/6e3d4a2369cbd5b09ef0b51fe23d9e56.jpg">
+                </td>
+                <td>{{ data.signaturedate }}</td>
+                <td>{{ data.signaturemark }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card-footer small text-muted">
+          <div class="has-text-centered text-center">
+            <pagination-controls maxSize="5" (pageChange)="page = $event" *ngIf="checkinData.length > 0"></pagination-controls>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container-fluid pt-4 pb-4" *ngIf="tab == 2">
+      <div class="row justify-content-center" *ngIf="checkoutData.length == 0">
+        <div class="col-md-3 text-center mt-3">
+          <i class="fa fa-search fa-2x" aria-hidden="true"></i>
+          <span class="nodata"> 尚無資料</span>
+        </div>
+      </div>
+      <div class="card mb-2">
+        <div class="card-footer small text-muted">
+          共 {{ checkoutData.length }} 筆資料
+        </div>
+        <div class="card-body table-responsive">
+          <table class="table table-striped table-border table-button text-center">
+            <thead>
+              <tr>
+                <th>編號</th>
+                <th>姓名</th>
+                <th>狀態</th>
+                <th>簽到時間</th>
+                <th>備註</th>
+              </tr>
+            </thead>
+            <tbody *ngFor="let data of checkoutData | paginate: { itemsPerPage: 10, currentPage: page } ; let i = index">
+              <tr>
+                <th scope="row">00{{ i + ( page - 1 ) * 10 + 1 }}</th>
+                <td>
+                  <span>{{ data.name }}</span>
+                </td>
+                <td *ngIf="data.signaturestatus === '已簽到'">
+                  <img src="http://www.clker.com/cliparts/1/5/4/b/11949892282132520602led_circle_green.svg.med.png">
+                </td>
+                <td *ngIf="data.signaturestatus === '未簽到'">
+                  <img src="https://i.pinimg.com/originals/6e/3d/4a/6e3d4a2369cbd5b09ef0b51fe23d9e56.jpg">
+                </td>
+                <td>{{ data.signaturedate }}</td>
+                <td>{{ data.signaturemark }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card-footer small text-muted">
+          <div class="has-text-centered text-center">
+            <pagination-controls maxSize="5" (pageChange)="page = $event" *ngIf="checkoutData.length > 0"></pagination-controls>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--非RWD-->
+  <nav class="navbar navbar-expand-md navbar-default bg-light table-responsive" *ngIf="!isLoading && size > 763">
+    <div>
+      <div class="container navbar title navbar-collapse" *ngIf="!isLoading">
+        <div class="titletext">
+          <label>
+            <i class="fa fa-check-square-o" aria-hidden="true"></i>
+          </label>
+          <span>活動簽到表</span>
+        </div>
+        <div>
+          <button class="btn btn-lg btn-info form-control" type="button" [routerLink]="['/mission/introduce']" [queryParams]="{ id:missions.id }">
+            <i class="fa fa-arrow-circle-left mr-2" aria-hidden="true"></i>返回任務</button>
+        </div>
+      </div>
+    </div>
+    <div class="container navbar content navbar-collapse" *ngIf="!isLoading">
+      <div class="contenttext border border-info rounded">
+        <div class="col-8">
+          <h4 class="mb-4">
+            {{ missions.missionname }}
+          </h4>
+          <div>
+            <h6>
+              <i class="fa fa-calendar-check-o mr-2" aria-hidden="true"></i>任務期間：
+            </h6>
+            <p class="ml-4">{{ missions.missionstartdate | date: 'yyyy/MM/dd' }} ~ {{ missions.missionfinaldate | date: 'yyyy/MM/dd' }}
+            </p>
+          </div>
+          <div>
+            <h6>
+              <i class="fa fa-map-marker mr-2" aria-hidden="true"></i>任務地點：
+            </h6>
+            <p class="ml-4">{{ missions.missionlocation }}</p>
+          </div>
+        </div>
+
+        <div class="col-4 text-center">
+          <img src="http://t.wsgxsp.com/uploads/149802367171545.png">
+          <div class="positionabsolute">
+            <span class="text-warning span1">
+              Arrived：&nbsp;{{ checkinData.length }}
+            </span>
+            <br/>
+            <span class="text-danger span2">
+              Not Arrived：&nbsp;{{ checkoutData.length }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container collapse navbar-collapse">
+      <ul class="navbar-nav">
+        <li class="nav-item" [ngClass]="{ 'active': tab == 0 }">
+          <a class="nav-link" (click)="tab = 0">簽到狀況
+            <span class="text-danger">({{ allData.length }})</span>
+          </a>
+        </li>
+        <li class="nav-item" [ngClass]="{ 'active': tab == 1 }">
+          <a class="nav-link" (click)="tab = 1">已簽到
+            <span class="text-danger">({{ checkinData.length }})</span>
+          </a>
+        </li>
+        <li class="nav-item" [ngClass]="{ 'active': tab == 2 }">
+          <a class="nav-link" (click)="tab = 2">未簽到
+            <span class="text-danger">({{ checkoutData.length }})</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <div *ngIf="!isLoading && size > 763">
+    <div class="container pt-4 pb-4" *ngIf="tab == 0">
+      <div class="row justify-content-center" *ngIf="allData.length === 0">
+        <div class="col-md-3 text-center mt-3">
+          <i class="fa fa-search fa-2x" aria-hidden="true"></i>
+          <span class="nodata"> 尚無資料</span>
+        </div>
+      </div>
+      <div class="card mb-2" *ngIf="allData.length !== 0">
+        <div class="card-footer small text-muted">
+          共 {{ allData.length }} 筆資料
+        </div>
+        <div class="card-body table-responsive">
+          <table class="table table-striped table-border table-button text-center">
+            <thead>
+              <tr>
+                <th>編號</th>
+                <th>姓名</th>
+                <th>狀態</th>
+                <th>簽到時間</th>
+                <th>備註</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let data of allData | paginate: { itemsPerPage: 10, currentPage: page } ; let i = index">
+                <th scope="row">00{{ i + ( page - 1 ) * 10 + 1 }}</th>
+                <td>
+                  <span>{{ data.name }}</span>
+                </td>
+                <td *ngIf="data.signaturestatus === '已簽到'">
+                  <img src="http://www.clker.com/cliparts/1/5/4/b/11949892282132520602led_circle_green.svg.med.png">
+                </td>
+                <td *ngIf="data.signaturestatus === '未簽到'">
+                  <img src="https://i.pinimg.com/originals/6e/3d/4a/6e3d4a2369cbd5b09ef0b51fe23d9e56.jpg">
+                </td>
+                <td>{{ data.signaturedate }}</td>
+                <td>{{ data.signaturemark }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card-footer small text-muted">
+          <div class="has-text-centered text-center">
+            <pagination-controls maxSize="5" (pageChange)="page = $event" *ngIf="allData.length > 0"></pagination-controls>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!isLoading && size > 763">
+    <div class="container pt-4 pb-4" *ngIf="tab == 1">
+      <div class="row justify-content-center" *ngIf="checkinData.length === 0">
+        <div class="col-md-3 text-center mt-3">
+          <i class="fa fa-search fa-2x" aria-hidden="true"></i>
+          <span class="nodata"> 尚無資料</span>
+        </div>
+      </div>
+      <div class="card mb-2" *ngIf="checkinData.length !== 0">
+        <div class="card-footer small text-muted">
+          共 {{ checkinData.length }} 筆資料
+        </div>
+        <div class="card-body table-responsive">
+          <table class="table table-striped table-border table-button text-center">
+            <thead>
+              <tr>
+                <th>編號</th>
+                <th>姓名</th>
+                <th>狀態</th>
+                <th>簽到時間</th>
+                <th>備註</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let data of checkinData | paginate: { itemsPerPage: 10, currentPage: page } ; let i = index">
+                <th scope="row">00{{ i + ( page - 1 ) * 10 + 1 }}</th>
+                <td>
+                  <span>{{ data.name }}</span>
+                </td>
+                <td *ngIf="data.signaturestatus === '已簽到'">
+                  <img src="http://www.clker.com/cliparts/1/5/4/b/11949892282132520602led_circle_green.svg.med.png">
+                </td>
+                <td *ngIf="data.signaturestatus === '未簽到'">
+                  <img src="https://i.pinimg.com/originals/6e/3d/4a/6e3d4a2369cbd5b09ef0b51fe23d9e56.jpg">
+                </td>
+                <td>{{ data.signaturedate }}</td>
+                <td>{{ data.signaturemark }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card-footer small text-muted">
+          <div class="has-text-centered text-center">
+            <pagination-controls maxSize="5" (pageChange)="page = $event" *ngIf="checkinData.length > 0"></pagination-controls>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!isLoading && size > 763">
+    <div class="container pt-4 pb-4" *ngIf="tab == 2">
+      <div class="row justify-content-center" *ngIf="checkoutData.length === 0">
+        <div class="col-md-3 text-center mt-3">
+          <i class="fa fa-search fa-2x" aria-hidden="true"></i>
+          <span class="nodata"> 尚無資料</span>
+        </div>
+      </div>
+      <div class="card mb-2" *ngIf="checkoutData.length !== 0">
+        <div class="card-footer small text-muted">
+          共 {{ checkoutData.length }} 筆資料
+        </div>
+        <div class="card-body table-responsive">
+          <table class="table table-striped table-border table-button text-center">
+            <thead>
+              <tr>
+                <th>編號</th>
+                <th>姓名</th>
+                <th>狀態</th>
+                <th>簽到時間</th>
+                <th>備註</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let data of checkoutData | paginate: { itemsPerPage: 10, currentPage: page } ; let i = index">
+                <th scope="row">00{{ i + ( page - 1 ) * 10 + 1 }}</th>
+                <td>
+                  <span>{{ data.name }}</span>
+                </td>
+                <td *ngIf="data.signaturestatus === '已簽到'">
+                  <img src="http://www.clker.com/cliparts/1/5/4/b/11949892282132520602led_circle_green.svg.med.png">
+                </td>
+                <td *ngIf="data.signaturestatus === '未簽到'">
+                  <img src="https://i.pinimg.com/originals/6e/3d/4a/6e3d4a2369cbd5b09ef0b51fe23d9e56.jpg">
+                </td>
+                <td>{{ data.signaturedate }}</td>
+                <td>{{ data.signaturemark }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card-footer small text-muted">
+          <div class="has-text-centered text-center">
+            <pagination-controls maxSize="5" (pageChange)="page = $event" *ngIf="checkoutData.length > 0"></pagination-controls>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<swal type="error" title="登入逾時，請重新登入" #dialogPassError [options]="{ timer : '1000' }"></swal>
+
+<swal #dialogMissionIdError title="無此任務" type="error" [options]="{ timer : '1000' }"></swal>

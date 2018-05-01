@@ -1,0 +1,42 @@
+<div id="punchin">
+  <div class="row">
+    <div class="offset-1 col-10 bod tm-3 bg-white">
+      <div class="col-12 bg-primary title-hei text-center rau-top">
+        <h3>天使計劃 iShare</h3>
+      </div>
+      <div class="col-12 rau-bottom">
+        <div class="text-center">
+          <img src="http://bpic.588ku.com/element_origin_min_pic/16/05/24/20574448b9bdf27.jpg" alt="" class="img-fluid rounded-circle pt-3">
+          <h5>任務簽到 ─ 學生登入</h5>
+        </div>
+
+        <form class="pt-2" action="" method="post">
+          <div class="form-group">
+            <h5>
+              <label for="account">帳號：</label>
+            </h5>
+            <input type="text" class=" ml-3 form-control" id="uesrAccount" [(ngModel)]="userAccount" name="userAccount">
+          </div>
+          <div class="form-group">
+            <h5>
+              <label for="password">密碼：</label>
+            </h5>
+            <input type="password" class=" ml-3 form-control" id="userPassword" [(ngModel)]="userPassword" name="userPassword">
+          </div>
+          <div class="form-group">
+            <button class="btn btn-primary btn-lg btn-block" (click)="userLogin()" type="submit">簽到</button>
+
+          </div>
+
+        </form>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<swal #dialogError title="簽到失敗，帳號或密碼錯誤" type="error"></swal>
+<swal #dialogPassError title="此帳戶無訪問權限" type="error"></swal>
+<swal #dialogIdError title="跳轉發生錯誤" type="error"></swal>
+<swal #dialogSignatureFinish title="此任務已簽到完成，跳回首頁" type="info"></swal>

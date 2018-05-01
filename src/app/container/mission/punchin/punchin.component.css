@@ -1,0 +1,40 @@
+.bg-primary {
+    color: white;
+}
+
+.bod {
+    padding: 0;
+    border-radius: 5px;
+    box-shadow: 7px 7px 5px rgba(121, 110, 110, 0.658);
+}
+
+.title-hei {
+    height: 70px;
+}
+
+h3 {
+    display: inline-block;
+    margin: 1rem 0 0 0;
+}
+
+.rau-top {
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.rau-bottom {
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+.row {
+    margin: 0;
+}
+
+.tm-3 {
+    margin-top: -3rem;
+}
+
+.form-control {
+    width: 90%;
+}

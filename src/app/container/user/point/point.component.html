@@ -1,0 +1,122 @@
+<div id="point">
+
+    <div class="text-center w-100" *ngIf="!isLoading && size <= 762">
+        <a href="#" [routerLink]="['/user/profile']">
+            <button class="dropbtn w-50 f-white">個人資訊</button>
+        </a>
+    </div>
+
+    <nav class="navbar navbar-expand-md navbar-default bg-light table-responsive" *ngIf="!isLoading && size > 763">
+        <div class="container collapse navbar-collapse">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="#" [routerLink]="['/user/profile']">個人資訊</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="#" [routerLink]="['/user/point']">任務點數</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container text-center mt-5" *ngIf="isLoading">
+        <div class="loader">Loading...</div>
+    </div>
+    <div class="container" *ngIf="!isLoading">
+        <div class="row">
+            <div class="col-md-12">
+                <h2 class="group-title">任務點數</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="nav nav-tabs user-tab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="get-start-tab" data-toggle="tab" href="#get-tab" role="tab" aria-controls="get-tab" aria-expanded="true">獲得點數紀錄({{data.length}})</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="delete-start-tab" data-toggle="tab" href="#delete-tab" role="tab" aria-controls="delete-tab">扣除點數紀錄({{data2.length}})</a>
+                    </li>
+                </ul>
+                <div class="tab-content user-tab-content mb-5">
+                    <div class="tab-pane fade show active" id="get-tab" role="tabpanel" aria-labelledby="get-start-tab">
+                        <div class="card mb-3">
+                            <div class="card-body table-responsive">
+                                <table class="table table-striped table-border">
+                                    <tbody>
+                                        <tr *ngIf="isLoading" class="text-center">
+                                            <td colspan="5">
+                                                <div class="loader">Loading...</div>
+                                            </td>
+                                        </tr>
+                                        <div class="container mt-3" *ngIf="data.length === 0">
+                                            <div class="col-md-12 row justify-content-center">
+                                                <div class="col-md-3 text-center">
+                                                    <i class="fa fa-search fa-2x" aria-hidden="true"></i><span class="data-set">  查無結果</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <tr *ngFor="let data of data | paginate: { itemsPerPage: 10, currentPage: page } ; let i = index">
+                                            <td [ngClass]="color(data.missiontype)">{{ data.missiontype }}</td>
+                                            <td class="secocnd">
+                                                <p class="mb-0 name"><a [routerLink]="['../../mission/introduce']" [queryParams]="{id:data.missionid}" class="name" target="_blank">{{data.missionname}}</a></p>
+                                                <p class="mb-0 text-secondary">完成時間：{{data.sendtime}}</p>
+                                            </td>
+                                            <td class="text-center"><b class="text-danger point-font">{{ data.missionpoint }}</b>點數</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="card-footer small text-muted">
+                                <div class="has-text-centered text-center" *ngIf="data.length !== 0">
+                                    <pagination-controls (pageChange)="page = $event"></pagination-controls>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="delete-tab" role="tabpanel" aria-labelledby="delete-start-tab">
+                        <div class="card mb-3">
+                            <div class="card-body table-responsive">
+                                <table class="table table-striped table-border">
+                                    <tbody>
+                                        <tr *ngIf="isLoading" class="text-center">
+                                            <td colspan="5">
+                                                <div class="loader">Loading...</div>
+                                            </td>
+                                        </tr>
+                                        <div class="container mt-3" *ngIf="data2.length === 0">
+                                            <div class="col-md-12 row justify-content-center">
+                                                <div class="col-md-3 text-center">
+                                                    <i class="fa fa-search fa-2x" aria-hidden="true"></i><span class="data-set">  查無結果</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <tr *ngFor="let data of data2 | paginate: { itemsPerPage: 10, currentPage: page } ; let i = index">
+                                            <td [ngClass]="color(data.recordtime | date: 'HH')">{{recordstatus}}</td>
+                                            <td class="secocnd">
+                                                <p class="mb-0 name">{{data.name}}</p>
+                                                <p class="mb-0 text-secondary">兌換時間：{{data.recordtime | date: 'yyyy-MM-dd HH:mm:ss'}}</p>
+                                            </td>
+                                            <td class="text-center"><b class="text-danger point-font">{{ data.recordcost }}</b>點數</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="card-footer small text-muted" *ngIf="data2.length !== 0">
+                                <div class="has-text-centered text-center">
+                                    <pagination-controls (pageChange)="page = $event"></pagination-controls>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+</div>
+
+<swal type="error" title="登入逾時，請重新登入" #dialogPassError [options]="{ timer : '1000' }"></swal>

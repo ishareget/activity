@@ -1,0 +1,112 @@
+<div id="search">
+  <div class="bg-color">
+    <div class="container">
+      <div class="row pt-3">
+        <div class="col-md-3 p-0">
+          <form #form1="ngForm" novalidate>
+            <div class="btn-group">
+              <button class="btn btn-title">　地區　</button>
+              <div class="btn-group">
+                <!-- <div class="col-md-6 mt-2"> -->
+                <select name="city" [(ngModel)]="city" (click)="selectCity()" class="btn btn-selection form-control">
+                  <option value="">縣市</option>
+                  <option *ngFor="let item of cityArea">{{item}}</option>
+                </select>
+                <!-- </div> -->
+              </div>
+              <div class="btn-group">
+                <!-- <div class="col-md-6 mt-2"> -->
+                <select name="dist" [(ngModel)]="dist" class="btn btn-selection dropdown-toggle form-control">
+                  <option value="">地區</option>
+                  <option *ngFor="let item of distList">{{item}}</option>
+                </select>
+                <!-- </div> -->
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="col-md-1 pt-3"></div>
+        <!-- For RWD -->
+        <div id="typeselection" class="col-md-8 p-0">
+          <div class="btn-group">
+            <button class="btn btn-title">　類型　</button>
+            <div class="btn-group">
+              <!-- <div class="col-md-6 mt-2"> -->
+              <select name="selGroup" [(ngModel)]="searchType" class="btn btn-selection dropdown-toggle form-control">
+                <option value="0">全部</option>
+                <option *ngFor="let item of missionType" [ngValue]='item.id'>{{item.missiontype}}</option>
+              </select>
+              <!-- </div> -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row mt-3">
+        <div class="btn-group">
+          <button class="btn btn-title">　時間　</button>
+          <div class="btn-group">
+            <my-date-picker class="col-md-3 p-0" [options]="DatePickerOption" placeholder="開始日期" [(ngModel)]="missionStartDate" required></my-date-picker>
+            <my-date-picker class="col-md-3 p-0" [options]="DatePickerOption" placeholder="結束日期" [(ngModel)]="missionFinalDate" required></my-date-picker>
+          </div>
+        </div>
+      </div>
+      <div class="row mt-3 pb-3">
+        <div class="col-md-8 p-0 btn-group">
+          <button class="btn btn-title">　任務名稱　</button>
+          <div class="btn-group w-100">
+            <input type="text" class="w-100 form-control btn-selection" placeholder="請輸入搜尋名稱" [(ngModel)]="missionname" aria-describedby="basic-addon3">
+          </div>
+        </div>
+        <div class="col-md-1 pt-3"></div>
+        <!-- For RWD -->
+        <div class="col-md-3 p-0 ">
+          <button id="searchBtn" type="button" class=" btn-ninety btn btn-back" (click)="search()">搜尋
+            <i class="fa fa-search fa-1g ml-2" aria-hidden="true"></i>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+<!-- 載入中動畫 -->
+<div class="container text-center mt-5" *ngIf="isLoading">
+  <div class="loader">Loading...</div>
+</div>
+<div class="container mt-5" *ngIf="!isLoading && missionShow.length === 0">
+  <div class="col-md-12 row justify-content-center">
+    <div class="col-md-6 text-center">
+      <span class="data-set">
+        <i class="fa fa-search" aria-hidden="true"></i>查無結果</span>
+    </div>
+  </div>
+</div>
+<div class="container" *ngIf="!isLoading">
+  <div class="row">
+    <div class="col-md-4 mt-5" *ngFor="let mission of missionShow | paginate: { itemsPerPage: 9, currentPage: page };let i =index">
+      <div class="card card-main">
+        <a [routerLink]="['../mission/introduce']" [queryParams]="{id:mission.id}" target="_blank">
+          <img class="img-thumbnail" src="{{mission.missionpicture}}" target="_blank">
+        </a>
+        <div class="card-block">
+          <a [routerLink]="['../mission/introduce']" [queryParams]="{id:mission.id}" target="_blank">
+            <h5 class="card-title">{{mission.missionname}}</h5>
+          </a>
+          <div class="card-text">
+            <p>活動時間：{{mission.missionstartdate | date: 'yyyy/MM/dd'}}~{{mission.missionfinaldate | date: 'yyyy/MM/dd'}}</p>
+            <span>地區：{{mission.missionlocation}}</span>
+            <span>任務描述：{{mission.missioncontent}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-12 row justify-content-center mt-5 page-style"  *ngIf="missionShow != 0">
+      <div class="text-center ">
+        <pagination-controls maxSize="4" (pageChange)="page = $event"></pagination-controls>
+      </div>
+    </div>
+  </div>
+</div>
+<swal #dialogErrorAll title="日期錯誤" type="error"></swal>
+<swal type="error" title="登入逾時，請重新登入" #dialogPassError [options]="{ timer : '1000' }"></swal>

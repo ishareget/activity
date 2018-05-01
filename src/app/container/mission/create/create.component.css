@@ -1,0 +1,117 @@
+/* 引導區塊 */
+
+.nav .nav-item {
+    padding: 1rem 1rem 1rem 0;
+    font-size: 1rem;
+}
+
+
+/* 任務類別 */
+
+.create-header {
+    padding: 0;
+    margin-top: -7px;
+}
+
+.create-type {
+    padding: 3rem 0 2rem;
+}
+
+.create-type h2 {
+    font-size: 1.5rem;
+}
+
+
+/* 任務名稱 */
+
+.create-main #txtMissionName {
+    padding: 0.6rem 1rem;
+    font-size: 30px;
+}
+
+
+/* 任務選項 */
+
+
+.create-main .row .col-md-6 .custom-control-indicator {
+    margin-top: 0.2rem;
+    margin-left: 0.5rem;
+}
+
+.create-main .row .col-md-6 .custom-checkbox {
+    padding-top: 0.3rem;
+    padding-left: 1.8rem;
+}
+
+
+/* 任務圖片區塊 */
+
+.create-main .create-photo {
+    height: auto;
+    max-height: 500px;
+    width: 100%;
+    object-fit: cover;
+    background-color: #ddd;
+    color: #bdbdbd;
+    text-align: center;
+}
+
+.create-main .img-thumbnail {
+    padding: 0;
+    border: 0;
+    height: auto;
+    max-height: 500px;
+    width: 100%;
+    border-radius: 0;
+    object-fit: cover;
+}
+
+.create-main .create-photo+button {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    padding: 1rem;
+}
+
+
+/* 任務發佈按鈕 */
+
+.create-main #btnSave {
+    padding: 1rem;
+}
+
+.create-main .row .form-group .form-check {
+    line-height: 1.5;
+    padding: 0rem .75rem;
+    font-size: 1rem;
+}
+
+.upload-btn {
+    position: relative;
+    top: -36px;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.upload-btn:hover {
+    background-color: rgba(0, 0, 0, 0.75);
+}
+
+#swal2-content {
+    width: 30% !important;
+    margin: auto !important;
+}
+
+.invalidtext {
+    color: #ff0000;
+}
+
+.modal-body {
+    overflow: auto;
+}
+
+@media (min-width: 768px) {
+    .modal-xl {
+        width: 90%;
+        max-width: 1000px;
+    }
+}

@@ -1,0 +1,32 @@
+/*
+
+  物件背景顏色
+
+  使用方法如同 bootstrap 的 bg-color
+
+  bootstrap 預設：
+  class="bg-info"
+  class="bg-danger"
+  class="bg-primary"
+
+*/
+
+.bg-white {
+    background-color: #fff !important;
+}
+
+.bg-inherit {
+    background-color: inherit;
+}
+
+.bg-info {
+    background-color: #2AB3FC !important;
+}
+
+.bg-blue {
+    background-color: #0088D2;
+}
+
+.bg-gray {
+    background-color: #E2E6EA !important;
+}

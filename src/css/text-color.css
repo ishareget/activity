@@ -1,0 +1,20 @@
+/*
+
+  物件文字顏色
+
+  使用方法如同 bootstrap 的 text-color
+
+  bootstrap 預設：
+  class="text-info"
+  class="text-danger"
+  class="text-primary"
+
+*/
+
+.text-white {
+    color: #fff !important;
+}
+
+.text-gray {
+    color: #757575 !important;
+}

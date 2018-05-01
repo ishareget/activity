@@ -1,0 +1,33 @@
+<div class="modal fade" id="signupModal" tabindex="-1" role="dialog" aria-labelledby="signupModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="loginModalLabel"><i class="fa fa-sign-in" aria-hidden="true"></i>註冊</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+      </div>
+      <!-- <div class="modal-body">
+        <div class="form-group">
+          <label for="userAccount">帳號</label>
+          <input type="text" class="form-control is-invalid" id="userAccount" placeholder="請輸入帳號" required>
+        </div>
+        <div class="form-group">
+          <label for="{{userPassword}}">密碼</label>
+          <input type="password" class="form-control is-valid" id="{{userPassword}}" placeholder="請輸入密碼" required>
+        </div>
+        <div class="form-group">
+          <label for="userPasswordCheck">確認密碼</label>
+          <input type="password" class="form-control is-valid" id="userPasswordCheck" placeholder="請輸入密碼" required>
+        </div>
+      </div> -->
+
+      <div class="modal-footer">
+        <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
+        <swal #dialogSuccess title="註冊成功" type="success"></swal>
+        <button type="submit" class="btn btn-info bg-info btn-maxw" (click)="signup()">成為會員</button>
+      </div>
+
+    </div>
+  </div>
+</div>

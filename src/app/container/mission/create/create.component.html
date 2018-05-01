@@ -1,0 +1,257 @@
+<div class="container text-center mt-5" *ngIf="!isLoading">
+  <div class="loader">Loading...</div>
+</div>
+<div id="create" *ngIf="isLoading">
+
+
+
+  <!-- 引導區塊 -->
+  <div class="create-header bg-white">
+    <div class="container">
+      <ul class="nav text-gray mt-1">
+        <li class="nav-item" [ngClass]="{ 'text-info': step == 0 }">選擇任務類別</li>
+        <li class="nav-item">
+          <i class="fa fa-angle-right" aria-hidden="true"></i>
+        </li>
+        <li class="nav-item" [ngClass]="{ 'text-info': step == 1 }">任務基本設定</li>
+      </ul>
+    </div>
+  </div>
+
+
+  <div *ngIf="step === 0">
+    <div class="create-type">
+      <div class="container bg-white rounded pt-5 pb-5">
+        <div class="row">
+          <div class="col-md-12 text-center">
+            <h2>這次要建立什麼任務給小朋友呢？</h2>
+          </div>
+        </div>
+        <div class="row justify-content-center mt-4">
+          <div class="col-md-6">
+            <div class="form-group">
+              <select class="form-control custom-select" name="selGroup" [(ngModel)]="typeId" (click)="typeSelect()">
+                <option *ngFor="let Type of missionType" [ngValue]='Type.id'>{{Type.missiontype}}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container pb-5">
+      <div class="row justify-content-center">
+        <div class="col-md-3">
+          <button type="button" class="btn btn-white form-control" [routerLink]="['/home']">取消</button>
+        </div>
+        <div class="col-md-3">
+          <button type="button" class="btn btn-info form-control" (click)="toStep1()">下一步</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div *ngIf="step === 1">
+
+    <!-- 任務類別 -->
+    <div class="create-main container pt-3">
+      <div class="row">
+        <label class="col-sm-2 col-form-label">任務類別：</label>
+        <div class="col-sm-3">
+          <div class="form-group">
+            <select class="form-control custom-select" name="selGroup" [(ngModel)]="typeId" (click)="typeSelect()">
+              <option *ngFor="let Type of missionType" [ngValue]='Type.id'>{{Type.missiontype}}</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 圖片上傳區塊 -->
+    <div class="create-main bg-white pt-4">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <input id="txtMissionName" type="text" [readonly]="andited" [ngClass]="mission.missionname ? 'is-valid' : 'is-invalid'" class="form-control"
+              placeholder="請輸入任務名稱" [(ngModel)]="mission.missionname" required>
+          </div>
+        </div>
+        <div class="row mt-3">
+          <div class="col-md-12">
+            <div *ngIf="urlBoolean" class="create-photo text-center">
+              <img src="http://fakeimg.pl/1080x500/?text=1080X500&font=MicrosoftJhengHei" class="img-thumbnail">
+            </div>
+            <div *ngIf="urlBoolean===false" class="create-photo">
+              <img [src]="mission.missionpicture" class="img-thumbnail">
+            </div>
+            <label class="btn upload-btn w-100" *ngIf="!andited">
+              <input id="upload_img" [hidden]="true" type="file" accept="image/*" data-toggle="modal" (change)="fileChangeListener($event)"
+                data-target="#changephoto" /> 上傳圖片
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 任務詳細資訊 -->
+    <div class="create-main container pt-4 pb-4">
+      <div class="row">
+        <div class="col-md-6">
+
+          <div class="form-group text-gray">
+            <div class="row">
+              <div class="col-md-6">
+                <i class="fa fa-clock-o" aria-hidden="true"></i>
+                <label>開始日期</label>
+                <span class="text-danger">*</span>
+                <input *ngIf="andited" class="form-control" type="text" [value]="mission.missionstartdate.formatted" readonly>
+                <my-date-picker [options]="DatePickerOption" [hidden]="andited" [ngClass]="mission.missionstartdate ? 'is-valid' : 'is-invalid'"
+                  placeholder="選擇日期" class="" [(ngModel)]="mission.missionstartdate" required></my-date-picker>
+              </div>
+              <div class="col-md-6">
+                <i class="fa fa-clock-o" aria-hidden="true"></i>
+                <label>結束日期</label>
+                <span class="text-danger">*</span>
+                <input *ngIf="andited" class="form-control" type="text" [value]="mission.missionfinaldate.formatted" readonly>
+                <my-date-picker [options]="DatePickerOption" [hidden]="andited" [ngClass]="mission.missionfinaldate ? 'is-valid' : 'is-invalid'"
+                  placeholder="選擇日期" class="" [(ngModel)]="mission.missionfinaldate" required></my-date-picker>
+              </div>
+            </div>
+          </div>
+          <div class="form-group text-gray">
+            <div class="row">
+              <div class="col-md-6">
+                <i class="fa fa-clock-o" aria-hidden="true"></i>
+                <label>開放填寫心得日期</label>
+                <span class="text-danger">*</span>
+                <input *ngIf="andited" class="form-control" type="text" [value]="mission.missionexperiencedate.formatted" readonly>
+                <my-date-picker [options]="DatePickerOption" [hidden]="andited" [ngClass]="mission.missionexperiencedate ? 'is-valid' : 'is-invalid'"
+                  placeholder="選擇日期" class="" [(ngModel)]="mission.missionexperiencedate" required></my-date-picker>
+              </div>
+              <div class="col-md-6">
+                <i class="fa fa-clock-o" aria-hidden="true"></i>
+                <label>任務獎勵</label>
+                <span class="text-danger">*</span>
+                <input type="number" class="form-control" [readonly]="andited" placeholder="請輸入任務獎勵" [ngClass]="(mission.missionpoint && mission.missionpoint >0) ? 'is-valid' : 'is-invalid'"
+                  min="0" [(ngModel)]="mission.missionpoint" required>
+              </div>
+            </div>
+          </div>
+          <div class="form-group text-gray">
+            <i class="fa fa-map-marker" aria-hidden="true"></i>
+            <label>任務地址</label>
+            <span class="text-danger">*</span>
+            <!-- <input type="text" class="form-control" [readonly]="andited" [ngClass]="mission.missionlocation ? 'is-valid' : 'is-invalid'"
+              placeholder="請輸入地址" [(ngModel)]="mission.missionlocation" required> -->
+
+            <div class="row">
+              <div class="col-md-3 " *ngIf="!andited">
+                <select name="city" [(ngModel)]="city" (click)="selectCity()" class="form-control custom-select">
+                  <option value="">縣市</option>
+                  <option *ngFor="let item of cityArea">{{item}}</option>
+                </select>
+              </div>
+              <div class="col-md-3" *ngIf="andited">
+                <input type="text" class="form-control" [value]="mission.missionlocation.slice(0,3)">
+              </div>
+              <div class="col-md-3" *ngIf="!andited">
+                <select name="dist" [(ngModel)]="dist" class="form-control custom-select">
+                  <option value="">地區</option>
+                  <option *ngFor="let item of distList">{{item}}</option>
+                </select>
+              </div>
+              <div class="col-md-3" *ngIf="andited">
+                <input type="text" class="form-control" [value]="mission.missionlocation.slice(3,6)">
+              </div>
+              <div class="col-md-6" *ngIf="!andited">
+                <input type="text" class="form-control" [ngClass]="road ? 'is-valid' : 'is-invalid'" placeholder="請輸入地點" [(ngModel)]="road">
+              </div>
+              <div class="col-md-6" *ngIf="andited">
+                <input type="text" class="form-control" [value]="mission.missionlocation.slice(6,mission.missionlocation.length)" [readonly]="andited">
+              </div>
+            </div>
+          </div>
+          <!-- <div class="form-group text-gray">
+            <i class="fa fa-table" aria-hidden="true"></i>
+            <label>其他</label>
+            <div class="row">
+              <div class="col-md-6">
+                <label class="custom-control custom-checkbox">
+                  <input type="checkbox" class="custom-control-input" [(ngModel)]="isSignature">
+                  <span class="custom-control-indicator"></span>
+                  <span class="custom-control-description">簽到表</span>
+                </label>
+              </div>
+            </div>
+          </div> -->
+          <div class="form-group text-gray" *ngIf="isTravel">
+            <i class="fa fa-plane" aria-hidden="true"></i>
+            <label>旅遊交通工具</label>
+            <span class="text-danger">*</span>
+            <input type="text" class="form-control" [readonly]="andited" placeholder="請輸入交通工具" [ngClass]="missionTrans ? 'is-valid' : 'is-invalid'"
+              [(ngModel)]="missionTrans" required>
+          </div>
+          <div class="form-group text-gray" *ngIf="isVideo">
+            <i class="fa fa-clock-o" aria-hidden="true"></i>
+            <label>影片任務網址</label>
+            <span class="text-danger">*</span>
+            <input type="text" class="form-control" [readonly]="andited" placeholder="請輸入影片網址" [ngClass]="missionLink ? 'is-valid' : 'is-invalid'"
+              [(ngModel)]="missionLink " placeholder="ex: https://www.youtube.com/watch?v=DdcoPdEOm5o " required>
+          </div>
+        </div>
+
+        <div class="col-md-6 ">
+          <div class="form-group text-gray ">
+            <i class="fa fa-sticky-note-o " aria-hidden="true "></i>
+            <label>任務介紹</label>
+            <span class="text-danger ">*</span>
+            <textarea class="form-control " rows="10" [readonly]="andited" [ngClass]="mission.missioncontent ? 'is-valid' : 'is-invalid'"
+              placeholder="為這個任務增添介紹吧 " [(ngModel)]="mission.missioncontent" required></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="row justify-content-center mt-3" *ngIf=" !andited">
+        <div class="col-md-3 ">
+          <button type="button " class="btn btn-secondary form-control h-100 " (click)="BackStep() ">上一步</button>
+        </div>
+        <div class="col-md-3 ">
+          <button type="button " class="btn btn-info form-control h-100 " (click)="saveMission() ">儲存並送審</button>
+        </div>
+      </div>
+      <div class="row justify-content-center mt-3" *ngIf="andited">
+        <div class="col-md-3 ">
+          <button class="btn btn-lg btn-info form-control" type="button" [routerLink]="['/user/management']" [queryParams]="{ tab : 1 }">
+            <i class="fa fa-arrow-circle-left mr-2" aria-hidden="true"></i>返回列表</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<swal #dialogSuccess title="發佈成功" type="success" [options]="{ timer : '1000' }"></swal>
+<swal #dialogError title="發佈失敗" type="error"></swal>
+<swal #dialogErrorType title="請選擇任務類別" type="warning"></swal>
+<swal #dialogErrorAll title="資料錯誤" type="warning"></swal>
+<swal #noPermission title="抱歉，您無權訪問這頁面" type="error"></swal>
+
+<div id="changephoto" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="changephoto" aria-hidden="true">
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5>
+          <i class="fa fa-undo mr-2" aria-hidden="true"></i>修改任務圖片</h5>
+      </div>
+      <div class="modal-body text-center w-100">
+        <img-cropper #cropper [image]="data" [settings]="cropperSettings"></img-cropper>
+      </div>
+
+      <div class="modal-footer w-100">
+        <button type="submit" class="btn btn-primary mr-3 send" (click)="readUrl(data.image)">送出</button>
+        <button #modelClose type="submit" class="btn btn-secondary  send" data-dismiss="modal">取消</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<swal type="error" title="登入逾時，請重新登入" #dialogPassError [options]="{ timer : '1000' }"></swal>

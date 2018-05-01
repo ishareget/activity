@@ -1,0 +1,50 @@
+/* p-fileUpload 客製化 */
+
+.ui-fileupload {}
+
+.ui-fileupload-content {}
+
+
+/* 檔案名稱超過 280px 以...表示 */
+
+.ui-fileupload-row>div:nth-child(1) {
+    display: inline-block;
+}
+
+.ui-fileupload-row>div:nth-child(2) {
+    display: inline-block;
+    overflow-x: hidden;
+    width: 280px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+@media screen and (max-width: 1200px) {
+    .ui-fileupload-row>div:nth-child(2) {
+        width: 190px;
+    }
+}
+
+@media screen and (max-width: 990px) {
+    .ui-fileupload-row>div:nth-child(2) {
+        width: 70px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .ui-fileupload-row>div:nth-child(2) {
+        width: 240px;
+    }
+}
+
+@media screen and (max-width: 540px) {
+    .ui-fileupload-row>div:nth-child(2) {
+        width: 190px;
+    }
+}
+
+@media screen and (max-width: 495px) {
+    .ui-fileupload-row>div:nth-child(2) {
+        width: 100px;
+    }
+}

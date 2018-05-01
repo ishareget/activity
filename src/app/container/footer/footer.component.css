@@ -1,0 +1,38 @@
+#footer {
+  padding-bottom: 6em;
+  background-color: #333333;
+}
+
+#footer span {
+  font-size: 18px;
+  color: #616365;
+}
+
+#footer .settop {
+  margin-top: 20px;
+}
+
+#footer a {
+  display: block;
+  text-decoration: none;
+  color: #B7B8B8;
+  font-size: 14px;
+  line-height: 23px;
+}
+
+#footer p {
+  color: #B7B8B8;
+  font-size: 14px;
+}
+
+#footer a:hover {
+  color: #FFFFFF;
+}
+
+.setbordertop {
+  border-top: 4px solid #0088d2;
+}
+
+.setmargintop {
+  margin-top: 10px;
+}

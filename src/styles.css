@@ -1,0 +1,22 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import url(https://fonts.googleapis.com/earlyaccess/notosanstc.css);
+@import url('./css/button.css');
+@import url('./css/table.css');
+@import url('./css/bg-color.css');
+@import url('./css/text-color.css');
+@import url('./css/p-fileUpload.css');
+@import url('./css/loading.css');
+@import url('./css/font.css');
+* {
+    /* font-family: 'Microsoft JhengHei', sans-serif; */
+    font-family: 'Noto Sans TC', sans-serif;
+}
+
+body {
+    padding-top: 3rem;
+    line-height: 1.428571429;
+    font-size: 14px;
+    color: #333;
+    background-color: #eee;
+}

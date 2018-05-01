@@ -1,0 +1,40 @@
+.col-12 {
+    padding: 0;
+    flex: none;
+}
+
+.ml-02 {
+    margin-left: 1.2rem;
+}
+
+.h-150 {
+    height: 150px;
+}
+
+.bod {
+    border-radius: 5px;
+    box-shadow: 7px 7px 5px rgba(121, 110, 110, 0.658);
+}
+
+.rau-top {
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.rau-bottom {
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+.title-hei {
+    height: 70px;
+}
+
+.bg-primary {
+    color: white;
+}
+
+h3 {
+    display: inline-block;
+    margin: 1rem 0 0 0;
+}

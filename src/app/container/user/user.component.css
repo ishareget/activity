@@ -1,0 +1,178 @@
+/* 使用者基本資訊 */
+
+.user-profile {
+    padding-bottom: 0;
+}
+
+.user-profile .user-photo {
+    width: 150px;
+    border-radius: 100%;
+    object-fit: cover;
+    overflow: hidden;
+}
+
+.container .data-set {
+    font-size: 40px;
+}
+
+/* tab 選單 */
+
+.user-photo span {
+    display: block;
+    font-size: 5rem;
+}
+
+/* tab content 選單內容*/
+
+/* 
+.user-tab-content {
+    margin-top: 1.4rem;
+} */
+
+.col-md-12 {
+    padding: 0;
+}
+
+.user-tab-content .col-md-4 {
+    display: inline-block;
+}
+
+.card-img-top {
+    max-width: 100%;
+    max-height: 150px;
+    height: 150px;
+    object-fit: cover;
+}
+
+.card-body {
+    padding: 1.2rem;
+}
+
+.card-body .card-title {
+    overflow: hidden;
+    margin: 0 0 10px;
+    max-height: 48px;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 24px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.card-body .card-time {
+    font-size: 14px;
+    line-height: 20px;
+    color: #bdbdbd;
+}
+
+.card-body .card-text {
+    padding: 0.4rem 0;
+    font-size: 14px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.card-modal {
+    border: 1px solid #ccc;
+    background-color: #ffffff;
+}
+
+.card-body .card-control .col-sm-6 {
+    line-height: 35px;
+}
+
+.card-body .card-control .card-text {
+    padding: 0 0.4rem;
+}
+
+.card-body .card-control .card-text::after {
+    content: '人喜歡';
+    padding: 0 0.4rem;
+}
+
+.card-body .card-control .img-thumbnail {
+    padding: 0.4rem 0.6rem 0.3rem;
+    width: 50px;
+    height: 50px;
+    color: #E0E0E0;
+    border: 1px solid #E0E0E0;
+    border-radius: 100%;
+}
+
+.card-body .card-control .img-thumbnail:hover {
+    color: #767676;
+    border: 1px solid #767676;
+}
+
+.card-body .card-control .img-thumbnail.liked, .card-body .card-control .img-thumbnail:focus {
+    color: #FF5258;
+    border: 1px solid #FF5258;
+}
+
+.align-center {
+    position: relative;
+    width: 100px;
+    height: 50px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.fade-in {
+    opacity: 1;
+    animation-name: fadeInOpacity;
+    animation-iteration-count: 1;
+    animation-timing-function: ease-in;
+    animation-duration: 0.3s;
+}
+
+@keyframes fadeInOpacity {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.dropbtn {
+    background-color: #0088D2;
+    opacity: 0.9;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+}
+
+.dropdown:hover .dropbtn {
+    background-color: rgb(4, 113, 172);
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #ddd;
+}
+
+.dropdown:hover .dropdown-content {
+    display:block;
+}

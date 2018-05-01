@@ -1,0 +1,217 @@
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-blue" [ngClass]="{'navopacity': isScrolled}">
+  <div class="container">
+    <a class="btn btn-nav navbar-brand mr-auto" [ngClass]="{'btn-opacity': isScrolled}" href="#" [routerLink]="['/home']">天使計劃</a>
+    <div class="ml-auto" *ngIf="rwd">
+      <a href="#" *ngIf="readyLogin" class="btn btn-nav text-white" data-toggle="modal" data-target="#loginModal">登入</a>
+      <a *ngIf="isLogin" class="nav-item dropdown btn btn-nav text-white pr-1">
+        <button type="button" class="btn btn-nav text-white fa fa-bell fa-lg" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <span class="sr-only">Toggle Dropdown</span>
+          <span *ngIf="datacount> 0" class="datacount">{{datacount}}</span>
+        </button>
+        <div class="dropdown-menu dropdown-menu-right menuopacity notifications py-0">
+          <div *ngIf="isLogin">
+            <h6 class="pl-3 py-2 noti">通知</h6>
+          </div>
+          <div class="dropdown-divider my-0"></div>
+          <a class="pl-3 py-1 notice">最新通知</a>
+          <div class="list-group">
+            <div *ngFor="let value of data;let i = index">
+              <a *ngIf="value.status == false" class="list-group-item" href="">
+                <div class="dropdown-divider my-0"></div>
+                <span class="my-2" [ngClass]="{
+                        'btn-red': value.type=='任務',
+                        'btn-blue': value.type=='點數',
+                        'btn-sky': value.type=='活動',
+                        'btn-green': value.type=='心得'
+                        }">{{value.type}}</span> {{value.name}} {{value.content}}</a>
+            </div>
+          </div>
+          <div class="dropdown-divider my-0"></div>
+          <a class="pl-3 py-1 notice">先前通知</a>
+          <div class="list-group">
+            <div *ngFor="let value of data;let i=index">
+              <a *ngIf="value.status == true && i <= 3" class="list-group-item item2" href="">
+                <div class="dropdown-divider my-0"></div>
+                <span class="my-2" [ngClass]="{
+                    'btn-red': value.type=='任務',
+                    'btn-blue': value.type=='點數',
+                    'btn-sky': value.type=='活動',
+                    'btn-green': value.type=='心得'
+                    }">{{value.type}}</span> {{value.name}} {{value.content}}</a>
+            </div>
+          </div>
+        </div>
+      </a>
+      <button *ngIf="img" type="button" class="btn btn-nav text-white" [routerLink]="['/user/profile']">
+        <img class="rounded-circle head-photo img-thumbnail" [src]="img" alt=""> {{name}}</button>
+      <button *ngIf="isLogin" class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarGroup"
+        id="navbarBtn">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    </div>
+
+    <div class="collapse navbar-collapse navbar-group" id="navbarGroup">
+      <ul class="navbar-nav ml-auto" *ngIf="!rwd">
+        <li class="nav-item">
+          <a href="#" *ngIf="readyLogin" class="btn btn-nav text-white" data-toggle="modal" data-target="#loginModal">登入</a>
+        </li>
+        <li class="nav-item" *ngIf="(isLogin && logingroup === 3 || logingroup === 2) && !rwd">
+          <a href="#" class="btn btn-nav text-white" [routerLink]="['/user/management']" [queryParams]="{ tab: 0 }">
+            <i class="fa fa-edit fa-lg"></i>
+          </a>
+        </li>
+        <li class="nav-item" *ngIf="isLogin && !rwd">
+          <div class="search-button">
+            <span class="icon">
+              <i class="fa fa-search fa-lg"></i>
+            </span>
+            <input type="search" id="search" placeholder="Search..." (keyup.enter)="onSubmit($event)" />
+          </div>
+        </li>
+        <li class="nav-item dropdown" *ngIf="isLogin &&  !rwd">
+          <button type="button" class="btn btn-nav text-white fa fa-bell fa-lg" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <span class="sr-only">Toggle Dropdown</span>
+            <span *ngIf="datacount> 0" class="datacount">{{datacount}}</span>
+          </button>
+          <div class="dropdown-menu dropdown-menu-right menuopacity notifications py-0">
+            <div *ngIf="isLogin">
+              <h6 class="pl-3 py-2 noti">通知</h6>
+            </div>
+            <div class="dropdown-divider my-0"></div>
+            <a class="pl-3 py-1 notice">最新通知</a>
+            <div class="dropdown-divider my-0"></div>
+
+            <div class="list-group">
+              <div *ngFor="let value of data;let i = index">
+                <a *ngIf="value.status == false" class="list-group-item" href="">
+                  <span class="my-2" [ngClass]="{
+                        'btn-red': value.type=='任務',
+                        'btn-blue': value.type=='點數',
+                        'btn-sky': value.type=='活動',
+                        'btn-green': value.type=='心得'
+                        }">{{value.type}}</span> {{value.name}} {{value.content}}</a>
+              </div>
+            </div>
+            <div class="dropdown-divider my-0"></div>
+            <a class="pl-3 py-1 notice">先前通知</a>
+            <div class="dropdown-divider my-0"></div>
+            <div class="list-group">
+              <div *ngFor="let value of data;let i=index">
+                <a *ngIf="value.status == true && i <= 3" class="list-group-item item2" href="">
+                  <span class="my-2" [ngClass]="{
+                    'btn-red': value.type=='任務',
+                    'btn-blue': value.type=='點數',
+                    'btn-sky': value.type=='活動',
+                    'btn-green': value.type=='心得'
+                    }">{{value.type}}</span> {{value.name}} {{value.content}}</a>
+              </div>
+            </div>
+          </div>
+        </li>
+        <!-- <li class="nav-item dropdown" *ngIf="isLogin&&!rwd">
+          <button type="button" class="btn btn-nav text-white fa fa-bell fa-lg" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <span class="sr-only">Toggle Dropdown</span>
+          </button>
+          <div class="dropdown-menu dropdown-menu-right menuopacity">
+              <div *ngIf="isLogin">
+                <h6 class="dropdown-header py-0">通知</h6>
+              </div>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item pl-2 py-0">最新通知</a>
+              <div class="panel-group">
+
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item pl-2 py-0">先前通知</a>
+              <div class="list-group">
+
+              </div>
+            </div>
+        </li> -->
+        <li class="nav-item" *ngIf="isLogin && logingroup == 1">
+          <a href="#" class="btn btn-nav text-warning" [routerLink]="['/user/point']">
+            <i class="fa fa-copyright fa-lg" aria-hidden="true"></i>({{point}})
+          </a>
+        </li>
+        <li class="nav-item dropdown" *ngIf="isLogin">
+          <button *ngIf="img" type="button" class="btn btn-nav text-white" [routerLink]="['/user/profile']">
+            <img class="rounded-circle head-photo img-thumbnail" [src]="img" alt=""> {{name}}</button>
+          <button *ngIf="img==='' || img===null" type="button" class="btn btn-nav text-white" [routerLink]="['/user/profile']">
+            <img class="rounded-circle head-photo img-thumbnail" src="http://fakeimg.pl/200x200/?text=?" alt=""> {{name}}</button>
+          <button type="button" class="btn btn-nav text-white dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true"
+            aria-expanded="false">
+            <span class="sr-only">Toggle Dropdown</span>
+          </button>
+          <div class="dropdown-menu dropdown-menu-right menuopacity">
+            <!-- 學生區塊 -->
+            <div *ngIf="isLogin && logingroup == 1">
+              <h6 class="dropdown-header">參加任務</h6>
+              <a class="dropdown-item pl-5" href="#" [routerLink]="['/user']">個人主頁</a>
+              <a class="dropdown-item pl-5" href="#" [routerLink]="['/user/point']">任務點數</a>
+            </div>
+
+            <!-- 老師區塊 -->
+            <div *ngIf="isLogin && ( logingroup == 3 || logingroup == 2 )">
+              <h6 class="dropdown-header">管理任務</h6>
+              <a class="dropdown-item pl-5" href="#" [routerLink]="['/user/management']" [queryParams]="{ tab: 0 }">任務管理</a>
+              <a class="dropdown-item pl-5" href="#" [routerLink]="['/user/expmanagement']" [queryParams]="{ tab: 0 }">心得管理</a>
+              <!-- <a class="dropdown-item pl-5" href="#" [routerLink]="['/user/management']" [queryParams]="{ tab: 1 }">審核學童任務</a> -->
+            </div>
+            <!-- 共通設定 -->
+            <div class="dropdown-divider"></div>
+            <h6 class="dropdown-header">帳號設定</h6>
+            <a class="dropdown-item pl-5" href="#" [routerLink]="['/user/profile']">個人資料</a>
+
+            <!-- 老師志工區塊 -->
+            <div *ngIf="isLogin && logingroup == 3 || logingroup == 2">
+              <div class="dropdown-divider"></div>
+              <h6 class="dropdown-header">平台服務</h6>
+              <a class="dropdown-item pl-5" href="http://admin.ishareget.org/" target="_blank">後台系統</a>
+            </div>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" (click)="logout()" id="logout">登出</a>
+          </div>
+        </li>
+        <li class="nav-item" *ngIf="isLogin && logingroup == 3 || logingroup == 2">
+          <a href="#" class="btn btn-create text-white" [routerLink]="['/mission/create']">建立任務</a>
+        </li>
+      </ul>
+      <ul class="navbar-nav ml-auto" *ngIf="rwd">
+        <li *ngIf="isLogin && logingroup == 1">
+          <a href="#" class="btn btn-nav" [routerLink]="['/user']" (click)="onNavClick()">　個人主頁</a>
+        </li>
+        <li *ngIf="isLogin && logingroup == 3 || logingroup == 2">
+          <a href="#" class="btn btn-nav" [routerLink]="['/mission/create']" (click)="onNavClick()">　建立任務</a>
+        </li>
+        <li *ngIf="isLogin && ( logingroup == 3 || logingroup == 2 )">
+          <a href="#" class="btn btn-nav" [routerLink]="['/user/management']" [queryParams]="{ tab: 0 }" (click)="onNavClick()">　任務管理</a>
+        </li>
+        <li *ngIf="isLogin && ( logingroup == 3 || logingroup == 2 )">
+          <a href="#" class="btn btn-nav" [routerLink]="['/user/expmanagement']" [queryParams]="{ tab: 0 }" (click)="onNavClick()">　心得管理</a>
+        </li>
+        <li *ngIf="isLogin && logingroup == 1">
+          <a href="#" class="btn btn-nav" [routerLink]="['/user/point']" (click)="onNavClick()">　任務點數</a>
+        </li>
+        <li *ngIf="isLogin">
+          <a href="#" class="btn btn-nav" [routerLink]="['/search']" (click)="onNavClick()">　搜尋任務</a>
+        </li>
+        <li *ngIf="isLogin">
+          <a href="#" class="btn btn-nav" [routerLink]="['/user/profile']" (click)="onNavClick()">　個人資料</a>
+        </li>
+        <li *ngIf="isLogin && logingroup == 3 || logingroup == 2">
+          <a href="http://admin.ishareget.org/" class="btn btn-nav" target="_blank" (click)="onNavClick()">　後台系統</a>
+        </li>
+        <li *ngIf="isLogin">
+          <a class="btn btn-nav" (click)="logout()" id="logout">　登出</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<app-login></app-login>
+<app-signup></app-signup>
+
+<swal type="success" title="登入成功" #dialogPass [options]="{ timer : '1000' }"></swal>
+<swal type="error" title="登入逾時，請重新登入" #dialogPassError [options]="{ timer : '1000' }"></swal>
+<swal type="success" title="登出成功，正在跳轉至首頁" #dialogPassOut [options]="{ timer : '1000' }"></swal>
+<!-- <swal type="warning" title="系統通知功能開發中，敬請期待" #dialogWarning [options]="{ timer : '3000' }"></swal> -->

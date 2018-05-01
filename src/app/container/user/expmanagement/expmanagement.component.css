@@ -1,0 +1,100 @@
+#tcreate {
+    margin-top: 0.8rem;
+}
+
+/* 選單設定 */
+
+.navbar {
+    padding: 0;
+    margin-top: -12px;
+}
+
+.navbar-nav a {
+    padding: 1.2rem;
+    color: #777;
+}
+
+.navbar-nav a:hover {
+    color: #555;
+    cursor: pointer;
+}
+
+.navbar-nav .active a {
+    color: #555;
+    background-color: #eee;
+}
+
+
+/* 表格設定 */
+
+.table thead tr th {
+    font-weight: bold;
+}
+
+.table thead tr th,
+.table tbody tr td {
+    text-align: center;
+    white-space: nowrap;
+}
+
+.btn-circle {
+    width: 35px;
+    height: 35px;
+    text-align: center;
+    padding: 6px 0;
+    font-size: 12px;
+    line-height: 24px;
+    border-radius: 17.5px;
+    display: inline-block;
+    background-color: #dc3545;
+    color: #fff;
+}
+
+#tcreate .data-set {
+    font-size: 40px;
+}
+
+
+.dropbtn {
+    background-color: #0088D2;
+    opacity: 0.9;
+    color: white;
+    padding: 8px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    letter-spacing: 5px;
+}
+
+.dropdown:hover .dropbtn {
+    background-color: rgb(4, 113, 172);
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #ddd;
+}
+
+.dropdown:hover .dropdown-content {
+    display:block;
+}

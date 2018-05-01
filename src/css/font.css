@@ -1,0 +1,9 @@
+@font-face {
+  font-family: whatever;
+  src: local('whatever it takes'), url('../fonts/whatever it takes.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: whatever-bold;
+    src: local('whatever it takes bold'), url('../fonts/whatever it takes bold.ttf') format('truetype')
+}

@@ -1,0 +1,146 @@
+#search {
+    background-color: #eeeeee;
+    padding-bottom: 25px;
+    margin-top: -2px;
+}
+
+#searchBtn {
+    cursor: pointer !important;
+}
+
+
+/* 設定上方搜尋開頭的文字樣式,ex:地區、類別 */
+
+#search .search-title {
+    height: 28px;
+    line-height: 28px;
+    color: #757575;
+    font-size: 20px;
+}
+
+.container .data-set {
+    font-size: 40px;
+}
+
+
+/* 設定Card */
+
+.card .card-block {
+    padding: 1rem;
+}
+
+.card-pic {
+    height: 180px;
+    object-fit: cover;
+}
+
+.card .card-title {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.card .card-text>* {
+    margin-top: 0.6rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.card .card-text p {
+    color: #bdbdbd;
+}
+
+.card .card-text span {
+    display: block;
+}
+
+.card .img-thumbnail {
+    padding: 0;
+    border: 0;
+    width: 100%;
+    max-height: 120px;
+    height: auto;
+    border-radius: 0;
+    object-fit: cover;
+}
+
+.btn-group {
+    height: 40px;
+}
+
+.btn-selection {
+    background-color: #585F6A;
+    color: white;
+    height: 40px !important;
+}
+
+.btn-selection:hover {
+    background-color: #acb0b9;
+    color: white;
+}
+
+.bg-color {
+    background-color: #2A2E37;
+}
+
+.btn-back {
+    background-color: #0088D2;
+    color: #fff;
+}
+
+.btn-title {
+    background-color: #3E454F;
+    color: white;
+    height: 40px !important;
+}
+
+.btn {
+    height: 40px !important;
+    cursor: default !important;
+}
+
+:host>>>my-date-picker>>>.mydpicon {
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    color: #55595c !important;
+}
+
+ :host>>>my-date-picker>>>.btnpicker {
+    width: 35px;
+    background: #d1d4d7;
+    height: 40px !important;
+    z-index: 0;
+}
+
+:host>>>my-date-picker>>>input {
+    background-color: #6C7280 !important;
+    color: black !important;
+    border: 0 !important;
+    border-radius: 0 0 0 0!important;
+    display: flex !important;
+    height: 40px !important;
+    /* margin-left: -3px!important; */
+    color: white !important;
+    padding: 0px;
+}
+
+:host>>>my-date-picker>>>div {
+    border: 0 !important;
+}
+
+my-date-picker {
+    border: 0!important;
+    height: 40px !important;
+    padding: 0;
+}
+
+input {
+    display: flex;
+    border: 0;
+    border-radius: 0 0.25rem 0.25rem 0;
+}
+
+.page-style{
+    font-size: 0.7rem;
+}

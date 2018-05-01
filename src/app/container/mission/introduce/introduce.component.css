@@ -1,0 +1,122 @@
+#introduce .intro-action {
+    padding: .75rem;
+    margin-top: 7px;
+    border-radius: 3px;
+    background-color: #fcfcfc;
+    box-shadow: 3px 3px 0 0 #f0f0f0;
+    border: 1px solid #dce0e0;
+}
+
+.setheight {
+    height: 300px;
+    width: 98%;
+    border: 0;
+    overflow-y: auto;
+    /* IE */
+    resize: none;
+    /* Firefox, Chrome */
+}
+
+.intro-label {
+    margin-bottom: 1rem;
+    padding: .5rem .75rem;
+    font-size: 1rem;
+    line-height: 1.25;
+    border-radius: .25rem;
+    text-align: center;
+}
+
+.intro-action button {
+    cursor: pointer;
+    box-shadow: 3px 3px 0 0 #f0f0f0;
+    height: 40px;
+    font-size: 20px;
+}
+
+.intro-action button:not(:last-child) {
+    margin-bottom: 1rem;
+}
+
+.pic {
+    padding: 0;
+    border: 0;
+    width: 100%;
+    max-height: 500px;
+    border-radius: 0;
+}
+
+#introduce .container .col-md-9 label {
+    cursor: default;
+}
+
+#introduce .container .col-md-3 .font-size {
+    font-size: 40px;
+}
+
+ul li {
+    display: inline;
+}
+
+#introduce .row .b-link {
+    border-radius: 0;
+    box-shadow: 3px 3px 0 0 #f0f0f0;
+}
+
+#introduce .row .b-border:before {
+    content: '';
+    width: 1px;
+    height: 60%;
+    background-color: #000;
+    position: absolute;
+    left: 0;
+    top: 20%;
+}
+
+.row .col-md-3 .intro-action .signature {
+    display: inherit;
+    font-size: 20px;
+    margin-bottom: 10px;
+    background-color: cadetblue;
+    color: #fff;
+    padding: 10px 0;
+    border-radius: .25rem;
+}
+
+.row .col-md-6 .btn-secondary {
+    color: #fff;
+    background-color: #bfbfbf;
+    border-color: #999;
+}
+
+.row .col-md-6 .btn-secondary:hover {
+    color: #fff;
+    background-color: #999;
+    border-color: #999;
+}
+
+.bord-bottom {
+    border-bottom: 1px solid #bfbfbf;
+}
+
+.fa {
+    display: inline-block;
+    width: 1rem;
+    text-align: center;
+}
+
+h6 {
+    font-weight: initial;
+}
+
+p,
+#content {
+    color: gray;
+    font-family: Microsoft JhengHei;
+}
+
+.badge {
+    letter-spacing: 1px;
+}
+.text-style {
+    word-break: break-all;
+}

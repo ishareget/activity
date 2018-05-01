@@ -1,0 +1,133 @@
+<div id="introduce">
+
+  <!-- Loading -->
+  <div class="row loading mt-5 mb-2" *ngIf="isLoading">
+    <div class="col-md-12 text-center">
+      <div class="loader">Loading...</div>
+    </div>
+  </div>
+
+  <div class="container mb-3" *ngIf="!isLoading">
+    <img class="pic" src="{{missions.missionpicture}}">
+    <div class="p-4 bg-white">
+      <div class="row">
+        <div class="col-md-9">
+          <span class="badge p-2 mb-2" [ngClass]="{
+              'btn-orange': missions.missiontype == '影片任務',
+              'btn-blue': missions.missiontype == '展演任務',
+              'btn-purple': missions.missiontype == '旅遊任務',
+              'btn-green': missions.missiontype == '環保任務',
+              'btn-sky': missions.missiontype == '運動任務',
+              'btn-red': missions.missiontype == '美術任務'
+            }">{{ missions.missiontype }}</span>
+          <h4 class="mb-4">
+            {{ missions.missionname }}
+          </h4>
+          <h6>
+            <i class="fa fa-calendar-check-o mr-2" aria-hidden="true"></i>任務期間：
+          </h6>
+          <p class="ml-4">{{ missions.missionstartdate | date: 'yyyy/MM/dd' }} ~ {{ missions.missionfinaldate | date: 'yyyy/MM/dd' }}
+          </p>
+          <h6>
+            <i class="fa fa-map-marker mr-2" aria-hidden="true"></i>任務地點：
+          </h6>
+          <p class="ml-4">{{ missions.missionlocation }}</p>
+          <hr>
+          <h6>
+            <i class="fa fa-file-text-o mr-2" aria-hidden="true"></i>任務內容：
+          </h6>
+          <div id="content" class="ml-4 text-center text-style" innerHtml="{{missions.missioncontent}}"></div>
+          <h6 *ngIf="missions.missiontype =='影片任務'">
+            <i class="fa fa-film mr-2 mt-4" aria-hidden="true"></i>
+            <span>
+              <span>影片內容</span>：</span>
+          </h6>
+          <div *ngIf="missions.missiontype =='影片任務'" class="col-md-12 ml-2 mt-3">
+            <div *ngIf="!isYoutube" class="container text-center mt-5">
+              <i class="fa fa-spinner fa-spin fa-5x" aria-hidden="true"></i>
+            </div>
+            <div *ngIf="isYoutube" class="form-control embed-responsive embed-responsive-16by9">
+
+              <iframe class="embed-responsive-item" type="text/html" [src]="videoUrlFrm" allowfullscreen></iframe>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <label class="text-secondary w-100 text-center mb-1 mt-1">
+            <b class="text-danger font-size">{{ missions.missionpoint }} </b>點</label>
+          <div *ngIf="userPermission.missionapply || ( userPermission.missionupdate && missions.missioncreater === userData.username && missions.status === '已退回' || missions.status === '審核中' )"
+            class="intro-action mt-2 mb-3 text-center">
+            <div class=" mb-3" *ngIf="userPermission.missionapply && missionJoin.status !== '已參加' && missionJoin.status" class="bord-bottom mb-3">
+              <label *ngIf="isJoin">任務</label>
+              <label *ngIf="isJoin" class="mr-1 mt-1 text-center lead font-weight-bold text" [ngClass]="{
+                                'text-primary': missionJoin.status === '已提交',
+                                'text-success': missionJoin.status === '已審核',
+                                'text-info': missionJoin.status ===  '已參加',
+                                'text-danger':  missionJoin.status === '已退回',
+                                'text-warning':  missionJoin.status === '已發送'
+                                }">{{ missionJoin.status }}
+              </label>
+            </div>
+            <button *ngIf="isJoin && missionJoin.status === '已審核' && userPermission.expread" type="button" class="form-control btn btn-info"
+              (click)="btnExperience()">觀看心得</button>
+            <button *ngIf="isJoin && ( missionJoin.status === '已參加' || missionJoin.status === '已退回' ) && userPermission.expwrite && ( missions.signature === 0 || missions.signature == undefined )"
+              type="button" class="form-control btn btn-info" (click)="btnExperience(missions.missionexperiencedate)">填寫心得</button>
+            <button *ngIf="isJoin && ( missionJoin.status === '已參加' || missionJoin.status === '已退回' ) && userPermission.expwrite && missions.signature === 1 && missionJoin.signaturestatus === '已簽到'"
+              type="button" class="form-control btn btn-info" (click)="btnExperience(missions.missionexperiencedate)">填寫心得</button>
+            <div *ngIf="isJoin && ( missionJoin.status === '已參加' || missionJoin.status === '已退回' ) && userPermission.expwrite && missions.signature === 1 && missionJoin.signaturestatus === '未簽到'"
+              class="signature">尚未簽到
+              <br/>無法填寫心得</div>
+            <button *ngIf="isJoin && ( missionJoin.status === '已提交' || missionJoin.status === '已發送' ) && userPermission.expread" type="button"
+              class="form-control btn btn-info" (click)="btnExperience()">編輯心得</button>
+            <button *ngIf="isJoin && ( missionJoin.status === '已參加' || missionJoin.status === '已退回' ) && userPermission.missionapply"
+              type="button" class="form-control btn btn-danger" (click)="dialogIsDelete.show()">取消參加</button>
+            <button *ngIf="missions.missioncreater === userData.username && userPermission.missionupdate && ( missions.status === '已退回' || missions.status === '審核中' ) "
+              type="button" class="form-control btn btn-info" [routerLink]="['/mission/create']" [queryParams]="{ id: missions.id }">編輯任務</button>
+            <button *ngIf="!isJoin && userPermission.missionapply" type="button" class="form-control btn btn-info " (click)="dialogIsJoin.show()">參加活動
+              <i class="fa fa-chevron-right ml-4" aria-hidden="true"></i>
+            </button>
+          </div>
+          <div *ngIf="userData.logingroup === 2 || userData.logingroup === 3" class="mt-2 mb-3 text-center intro-action">
+            <button type="button" *ngIf="missions.signature === 1" class="btn btn-primary form-control" [value]="qrcodewebsite"
+              data-toggle="modal" data-target="#modelGetMissionQRcode">QR Code</button>
+            <button type="button" *ngIf="missions.signature === 1" [routerLink]="['/mission/signature']" [queryParams]="{id:missions.id}"
+              class="btn btn-info form-control">簽到表</button>
+            <!-- <div class="" *ngIf="missions.signature === 0 || missions.signature == undefined">此任務無簽到表</div> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="modelGetMissionQRcode" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="exampleModalLabel">QR Code</h4>
+        <button #modalClose type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+          <span class="sr-only">Close</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="text-center">
+          <qr-code [value]='qrcodewebsite' [size]="250" [canvas]="true"></qr-code>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<swal #dialogIsJoin title="確定要參加？" type="question" (confirm)="missionApply()" [options]="{ showCancelButton: 'true' }"></swal>
+<swal #dialogSuccess title="參加成功" type="success" [options]="{ timer : '1000' }"></swal>
+<swal #dialogError title="參加失敗" type="error" [options]="{ timer : '1000' }"></swal>
+
+<swal #dialogIsDelete title="確定要取消？" type="question" (confirm)="deleteJoin()" [options]="{ showCancelButton: 'true' }"></swal>
+<swal #dialogDelSuccess title="刪除成功" type="success" [options]="{ timer : '1000' }"></swal>
+<swal #dialogDelError title="刪除失敗" type="error" [options]="{ timer : '1000' }"></swal>
+
+<swal #dialogIsLogin title="請先登入" type="warning" [options]="{ timer : '1000' }"></swal>
+<swal #dialogIsExperience title="尚未開放填寫心得" type="error"></swal>
+<swal type="error" title="登入逾時，請重新登入" #dialogPassError [options]="{ timer : '1000' }"></swal>
+
+<swal #dialogMissionIdError title="無此任務" type="error" [options]="{ timer : '1000' }"></swal>

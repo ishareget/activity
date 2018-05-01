@@ -1,0 +1,27 @@
+/*
+
+  表格設定
+
+  使用方法如同 bootstrap 的 table
+
+  bootstrap 預設：
+  class="table"
+
+  用法：
+  <table class="table table-button"> ... <table>
+
+*/
+
+.table-button tbody tr {
+    /* 如果表格內有 button 就要取行高 */
+    line-height: 2rem;
+}
+.table{
+  white-space: nowrap;
+}
+.table td{
+  vertical-align: middle;
+}
+.table th{
+  vertical-align: middle;
+}
