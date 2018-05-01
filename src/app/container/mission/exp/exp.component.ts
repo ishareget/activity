@@ -275,9 +275,6 @@ export class ExpComponent implements OnInit {
 
 
           if (this.missionData.missiontype !== '美術任務' && this.missionDetail.missionspecial) {
-            this.missionDetail.executedate = this.formatDate(this.missionDetail.executedate);
-            // this.country = String(this.missionDetail.missionspecial.Locate).split(';');
-            this.city = this.missionDetail.missionspecial.Locate.city;
             try {
               console.log('v5', JSON.parse(JSON.stringify(this.missionDetail.missionspecial)));
               console.log('v2', JSON.parse(this.missionDetail.missionspecial));
@@ -292,6 +289,10 @@ export class ExpComponent implements OnInit {
               console.log('v4', Object.keys(this.missionDetail.missionspecial));
               console.log('v6', typeof this.missionDetail.missionspecial);
             }
+            this.missionDetail.executedate = this.formatDate(this.missionDetail.executedate);
+            // this.country = String(this.missionDetail.missionspecial.Locate).split(';');
+            this.city = this.missionDetail.missionspecial.Locate.city;
+
 
 
             // this.city = this.missionDetail.missionspecial.Locate.slice(0, 3);
