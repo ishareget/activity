@@ -276,33 +276,24 @@ export class ExpComponent implements OnInit {
 
           if (this.missionData.missiontype !== '美術任務' && this.missionDetail.missionspecial) {
             try {
-              console.log('v5', JSON.parse(JSON.stringify(this.missionDetail.missionspecial)));
-              console.log('v2', JSON.parse(this.missionDetail.missionspecial));
-
-
-
+              if (typeof this.missionDetail.missionspecial === 'string') {
+                // online 為 string
+                // Local 為 object
+                this.missionDetail.missionspecial = JSON.parse(this.missionDetail.missionspecial);
+              }
+              this.missionDetail.executedate = this.formatDate(this.missionDetail.executedate);
+              // this.country = String(this.missionDetail.missionspecial.Locate).split(';');
+              this.city = this.missionDetail.missionspecial.Locate.city;
+              // this.city = this.missionDetail.missionspecial.Locate.slice(0, 3);
+              this.selectCity();
+              this.dist = this.missionDetail.missionspecial.Locate.dist;
+              this.road = this.missionDetail.missionspecial.Locate.road;
+              // this.dist = this.missionDetail.missionspecial.Locate.slice(3, 6);
+              // this.road = this.missionDetail.missionspecial.Locate.slice(6, this.missionDetail.missionspecial.Locate.length);
             } catch (e) {
-
-            } finally {
-              console.log('v1', this.missionDetail.missionspecial);
-              console.log('v3', this.missionDetail.missionspecial['Cost']);
-              console.log('v4', Object.keys(this.missionDetail.missionspecial));
-              console.log('v6', typeof this.missionDetail.missionspecial);
+              console.error(e);
             }
-            this.missionDetail.executedate = this.formatDate(this.missionDetail.executedate);
-            // this.country = String(this.missionDetail.missionspecial.Locate).split(';');
-            this.city = this.missionDetail.missionspecial.Locate.city;
-
-
-
-            // this.city = this.missionDetail.missionspecial.Locate.slice(0, 3);
-            this.selectCity();
-            this.dist = this.missionDetail.missionspecial.Locate.dist;
-            this.road = this.missionDetail.missionspecial.Locate.road;
-            // this.dist = this.missionDetail.missionspecial.Locate.slice(3, 6);
-            // this.road = this.missionDetail.missionspecial.Locate.slice(6, this.missionDetail.missionspecial.Locate.length);
           }
-
 
           if (this.missionDetail.missionspecial) {
             this.expLocate = this.missionDetail.missionspecial['Locate'];
