@@ -231,6 +231,15 @@ export class ExpComponent implements OnInit {
       await this.missionService.getJoinByMission(query).subscribe(
         result => {
           this.missionDetail = result[0];
+          try {
+            if (typeof this.missionDetail.missionspecial === 'string') {
+              // online 為 string
+              // Local 為 object
+              this.missionDetail.missionspecial = JSON.parse(this.missionDetail.missionspecial);
+            }
+          } catch (e) {
+            console.error(e);
+          }
           this.viewtime = moment(this.missionDetail.executedate).format('YYYY-MM-DD');
           if (this.missionDetail.missionspecial) {
             this.expLocate = this.missionDetail.missionspecial.Locate;
@@ -275,24 +284,15 @@ export class ExpComponent implements OnInit {
 
 
           if (this.missionData.missiontype !== '美術任務' && this.missionDetail.missionspecial) {
-            try {
-              if (typeof this.missionDetail.missionspecial === 'string') {
-                // online 為 string
-                // Local 為 object
-                this.missionDetail.missionspecial = JSON.parse(this.missionDetail.missionspecial);
-              }
-              this.missionDetail.executedate = this.formatDate(this.missionDetail.executedate);
-              // this.country = String(this.missionDetail.missionspecial.Locate).split(';');
-              this.city = this.missionDetail.missionspecial.Locate.city;
-              // this.city = this.missionDetail.missionspecial.Locate.slice(0, 3);
-              this.selectCity();
-              this.dist = this.missionDetail.missionspecial.Locate.dist;
-              this.road = this.missionDetail.missionspecial.Locate.road;
-              // this.dist = this.missionDetail.missionspecial.Locate.slice(3, 6);
-              // this.road = this.missionDetail.missionspecial.Locate.slice(6, this.missionDetail.missionspecial.Locate.length);
-            } catch (e) {
-              console.error(e);
-            }
+            this.missionDetail.executedate = this.formatDate(this.missionDetail.executedate);
+            // this.country = String(this.missionDetail.missionspecial.Locate).split(';');
+            this.city = this.missionDetail.missionspecial.Locate.city;
+            // this.city = this.missionDetail.missionspecial.Locate.slice(0, 3);
+            this.selectCity();
+            this.dist = this.missionDetail.missionspecial.Locate.dist;
+            this.road = this.missionDetail.missionspecial.Locate.road;
+            // this.dist = this.missionDetail.missionspecial.Locate.slice(3, 6);
+            // this.road = this.missionDetail.missionspecial.Locate.slice(6, this.missionDetail.missionspecial.Locate.length);
           }
 
           if (this.missionDetail.missionspecial) {
