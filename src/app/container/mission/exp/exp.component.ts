@@ -261,12 +261,7 @@ export class ExpComponent implements OnInit {
 
           if (this.missionDetail.experience) { this.missionDetail.experience = this.missionDetail.experience.replace('<br>', '\n') }
 
-          // if (this.missionData.missiontype !== '影片任務' && this.missionData.picture) {
-          //   this.missionPhotoList = String(this.missionDetail.picture).split(';');
-          //   if (this.missionPhotoList[this.missionPhotoList.length - 1] === '') {
-          //     this.missionPhotoList = this.missionPhotoList.slice(0, this.missionPhotoList.length - 1);
-          //   }
-          // }
+
 
           if (this.missionDetail.picture) {
             this.missionPhotoList = String(this.missionDetail.picture).split(';');
@@ -277,22 +272,23 @@ export class ExpComponent implements OnInit {
                 }
               });
               this.picture = this.missionPhotoList;
-              // this.missionPhotoList = this.pictrue.slice(0, this.pictrue.length - 1);
-              // this.missionPhotoList = this.missionPhotoList.slice(0, this.missionPhotoList.length - 1);
             }
           }
 
 
-          if (this.missionData.missiontype !== '美術任務' && this.missionDetail.missionspecial) {
+          if (this.missionData.missiontype !== '美術任務') {
             this.missionDetail.executedate = this.formatDate(this.missionDetail.executedate);
-            // this.country = String(this.missionDetail.missionspecial.Locate).split(';');
-            this.city = this.missionDetail.missionspecial.Locate.city;
-            // this.city = this.missionDetail.missionspecial.Locate.slice(0, 3);
-            this.selectCity();
-            this.dist = this.missionDetail.missionspecial.Locate.dist;
-            this.road = this.missionDetail.missionspecial.Locate.road;
-            // this.dist = this.missionDetail.missionspecial.Locate.slice(3, 6);
-            // this.road = this.missionDetail.missionspecial.Locate.slice(6, this.missionDetail.missionspecial.Locate.length);
+            if (this.missionDetail.missionspecial) {
+              try {
+                this.city = this.missionDetail.missionspecial.Locate.city;
+                this.selectCity();
+                this.dist = this.missionDetail.missionspecial.Locate.dist;
+                this.road = this.missionDetail.missionspecial.Locate.road;
+              } catch (e) {
+                console.error(e);
+              }
+            }
+
           }
 
           if (this.missionDetail.missionspecial) {
