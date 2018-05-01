@@ -531,7 +531,6 @@ export class ExpComponent implements OnInit {
             formData.append('photoData', JSON.stringify(body));
             await this.userService.upload(formData).subscribe(
               result => {
-                console.log(result);
                 this.saveMissionDetail(result);
               }
             )
