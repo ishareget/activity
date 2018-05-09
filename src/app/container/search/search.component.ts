@@ -88,13 +88,13 @@ export class SearchComponent implements OnInit {
 
   ngOnInit() {
     this.selectCity();
-    this.getMissionType();
+    this.GET_missionType();
     this.router.queryParams.forEach(params => {
       this.searchType = Number(params['type']) || 0;
       this.missionname = params['name'] || '';
       $('#searchBtn').click();
     });
-    Cookie.get('userCookie') ? this.getUserInfo() : this.getAllMission();
+    Cookie.get('userCookie') ? this.GET_userInfo() : this.GET_allMission();
   }
 
   /**
@@ -124,8 +124,8 @@ export class SearchComponent implements OnInit {
    *
    * @memberof SearchComponent
    */
-  public async getMissionType() {
-    await this.missionService.getMissionType().subscribe(
+  public async GET_missionType() {
+    await this.missionService.GET_missionType().subscribe(
       result => {
         result.forEach(e => {
           this.missionType.push(e);
@@ -139,12 +139,12 @@ export class SearchComponent implements OnInit {
    *
    * @memberof SearchComponent
    */
-  public async getUserInfo() {
-    await this.userService.userInfo().subscribe(
+  public async GET_userInfo() {
+    await this.userService.GET_userInfo().subscribe(
       result => {
         if (result[0]) {
           this.userData = result[0];
-          this.getMission();
+          this.GET_mission();
         }
       },
       err => {
@@ -190,8 +190,8 @@ export class SearchComponent implements OnInit {
    *
    * @memberof SearchComponent
    */
-  public async getMission() {
-    await this.missionService.getGroupMission(this.userData.groupid).subscribe(
+  public async GET_mission() {
+    await this.missionService.GET_groupMission(this.userData.groupid).subscribe(
       result => {
         this.putIntoMission(result);
       }
@@ -203,8 +203,8 @@ export class SearchComponent implements OnInit {
    *
    * @memberof SearchComponent
    */
-  public async getAllMission() {
-    await this.missionService.getAllMission().subscribe(
+  public async GET_allMission() {
+    await this.missionService.GET_allMission().subscribe(
       result => {
         this.putIntoMission(result);
       }

@@ -26,7 +26,7 @@ export class UserService {
    * @param body
    * @memberof UserService
    */
-  public Login(body: object) {
+  public POST_login(body: object) {
     return this.http.post('/api/user/login', body)
       .map((res) => {
         return res.json() || {}
@@ -38,7 +38,7 @@ export class UserService {
    *
    * @memberof UserService
    */
-  public userInfo() {
+  public GET_userInfo() {
     return this.http.get('/api/user/userinfo', this.packToken())
       .map((res) => {
         return res.json() || {}
@@ -51,7 +51,7 @@ export class UserService {
    * @param uid
    * @memberof UserService
    */
-  public getGroup(uid) {
+  public GET_group(uid) {
     return this.http.get(`/api/group/id/${uid}`, this.packToken())
       .map((res) => {
         return res.json() || {}
@@ -65,7 +65,7 @@ export class UserService {
    * @param id
    * @memberof UserService
    */
-  public userPermission(id) {
+  public GET_userPermission(id) {
     return this.http.get(`/api/user/permission/${id}`, this.packToken())
       .map((res) => {
         return res.json() || {}
@@ -78,7 +78,7 @@ export class UserService {
    * @param body
    * @memberof UserService
    */
-  public upload(body) {
+  public POST_upload(body) {
     return this.http.post('/api/upload/participate', body)
       .map((res: any) => {
         return res._body;
@@ -91,7 +91,7 @@ export class UserService {
    * @param body
    * @memberof UserService
    */
-  public upload_base64(body) {
+  public POST_uploadBase64(body) {
     return this.http.post('/api/upload/profile', body)
       .map((res: any) => {
         return res._body;
@@ -103,7 +103,7 @@ export class UserService {
    * @param body
    * @memberof UserService
    */
-  public updateProfile(body) {
+  public POST_updateProfile(body) {
     return this.http.post('/api/user/update', body, this.packToken())
       .map((res: any) => {
         return res._body;
@@ -116,7 +116,7 @@ export class UserService {
  * @returns
  * @memberof UserService
  */
-  public userGetGroup() {
+  public GET_userGetGroup() {
     return this.http.get('/api/group', this.packToken())
       .map((res) => {
         return res.json() || {}

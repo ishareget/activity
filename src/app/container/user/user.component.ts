@@ -58,7 +58,7 @@ export class UserComponent implements OnInit {
 
   ngOnInit() {
     this.size = window.innerWidth;
-    Cookie.get('userCookie') ? this.getUserInfo() : this.returnBack();
+    Cookie.get('userCookie') ? this.GET_userInfo() : this.returnBack();
     window.scroll(0, 0);
   }
 
@@ -78,11 +78,11 @@ export class UserComponent implements OnInit {
    * @memberof UserComponent
    */
   public async getUserPermission() {
-    await this.userService.userPermission(this.userData.logingroup).subscribe(
+    await this.userService.GET_userPermission(this.userData.logingroup).subscribe(
       result => {
         if (result[0].missionapply) {
           this.userPermission = result[0];
-          this.getMission();
+          this.GET_mission();
         } else {
           this.returnBack();
         }
@@ -95,8 +95,8 @@ export class UserComponent implements OnInit {
    *
    * @memberof UserComponent
    */
-  public async getUserInfo() {
-    await this.userService.userInfo().subscribe(
+  public async GET_userInfo() {
+    await this.userService.GET_userInfo().subscribe(
       result => {
         if (result[0]) {
           if (this.userData !== result[0]) {
@@ -138,9 +138,9 @@ export class UserComponent implements OnInit {
    *
    * @memberof UserComponent
    */
-  public async getMission() {
+  public async GET_mission() {
 
-    await this.missionService.findByStudent(this.userData.username).subscribe(
+    await this.missionService.GET_findByStudent(this.userData.username).subscribe(
       result => {
         if (result.length > 0) {
           result.forEach(e => {

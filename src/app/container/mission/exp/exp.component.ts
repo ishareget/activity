@@ -104,8 +104,8 @@ export class ExpComponent implements OnInit {
 
   ngOnInit() {
     // this.selectCity();
-    this.getMissionType();
-    if (Cookie.get('userCookie')) { this.getUserInfo() }
+    this.GET_missionType();
+    if (Cookie.get('userCookie')) { this.GET_userInfo() }
   }
 
   /**
@@ -152,8 +152,8 @@ export class ExpComponent implements OnInit {
    *
    * @memberof IntroduceComponent
    */
-  public async getUserInfo() {
-    await this.userService.userInfo().subscribe(
+  public async GET_userInfo() {
+    await this.userService.GET_userInfo().subscribe(
       result => {
         if (result[0]) {
           this.userData = result[0];
@@ -175,8 +175,8 @@ export class ExpComponent implements OnInit {
    *
    * @memberof IntroduceComponent
    */
-  public async getMissionType() {
-    await this.missionService.getMissionType().subscribe(
+  public async GET_missionType() {
+    await this.missionService.GET_missionType().subscribe(
       result => {
         result.forEach(e => {
           this.missionType.push(e);
@@ -191,10 +191,10 @@ export class ExpComponent implements OnInit {
    * @memberof IntroduceComponent
    */
   public async getUserPermission() {
-    await this.userService.userPermission(this.userData.logingroup).subscribe(
+    await this.userService.GET_userPermission(this.userData.logingroup).subscribe(
       result => {
         this.userPermission = result[0];
-        this.getMission();
+        this.GET_mission();
       }
     )
   }
@@ -204,11 +204,11 @@ export class ExpComponent implements OnInit {
    *
    * @memberof IntroduceComponent
    */
-  public async getMission() {
+  public async GET_mission() {
     this.missionId = Number(this.router.parseUrl(this.router.url).queryParams['id']);
     this.returnexplist = [];
     if (this.missionId) {
-      await this.missionService.getMission(this.missionId).subscribe(
+      await this.missionService.GET_mission(this.missionId).subscribe(
         result => {
           this.missionData = result[0];
           this.missionType.forEach(element => {
@@ -228,7 +228,7 @@ export class ExpComponent implements OnInit {
         this.router.parseUrl(this.router.url).queryParams['username'];
       const query = `username=${udata}&missionid=${this.missionId}`;
 
-      await this.missionService.getJoinByMission(query).subscribe(
+      await this.missionService.GET_joinByMission(query).subscribe(
         result => {
           this.missionDetail = result[0];
           try {
@@ -525,7 +525,7 @@ export class ExpComponent implements OnInit {
               formData.append('files', this.filesPhoto[i]);
             }
             formData.append('photoData', JSON.stringify(body));
-            await this.userService.upload(formData).subscribe(
+            await this.userService.POST_upload(formData).subscribe(
               result => {
                 this.saveMissionDetail(result);
               }
@@ -575,15 +575,15 @@ export class ExpComponent implements OnInit {
       studentusername: this.userData['username'],
       missionspecial: JSON.stringify(this.specialBody)
     }
-    await this.missionService.updateJoin(body).subscribe(
+    await this.missionService.POST_updateJoin(body).subscribe(
       result => {
         if (result.affectedRows > 0) {
 
           this.swalDialogSuccess.show();
           this.StudentEdit = true;
           this.reset();
-          this.getMissionType();
-          this.getUserInfo();
+          this.GET_missionType();
+          this.GET_userInfo();
         }
       });
   }
@@ -603,7 +603,7 @@ export class ExpComponent implements OnInit {
       studentusername: cuid,
       verifyexp: verifyexp
     };
-    await this.missionService.verifyMission(body)
+    await this.missionService.POST_verifyMission(body)
       .subscribe(result => {
         if (result.affectedRows > 0) {
           this.missionEditMode = true;
@@ -611,7 +611,7 @@ export class ExpComponent implements OnInit {
         } else {
           this.swalDialogPassError.show();
         }
-        this.getMission();
+        this.GET_mission();
       });
   }
 
@@ -639,14 +639,14 @@ export class ExpComponent implements OnInit {
         studentusername: cuid,
         returnexp: JSON.stringify(this.returnexplist)
       };
-      await this.missionService.verifyMission(body)
+      await this.missionService.POST_verifyMission(body)
         .subscribe(result => {
           if (result.affectedRows > 0) {
             this.swalDialogRejectSuccess.show();
           } else {
             this.swalDialogRejectError.show();
           }
-          this.getMission();
+          this.GET_mission();
           this.modelClose.nativeElement.click();
         });
     }
@@ -667,14 +667,14 @@ export class ExpComponent implements OnInit {
         missionid: mid,
         studentusername: cuid
       };
-      await this.missionService.verifyMission(body)
+      await this.missionService.POST_verifyMission(body)
         .subscribe(result => {
           if (result.affectedRows > 0) {
             this.swalDialogRevertSuccess.show();
           } else {
             this.swalDialogRevertError.show();
           }
-          this.getMission();
+          this.GET_mission();
         });
     }
   }

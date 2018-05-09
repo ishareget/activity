@@ -84,8 +84,8 @@ export class NavComponent implements OnInit {
    * 取得登入中的使用者
    * @memberof NavComponent
    */
-  public async getUserInfo() {
-    await this.userService.userInfo().subscribe(
+  public async GET_userInfo() {
+    await this.userService.GET_userInfo().subscribe(
       result => {
         if (this.userData !== result[0]) {
           if (this.userData !== result[0]) { this.userData = result[0] }
@@ -117,7 +117,7 @@ export class NavComponent implements OnInit {
    */
   public async checkLogin() {
     if (Cookie.get('userCookie')) {
-      this.getUserInfo();
+      this.GET_userInfo();
       this.readyLogin = false;
     } else {
       this.isLogin = false;

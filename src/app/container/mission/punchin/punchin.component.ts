@@ -43,7 +43,7 @@ export class PunchinComponent implements OnInit {
    * @memberof PunchinComponent
    */
   public async CheckUrlId() {
-    await this.missionService.getMission(Number(this.router.parseUrl(this.router.url).queryParams['id'])).subscribe(
+    await this.missionService.GET_mission(Number(this.router.parseUrl(this.router.url).queryParams['id'])).subscribe(
       result => {
         this.missions = result[0];
         if (this.missions === undefined) {
@@ -63,7 +63,7 @@ export class PunchinComponent implements OnInit {
    * @memberof PunchinComponent
    */
   public async CheckIdentity() {
-    await this.userService.userInfo().subscribe(
+    await this.userService.GET_userInfo().subscribe(
       result => {
         if (this.userData !== result[0]) {
           this.userData = result[0];
@@ -90,7 +90,7 @@ export class PunchinComponent implements OnInit {
       userPwd: this.userPassword
     };
 
-    await this.userService.Login(body).subscribe(
+    await this.userService.POST_login(body).subscribe(
       result => {
         if (result.token) {
           Cookie.set('userCookie', result.token, 0.040972255, '/');
@@ -108,7 +108,7 @@ export class PunchinComponent implements OnInit {
    * @memberof PunchinComponent
    */
   public async CheckSignaturestatus() {
-    await this.missionService.getSignature(Number(this.router.parseUrl(this.router.url).queryParams['id'])).subscribe(
+    await this.missionService.GET_signature(Number(this.router.parseUrl(this.router.url).queryParams['id'])).subscribe(
       result => {
         const filter = { id: this.missions.id };
         result.forEach(e => {

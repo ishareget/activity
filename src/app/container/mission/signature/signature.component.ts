@@ -52,7 +52,7 @@ export class SignatureComponent implements OnInit {
 
   ngOnInit() {
     this.size = window.innerWidth;
-    Cookie.get('userCookie') ? this.getUserInfo() : this.router.navigate(['/home']);
+    Cookie.get('userCookie') ? this.GET_userInfo() : this.router.navigate(['/home']);
     this.tab = 0;
   }
 
@@ -61,8 +61,8 @@ export class SignatureComponent implements OnInit {
    *
    * @memberof SignatureComponent
    */
-  public async getUserInfo() {
-    await this.userService.userInfo().subscribe(
+  public async GET_userInfo() {
+    await this.userService.GET_userInfo().subscribe(
       result => {
         if (result[0]) {
           this.userData = result[0];
@@ -86,10 +86,10 @@ export class SignatureComponent implements OnInit {
    * @memberof SignatureComponent
    */
   public async getUserPermission() {
-    await this.userService.userPermission(this.userData.logingroup).subscribe(
+    await this.userService.GET_userPermission(this.userData.logingroup).subscribe(
       result => {
         this.userPermission = result[0];
-        this.getMission();
+        this.GET_mission();
       }
     )
   }
@@ -99,16 +99,16 @@ export class SignatureComponent implements OnInit {
    *
    *  @memberof SignatureComponent
    */
-  public async getMission() {
+  public async GET_mission() {
     if (Number(this.router.parseUrl(this.router.url).queryParams['id'])) {
-      await this.missionService.getMission(Number(this.router.parseUrl(this.router.url).queryParams['id'])).subscribe(
+      await this.missionService.GET_mission(Number(this.router.parseUrl(this.router.url).queryParams['id'])).subscribe(
         result => {
           if (result[0] !== undefined) {
             if (result[0].missiongroup !== this.userData.groupid && result[0].missiongroup !== 1) { this.router.navigate([`/home`]) }
             result[0].missioncontent = result[0].missioncontent.replace(/'<br>'/g, '\n');
 
             this.missions = result[0];
-            this.getSignature();
+            this.GET_signature();
             this.isLoading = false;
           } else {
             this.swalDialogMissionIdError.show();
@@ -131,8 +131,8 @@ export class SignatureComponent implements OnInit {
    *
    * @memberof SignatureComponent
    */
-  public async getSignature() {
-    await this.missionService.getSignature(Number(this.router.parseUrl(this.router.url).queryParams['id'])).subscribe(
+  public async GET_signature() {
+    await this.missionService.GET_signature(Number(this.router.parseUrl(this.router.url).queryParams['id'])).subscribe(
       result => {
         if (result[0] !== undefined) {
           result.forEach(e => {

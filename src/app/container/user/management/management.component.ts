@@ -60,7 +60,7 @@ export class ManagementComponent implements OnInit {
   }
   ngOnInit() {
     this.size = window.innerWidth;
-    if (Cookie.get('userCookie')) { this.getUserInfo() }
+    if (Cookie.get('userCookie')) { this.GET_userInfo() }
     this.router.queryParams.forEach(params => {
       this.tab = Number(params['tab']);
     })
@@ -71,13 +71,13 @@ export class ManagementComponent implements OnInit {
  *
  * @memberof IntroduceComponent
  */
-  public async getMissionType() {
-    await this.missionService.getMissionType().subscribe(
+  public async GET_missionType() {
+    await this.missionService.GET_missionType().subscribe(
       result => {
         result.forEach(e => {
           this.missionType.push(e);
         });
-        this.getMission();
+        this.GET_mission();
       }
     )
   }
@@ -87,15 +87,15 @@ export class ManagementComponent implements OnInit {
    *
    * @memberof ManagementComponent
    */
-  public async getUserInfo() {
-    await this.userService.userInfo().subscribe(
+  public async GET_userInfo() {
+    await this.userService.GET_userInfo().subscribe(
       result => {
         if (result[0]) {
           this.userdata = result[0];
           switch (Number(this.userdata.logingroup)) {
             case 2:
             case 3:
-              this.getGroup();
+              this.GET_group();
               break;
           }
         }
@@ -129,11 +129,11 @@ export class ManagementComponent implements OnInit {
    *
    * @memberof ManagementComponent
    */
-  public async getMission() {
+  public async GET_mission() {
     this.isLoading = true;
     const body = this.userdata.groupid;
     this.datas = [];
-    await this.missionService.groupMission(body).
+    await this.missionService.GET_groupByMission(body).
       subscribe(result => {
         result.length === undefined ? this.isLoading = false : this.splitMission(result);
       });
@@ -144,11 +144,11 @@ export class ManagementComponent implements OnInit {
  *
  * @memberof StudentComponent
  */
-  public async getGroup() {
-    await this.userService.userGetGroup().subscribe(
+  public async GET_group() {
+    await this.userService.GET_userGetGroup().subscribe(
       result => {
         this.groupData = result;
-        this.getMissionType();
+        this.GET_missionType();
       }
     )
   }
