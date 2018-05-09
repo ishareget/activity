@@ -90,7 +90,7 @@
   background: transparent;
   border: none;
   font-size: 10pt;
-  float: left;
+  /* float: left; */
   padding-left: 50px;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
@@ -109,6 +109,11 @@
 
 .search-button input#search:-moz-placeholder {
   /* Firefox 18- */
+  color: #fff;
+}
+
+.search-button input#search::-moz-placeholder {
+  /* Firefox 19+ */
   color: #fff;
 }
 
