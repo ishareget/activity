@@ -37,7 +37,7 @@ export class PointComponent implements OnInit {
 
   ngOnInit() {
     this.size = window.innerWidth;
-    Cookie.get('userCookie') ? this.getUserInfo() : this.returnBack();
+    Cookie.get('userCookie') ? this.GET_userInfo() : this.returnBack();
   }
 
   /**
@@ -58,8 +58,8 @@ export class PointComponent implements OnInit {
   *
   * @memberof PointComponent
   */
-  public async getUserInfo() {
-    await this.userService.userInfo().subscribe(
+  public async GET_userInfo() {
+    await this.userService.GET_userInfo().subscribe(
       result => {
         if (result[0].logingroup !== 1) { this.router.navigate(['/home']) }
         if (result[0]) {
@@ -79,7 +79,7 @@ export class PointComponent implements OnInit {
     * @memberof PointComponent
     */
   public async getPoint() {
-    await this.pointService.getpoint(`username=${this.userData.username}&give=1`).subscribe(
+    await this.pointService.GET_point(`username=${this.userData.username}&give=1`).subscribe(
       result => {
         this.data = result;
         this.deduction();
@@ -92,10 +92,10 @@ export class PointComponent implements OnInit {
     * @memberof PointComponent
     */
   public async deduction() {
-    await this.pointService.depoint('username=' + this.userData.username).subscribe(
+    await this.pointService.GET_dePoint('username=' + this.userData.username).subscribe(
       result => {
         this.data2 = result;
-        this.getMissionType();
+        this.GET_missionType();
       });
   }
 
@@ -104,8 +104,8 @@ export class PointComponent implements OnInit {
    *
    * @memberof PointComponent
    */
-  public async getMissionType() {
-    await this.missionService.getMissionType().subscribe(
+  public async GET_missionType() {
+    await this.missionService.GET_missionType().subscribe(
       result => {
         this.data = this.SetType(this.data, result);
         this.data2 = this.SetType(this.data2, result);

@@ -88,7 +88,7 @@ export class ProfileComponent implements OnInit {
     if (window.innerHeight < 500 || window.innerWidth < 500) {
       this.cropperSettings.canvasHeight = 200; this.cropperSettings.canvasWidth = 200;
     }
-    Cookie.get('userCookie') ? this.getUserInfo() : this.returnBack();
+    Cookie.get('userCookie') ? this.GET_userInfo() : this.returnBack();
   }
 
   /**
@@ -109,7 +109,7 @@ export class ProfileComponent implements OnInit {
    * @memberof ProfileComponent
    */
   public async getUserGroup() {
-    await this.userService.getGroup(this.userData.groupid).subscribe(
+    await this.userService.GET_group(this.userData.groupid).subscribe(
       result => {
         this.userGroupName = result[0].name;
       }
@@ -122,7 +122,7 @@ export class ProfileComponent implements OnInit {
    * @memberof ProfileComponent
    */
   public async getUserPermission() {
-    await this.userService.userPermission(this.userData.logingroup).subscribe(
+    await this.userService.GET_userPermission(this.userData.logingroup).subscribe(
       result => {
         this.userPermission = result[0];
       }
@@ -134,8 +134,8 @@ export class ProfileComponent implements OnInit {
    *
    * @memberof ProfileComponent
    */
-  public async getUserInfo() {
-    await this.userService.userInfo().subscribe(
+  public async GET_userInfo() {
+    await this.userService.GET_userInfo().subscribe(
       result => {
         if (result[0]) {
           this.userData = result[0];
@@ -201,7 +201,7 @@ export class ProfileComponent implements OnInit {
       username: this.userData.username
     }
 
-    await this.userService.updateProfile(body).subscribe(
+    await this.userService.POST_updateProfile(body).subscribe(
       result => {
         if (result) {
           this.swalDialogSuccess.show();
@@ -220,7 +220,7 @@ export class ProfileComponent implements OnInit {
       username: this.userData.username,
       filetype: this.filename
     }
-    await this.userService.upload_base64(body).subscribe(
+    await this.userService.POST_uploadBase64(body).subscribe(
       result => {
         if (result) { this.userData.picture = result.replace(';', '') }
         this.updateProfile();

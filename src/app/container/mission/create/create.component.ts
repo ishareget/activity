@@ -120,9 +120,9 @@ export class CreateComponent implements OnInit {
 
   }
   ngOnInit() {
-    this.getMissionType();
+    this.GET_missionType();
     this.selectCity();
-    Cookie.get('userCookie') ? this.getUserInfo() : this.returnBack();
+    Cookie.get('userCookie') ? this.GET_userInfo() : this.returnBack();
   }
 
   /**
@@ -165,8 +165,8 @@ export class CreateComponent implements OnInit {
    *
    * @memberof CreateComponent
    */
-  public async getUserInfo() {
-    await this.userService.userInfo().subscribe(
+  public async GET_userInfo() {
+    await this.userService.GET_userInfo().subscribe(
       result => {
         if (result[0]) {
           this.userData = result[0];
@@ -192,8 +192,8 @@ export class CreateComponent implements OnInit {
    *
    * @memberof CreateComponent
    */
-  public async getMissionType() {
-    await this.missionService.getMissionType().subscribe(
+  public async GET_missionType() {
+    await this.missionService.GET_missionType().subscribe(
       result => {
         result.forEach(e => {
           this.missionType.push(e);
@@ -208,11 +208,11 @@ export class CreateComponent implements OnInit {
    * @memberof CreateComponent
    */
   public async getUserPermission() {
-    await this.userService.userPermission(this.userData.logingroup).subscribe(
+    await this.userService.GET_userPermission(this.userData.logingroup).subscribe(
       result => {
         this.userPermission = result[0];
         if (this.userPermission.missioncreate) {
-          this.getMission();
+          this.GET_mission();
         } else {
           this.returnBack();
         }
@@ -243,11 +243,11 @@ export class CreateComponent implements OnInit {
    *
    * @memberof CreateComponent
    */
-  public async getMission() {
+  public async GET_mission() {
     this.missionId = Number(this.router.parseUrl(this.router.url).queryParams['id']);
 
     if (this.missionId) {
-      await this.missionService.getMission(this.missionId).subscribe(
+      await this.missionService.GET_mission(this.missionId).subscribe(
         result => {
           this.mission = result[0];
           if (this.mission.status === '審核中' || this.mission.status === '已退回') {
@@ -414,7 +414,7 @@ export class CreateComponent implements OnInit {
         'Transportation': this.missionTrans ? this.missionTrans : null,
         'Link': this.missionLink ? this.missionLink : null
       };
-      this.changepicture ? this.updatePicture() : this.mission.missioncreater ? this.updateMission() : this.createMission();
+      this.changepicture ? this.updatePicture() : this.mission.missioncreater ? this.POST_updateMission() : this.createMission();
     } else {
       this.swalDialogErrorAll.html = `<ul class="text-center">${this.ErrorData}</ul>`;
       this.swalDialogErrorAll.show();
@@ -427,10 +427,10 @@ export class CreateComponent implements OnInit {
       username: this.userData.username,
       filetype: this.filename
     }
-    await this.missionService.uploadMissionPicture(body).subscribe(
+    await this.missionService.POST_uploadMissionPicture(body).subscribe(
       result => {
         if (result) { this.mission.missionpicture = result.replace(';', '') }
-        this.mission.missioncreater ? this.updateMission() : this.createMission();
+        this.mission.missioncreater ? this.POST_updateMission() : this.createMission();
       }
     )
   }
@@ -440,9 +440,9 @@ export class CreateComponent implements OnInit {
    *
    * @memberof CreateComponent
    */
-  public async updateMission() {
+  public async POST_updateMission() {
     const body = this.bodyMaker(moment(this.mission.missioncreatedate).format('YYYY-M-DD'), this.mission.id);
-    await this.missionService.updateMission(body).subscribe(
+    await this.missionService.POST_updateMission(body).subscribe(
       result => {
         if (result.affectedRows > 0 && this.checking === true) {
           this.swalDialogSuccess.show();
@@ -462,7 +462,7 @@ export class CreateComponent implements OnInit {
    */
   public async createMission() {
     const body = this.bodyMaker(moment().format('YYYY-M-DD'), null);
-    await this.missionService.addMission(body).subscribe(
+    await this.missionService.POST_addMission(body).subscribe(
       result => {
         if (result.affectedRows > 0 && this.checking === true) {
           this.swalDialogSuccess.show();

@@ -54,7 +54,7 @@ export class IntroduceComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    Cookie.get('userCookie') ? this.getUserInfo() : this.getMissionType();
+    Cookie.get('userCookie') ? this.GET_userInfo() : this.GET_missionType();
   }
 
   /**
@@ -62,8 +62,8 @@ export class IntroduceComponent implements OnInit {
    *
    * @memberof IntroduceComponent
    */
-  public async getUserInfo() {
-    await this.userService.userInfo().subscribe(
+  public async GET_userInfo() {
+    await this.userService.GET_userInfo().subscribe(
       result => {
         if (result[0]) {
           this.userData = result[0];
@@ -85,13 +85,13 @@ export class IntroduceComponent implements OnInit {
    *
    * @memberof IntroduceComponent
    */
-  public async getMissionType() {
-    await this.missionService.getMissionType().subscribe(
+  public async GET_missionType() {
+    await this.missionService.GET_missionType().subscribe(
       result => {
         result.forEach(e => {
           this.missionType.push(e);
         });
-        this.getMission();
+        this.GET_mission();
       }
     )
   }
@@ -102,10 +102,10 @@ export class IntroduceComponent implements OnInit {
    * @memberof IntroduceComponent
    */
   public async getUserPermission() {
-    await this.userService.userPermission(this.userData.logingroup).subscribe(
+    await this.userService.GET_userPermission(this.userData.logingroup).subscribe(
       result => {
         this.userPermission = result[0];
-        this.getMissionType() ;
+        this.GET_missionType() ;
       }
     )
   }
@@ -115,9 +115,9 @@ export class IntroduceComponent implements OnInit {
    *
    * @memberof IntroduceComponent
    */
-  public async getMission() {
+  public async GET_mission() {
     if (Number(this.router.parseUrl(this.router.url).queryParams['id'])) {
-      await this.missionService.getMission(Number(this.router.parseUrl(this.router.url).queryParams['id'])).subscribe(
+      await this.missionService.GET_mission(Number(this.router.parseUrl(this.router.url).queryParams['id'])).subscribe(
         result => {
           if (result[0] !== undefined) {
             if (result[0].missiongroup !== this.userData.groupid && result[0].missiongroup !== 1) { this.router.navigate([`/home`]) }
@@ -160,7 +160,7 @@ export class IntroduceComponent implements OnInit {
    */
   public async missionApply() {
     if (this.userData && this.userPermission.missionapply) {
-      await this.missionService.addJoin(this.Getbody()).subscribe(
+      await this.missionService.POST_addJoin(this.Getbody()).subscribe(
         result => {
           if (result.affectedRows > 0) {
             this.swalDialogSuccess.show();
@@ -202,7 +202,7 @@ export class IntroduceComponent implements OnInit {
    *
    * @memberof IntroduceComponent
    */
-  public async deleteJoin() {
+  public async POST_deleteJoin() {
 
     if (this.missions.id && this.userData && this.userPermission.missionapply) {
 
@@ -211,7 +211,7 @@ export class IntroduceComponent implements OnInit {
         studentusername: this.userData.username
       }
 
-      await this.missionService.deleteJoin(body).subscribe(
+      await this.missionService.POST_deleteJoin(body).subscribe(
         result => {
 
           if (result.affectedRows > 0) {
@@ -233,7 +233,7 @@ export class IntroduceComponent implements OnInit {
   public async checkApply() {
     if (this.userPermission.missionapply) {
       const body = 'username=' + this.userData.username + '&missionid=' + this.missions.id;
-      await this.missionService.getJoinByMission(body).subscribe(
+      await this.missionService.GET_joinByMission(body).subscribe(
         result => {
           if (result[0]) {
             this.missionJoin = result[0];

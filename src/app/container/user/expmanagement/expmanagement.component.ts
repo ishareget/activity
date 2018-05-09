@@ -52,7 +52,7 @@ export class ExpmanagementComponent implements OnInit {
 
   ngOnInit() {
     this.size = window.innerWidth;
-    Cookie.get('userCookie') ? this.getUserInfo() : this.returnBack();
+    Cookie.get('userCookie') ? this.GET_userInfo() : this.returnBack();
     this.router.queryParams.forEach(params => {
       this.tab = Number(params['tab']);
     })
@@ -63,15 +63,15 @@ export class ExpmanagementComponent implements OnInit {
    *
    * @memberof ExpmanagementComponent
    */
-  public async getUserInfo() {
-    await this.userService.userInfo().subscribe(
+  public async GET_userInfo() {
+    await this.userService.GET_userInfo().subscribe(
       result => {
         if (result[0]) {
           this.userdata = result[0];
           switch (Number(this.userdata.logingroup)) {
             case 2:
             case 3:
-              this.getMissionType();
+              this.GET_missionType();
               break;
           }
         }
@@ -106,14 +106,14 @@ export class ExpmanagementComponent implements OnInit {
    *
    * @memberof ExpmanagementComponent
    */
-  public async getMissionType() {
+  public async GET_missionType() {
     this.missionType = [];
-    await this.missionService.getMissionType().subscribe(
+    await this.missionService.GET_missionType().subscribe(
       result => {
         result.forEach(element => {
           this.missionType.push(element);
         });
-        this.getMission();
+        this.GET_mission();
       }
     )
   }
@@ -123,9 +123,9 @@ export class ExpmanagementComponent implements OnInit {
    *
    * @memberof ExpmanagementComponent
    */
-  public async getMission() {
+  public async GET_mission() {
     this.datas = [];
-    await this.missionService.JoinMission(`groupid=${this.userdata.groupid}`).subscribe(
+    await this.missionService.GET_joinMission(`groupid=${this.userdata.groupid}`).subscribe(
       result => {
         if (result[0] === undefined) {
           this.isLoading = false;
@@ -176,12 +176,12 @@ export class ExpmanagementComponent implements OnInit {
     this.route.navigate(['mission/exp'], { queryParams: filter })
   }
 
-  public async verifyMission(body) {
-    await this.missionService.verifyMission(body)
+  public async POST_verifyMission(body) {
+    await this.missionService.POST_verifyMission(body)
       .subscribe(result => {
         if (result.affectedRows > 0) {
           this.swalDialogPassSuccess.show();
-          this.getMission();
+          this.GET_mission();
         } else {
           this.swalDialogPassError.show();
         }
@@ -205,7 +205,7 @@ export class ExpmanagementComponent implements OnInit {
         studentusername: cuid
       };
 
-      this.verifyMission(body);
+      this.POST_verifyMission(body);
     }
   }
 
@@ -226,7 +226,7 @@ export class ExpmanagementComponent implements OnInit {
         studentusername: cuid
       };
 
-      this.verifyMission(body);
+      this.POST_verifyMission(body);
     }
   }
 
@@ -247,7 +247,7 @@ export class ExpmanagementComponent implements OnInit {
         studentusername: cuid
       };
 
-      this.verifyMission(body);
+      this.POST_verifyMission(body);
     }
   }
 

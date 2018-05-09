@@ -26,7 +26,7 @@ export class PunchinstatusComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.getUserInfo();
+    this.GET_userInfo();
   }
 
 
@@ -35,13 +35,13 @@ export class PunchinstatusComponent implements OnInit {
    *
    * @memberof PunchinstatusComponent
    */
-  public async getUserInfo() {
-    await this.userService.userInfo().subscribe(
+  public async GET_userInfo() {
+    await this.userService.GET_userInfo().subscribe(
       result => {
         if (this.userData !== result[0]) {
           this.userData = result[0];
           this.name = this.userData.name;
-          this.getMission();
+          this.GET_mission();
         }
       }
     )
@@ -52,8 +52,8 @@ export class PunchinstatusComponent implements OnInit {
    *
    * @memberof PunchinstatusComponent
    */
-  public async getMission() {
-    await this.missionService.getMission(Number(this.router.parseUrl(this.router.url).queryParams['id'])).subscribe(
+  public async GET_mission() {
+    await this.missionService.GET_mission(Number(this.router.parseUrl(this.router.url).queryParams['id'])).subscribe(
       result => {
         this.missions = result[0];
         this.punchin();
@@ -94,7 +94,7 @@ export class PunchinstatusComponent implements OnInit {
   public async punchin() {
     this.signaturedate = moment().format('YYYY-MM-DD HH:mm:ss');
     const body = this.bodyMaker(this.signaturedate);
-    await this.missionService.punchinMission(body).subscribe();
+    await this.missionService.POST_punchinMission(body).subscribe();
   }
 
 }

@@ -26,7 +26,7 @@ export class PointService {
   *
   * @memberof PointService
   */
-  public getpoint(param: Object) {
+  public GET_point(param: Object) {
     return this.http.get(`/api/student?${param}`, this.packToken())
       .map((res) => {
         return res.json() || []
@@ -38,7 +38,7 @@ export class PointService {
    *
    * @memberof PointService
    */
-  public depoint(param: Object) {
+  public GET_dePoint(param: Object) {
     return this.http.get(`/api/record?${param}`, this.packToken())
       .map((res) => {
         return res.json() || []

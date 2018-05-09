@@ -89,7 +89,7 @@
           </div>
           <div *ngIf="(userData.logingroup === 2 || userData.logingroup === 3) && missions.signature === 1" class="mt-2 mb-3 text-center intro-action">
             <button type="button" *ngIf="missions.signature === 1" class="btn btn-primary form-control" [value]="qrcodewebsite" data-toggle="modal"
-              data-target="#modelGetMissionQRcode">QR Code</button>
+              data-target="#modelGET_missionQRcode">QR Code</button>
             <button type="button" *ngIf="missions.signature === 1" [routerLink]="['/mission/signature']" [queryParams]="{id:missions.id}"
               class="btn btn-info form-control">簽到表</button>
             <!-- <div class="" *ngIf="missions.signature === 0 || missions.signature == undefined">此任務無簽到表</div> -->
@@ -99,7 +99,7 @@
     </div>
   </div>
 </div>
-<div class="modal fade" id="modelGetMissionQRcode" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="modelGET_missionQRcode" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -122,7 +122,7 @@
 <swal #dialogSuccess title="參加成功" type="success" [options]="{ timer : '1000' }"></swal>
 <swal #dialogError title="參加失敗" type="error" [options]="{ timer : '1000' }"></swal>
 
-<swal #dialogIsDelete title="確定要取消？" type="question" (confirm)="deleteJoin()" [options]="{ showCancelButton: 'true' }"></swal>
+<swal #dialogIsDelete title="確定要取消？" type="question" (confirm)="POST_deleteJoin()" [options]="{ showCancelButton: 'true' }"></swal>
 <swal #dialogDelSuccess title="刪除成功" type="success" [options]="{ timer : '1000' }"></swal>
 <swal #dialogDelError title="刪除失敗" type="error" [options]="{ timer : '1000' }"></swal>
 

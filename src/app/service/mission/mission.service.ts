@@ -17,7 +17,7 @@ export class MissionService {
    * @param body
    * @memberof MissionService
    */
-  public uploadMissionPicture(body) {
+  public POST_uploadMissionPicture(body) {
     return this.http.post('/api/upload/mission', body)
       .map((res: any) => {
         return res._body;
@@ -42,7 +42,7 @@ export class MissionService {
    * @param id
    * @memberof MissionService
    */
-  public getMission(id) {
+  public GET_mission(id) {
     return this.http.get(`/api/mission/id/${id}`, this.packToken())
       .map((res) => {
         return res.json() || {}
@@ -54,7 +54,7 @@ export class MissionService {
    *
    * @memberof MissionService
    */
-  public getAllMission() {
+  public GET_allMission() {
     return this.http.get(`/api/mission`)
       .map((res) => {
         return res.json() || {}
@@ -67,7 +67,7 @@ export class MissionService {
    * @param uid
    * @memberof MissionService
    */
-  public getGroupMission(uid) {
+  public GET_groupMission(uid) {
     return this.http.get(`/api/mission/group/${uid}`, this.packToken())
       .map(res => {
         return res.json() || {}
@@ -79,7 +79,7 @@ export class MissionService {
    *
    * @memberof MissionService
    */
-  public getMissionType() {
+  public GET_missionType() {
     return this.http.get(`/api/mission/type`, this.packToken())
       .map((res) => {
         return res.json() || {}
@@ -91,7 +91,7 @@ export class MissionService {
    *
    * @memberof MissionService
    */
-  public getCarousel() {
+  public GET_carousel() {
     return this.http.get('/api/carousel')
       .map((res) => {
         return res.json() || {}
@@ -104,7 +104,7 @@ export class MissionService {
    * @param body
    * @memberof MissionService
    */
-  public addMission(body) {
+  public POST_addMission(body) {
     return this.http.post('/api/mission/create', body, this.packToken())
       .map((res) => {
         return res.json() || {}
@@ -117,7 +117,7 @@ export class MissionService {
    * @param id
    * @memberof MissionService
    */
-  public updateMission(body) {
+  public POST_updateMission(body) {
     return this.http.post('/api/mission/update', body, this.packToken())
       .map((res) => {
         return res.json() || {}
@@ -130,7 +130,7 @@ export class MissionService {
    * @param uid
    * @memberof MissionService
    */
-  public findByStudent(uid) {
+  public GET_findByStudent(uid) {
     return this.http.get(`/api/participate/homepage/${uid}`, this.packToken())
       .map((res) => {
         return res.json() || {}
@@ -143,7 +143,7 @@ export class MissionService {
    * @param param
    * @memberof MissionService
    */
-  public getJoinByMission(param) {
+  public GET_joinByMission(param) {
     return this.http.get(`/api/participate/missionexp?${param}`, this.packToken())
       .map((res) => {
         return res.json() || {}
@@ -156,7 +156,7 @@ export class MissionService {
    * @param param
    * @memberof MissionService
    */
-  public JoinMission(param) {
+  public GET_joinMission(param) {
     return this.http.get(`/api/participate/status?${param}`, this.packToken())
       .map((res) => {
         return res.json() || {}
@@ -169,7 +169,7 @@ export class MissionService {
    * @param param
    * @memberof MissionService
    */
-  public groupMission(body) {
+  public GET_groupByMission(body) {
     return this.http.get(`/api/mission/user/${body}`, this.packToken())
       .map((res) => {
         return res.json() || {}
@@ -182,7 +182,7 @@ export class MissionService {
    * @param body
    * @memberof MissionService
    */
-  public addJoin(body: Object) {
+  public POST_addJoin(body: Object) {
     return this.http.post('/api/participate/create', body, this.packToken())
       .map((res) => {
         return res.json() || {}
@@ -196,7 +196,7 @@ export class MissionService {
    * @param body
    * @memberof MissionService
    */
-  public updateJoin(filedata) {
+  public POST_updateJoin(filedata) {
     const option = this.packToken();
     return this.http.post('/api/participate/update', filedata, option)
       .map((res) => {
@@ -210,7 +210,7 @@ export class MissionService {
    * @param body
    * @memberof MissionService
    */
-  public deleteJoin(body) {
+  public POST_deleteJoin(body) {
     return this.http.post('/api/participate/delete', body, this.packToken())
       .map((res) => {
         return res.json() || {}
@@ -223,21 +223,21 @@ export class MissionService {
    * @param body
    * @memberof MissionService
    */
-  public verifyMission(body) {
+  public POST_verifyMission(body) {
     return this.http.post('/api/mission/verify', body, this.packToken())
       .map((res) => {
         return res.json() || {}
       });
   }
 
-  public getSignature(uid) {
+  public GET_signature(uid) {
     return this.http.get(`/api/mission/signature/${uid}`, this.packToken())
       .map((res) => {
         return res.json() || {}
       });
   }
 
-  public punchinMission(body) {
+  public POST_punchinMission(body) {
     return this.http.post('/api/mission/punchin', body, this.packToken())
       .map((res) => {
         return res.json() || {}
@@ -249,7 +249,7 @@ export class MissionService {
    *
    * @memberof MissionService
    */
-  public error() {
+  public GET_error() {
     return this.http.get(`/api`)
       .map((res) => {
         return res.json() || {}

@@ -43,7 +43,7 @@ export class LoginComponent implements OnInit {
       userPwd: this.userPassword
     };
 
-    await this.userService.Login(body).subscribe(
+    await this.userService.POST_login(body).subscribe(
       result => {
         if (result.token) {
           Cookie.set('userCookie', result.token, 0.040972255, '/');

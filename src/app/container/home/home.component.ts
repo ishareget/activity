@@ -29,7 +29,7 @@ export class HomeComponent implements OnInit {
   public userData: any; // 存放使用者資料
   public missionType: any = []; // 存放所有任務型態
   public userMission: any = []; // 存放該使用者可以參加的任務
-  public groupMission: any = []; // 存放該使用者所屬單位的任務
+  public GET_groupMission: any = []; // 存放該使用者所屬單位的任務
   public masterMission: any = []; // 存放協會的任務
 
   public loadingFalse: any = false;
@@ -56,7 +56,7 @@ export class HomeComponent implements OnInit {
       $('.carousel').carousel({
         interval: 2500
       });
-      this.getMissionType();
+      this.GET_missionType();
     });
   }
 
@@ -65,7 +65,7 @@ export class HomeComponent implements OnInit {
     this.userData = undefined;
     this.missionType = [];
     this.userMission = [];
-    this.groupMission = [];
+    this.GET_groupMission = [];
     this.masterMission = [];
     this.loadingFalse = false;
     this.isLoading = true;
@@ -75,7 +75,7 @@ export class HomeComponent implements OnInit {
   }
 
   public async error() {
-    await this.missionService.error().subscribe(
+    await this.missionService.GET_error().subscribe(
       result => {
         // this.route.navigate(['/error'], {});
       },
@@ -90,14 +90,14 @@ export class HomeComponent implements OnInit {
    *
    * @memberof HomeComponent
    */
-  public async getUserInfo() {
-    await this.userService.userInfo().subscribe(
+  public async GET_userInfo() {
+    await this.userService.GET_userInfo().subscribe(
       result => {
         if (result[0]) {
           this.userData = result[0];
-          this.getMission();
+          this.GET_mission();
         } else {
-          this.getAllMission();
+          this.GET_allMission();
         }
       },
       err => {
@@ -115,10 +115,10 @@ export class HomeComponent implements OnInit {
    *
    * @memberof HomeComponent
    */
-  public async getMission() {
+  public async GET_mission() {
     const temp = [];
     const self = this;
-    await this.missionService.getGroupMission(this.userData.groupid).subscribe(
+    await this.missionService.GET_groupMission(this.userData.groupid).subscribe(
       result => {
         result.forEach(e => {
           if (this.formatDate(e.missionfinaldate) > this.formatDate(moment())) {
@@ -134,13 +134,13 @@ export class HomeComponent implements OnInit {
           }));
         })]).then(function (value) {
           self.missions = temp;
-          self.getCarousel();
+          self.GET_carousel();
         }, function (reason) {
           // rejection
         });
       },
       err => {
-        this.getCarousel();
+        this.GET_carousel();
         this.loadingFalse = true;
       }
     )
@@ -166,10 +166,10 @@ export class HomeComponent implements OnInit {
    *
    * @memberof HomeComponent
    */
-  public async getAllMission() {
+  public async GET_allMission() {
     const temp = [];
     const self = this;
-    await this.missionService.getAllMission().subscribe(
+    await this.missionService.GET_allMission().subscribe(
       result => {
         result.forEach(e => {
           if (this.formatDate(e.missionfinaldate) > this.formatDate(moment())) {
@@ -186,7 +186,7 @@ export class HomeComponent implements OnInit {
           }));
         })]).then(function (value) {
           self.missions = temp;
-          self.getCarousel();
+          self.GET_carousel();
         }, function (reason) {
           // rejection
         });
@@ -201,15 +201,15 @@ export class HomeComponent implements OnInit {
    *
    * @memberof HomeComponent
    */
-  public async getMissionType() {
+  public async GET_missionType() {
     const self = this;
-    await this.missionService.getMissionType().subscribe(
+    await this.missionService.GET_missionType().subscribe(
       result => {
 
         Promise.all([result.forEach(e => {
           self.missionType.push(e);
         })]).then(function (value) {
-          Cookie.get('userCookie') ? self.getUserInfo() : self.getAllMission();
+          Cookie.get('userCookie') ? self.GET_userInfo() : self.GET_allMission();
         }, function (reason) {
           // rejection
         });
@@ -222,9 +222,9 @@ export class HomeComponent implements OnInit {
    *
    * @memberof HomeComponent
    */
-  public async getCarousel() {
+  public async GET_carousel() {
 
-    await this.missionService.getCarousel().subscribe(
+    await this.missionService.GET_carousel().subscribe(
       result => {
 
         if (result) {
