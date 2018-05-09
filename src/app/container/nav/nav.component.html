@@ -16,28 +16,28 @@
           <a class="pl-3 py-1 notice">最新通知</a>
           <div class="list-group">
             <div *ngFor="let value of data;let i = index">
-              <a *ngIf="value.status == false" class="list-group-item" href="">
+              <a *ngIf="value.status == 0 && i >= 0" class="list-group-item" (click)="turnstatus(value.id)">
                 <div class="dropdown-divider my-0"></div>
                 <span class="my-2" [ngClass]="{
                         'btn-red': value.type=='任務',
                         'btn-blue': value.type=='點數',
                         'btn-sky': value.type=='活動',
                         'btn-green': value.type=='心得'
-                        }">{{value.type}}</span> {{value.name}} {{value.content}}</a>
+                        }">{{value.type}}</span> {{value.description}}</a>
             </div>
           </div>
           <div class="dropdown-divider my-0"></div>
           <a class="pl-3 py-1 notice">先前通知</a>
           <div class="list-group">
             <div *ngFor="let value of data;let i=index">
-              <a *ngIf="value.status == true && i <= 3" class="list-group-item item2" href="">
+              <a *ngIf="value.status == 1" class="list-group-item item2" href="">
                 <div class="dropdown-divider my-0"></div>
                 <span class="my-2" [ngClass]="{
                     'btn-red': value.type=='任務',
                     'btn-blue': value.type=='點數',
                     'btn-sky': value.type=='活動',
                     'btn-green': value.type=='心得'
-                    }">{{value.type}}</span> {{value.name}} {{value.content}}</a>
+                    }">{{value.type}}</span>{{value.description}}</a>
             </div>
           </div>
         </div>
@@ -83,13 +83,13 @@
 
             <div class="list-group">
               <div *ngFor="let value of data;let i = index">
-                <a *ngIf="value.status == false" class="list-group-item" href="">
+                <a *ngIf="value.status == 0 && i >= 0" class="list-group-item" (click)="turnstatus(value.id)">
                   <span class="my-2" [ngClass]="{
                         'btn-red': value.type=='任務',
                         'btn-blue': value.type=='點數',
                         'btn-sky': value.type=='活動',
                         'btn-green': value.type=='心得'
-                        }">{{value.type}}</span> {{value.name}} {{value.content}}</a>
+                        }">{{value.type}}</span> {{value.description}}</a>
               </div>
             </div>
             <div class="dropdown-divider my-0"></div>
@@ -97,13 +97,13 @@
             <div class="dropdown-divider my-0"></div>
             <div class="list-group">
               <div *ngFor="let value of data;let i=index">
-                <a *ngIf="value.status == true && i <= 3" class="list-group-item item2" href="">
+                <a *ngIf="value.status == 1" class="list-group-item item2" href="">
                   <span class="my-2" [ngClass]="{
                     'btn-red': value.type=='任務',
                     'btn-blue': value.type=='點數',
                     'btn-sky': value.type=='活動',
                     'btn-green': value.type=='心得'
-                    }">{{value.type}}</span> {{value.name}} {{value.content}}</a>
+                    }">{{value.type}}</span> {{value.description}}</a>
               </div>
             </div>
           </div>

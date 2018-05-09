@@ -4,6 +4,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { SwalComponent } from '@toverux/ngsweetalert2';
 import { UserService } from '../../service/user/user.service';
 import { MissionService } from '../../service/mission/mission.service';
+import { NoticationService } from '../../service/notification/notification.service';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
 
 declare let jquery: any;
@@ -13,7 +14,7 @@ declare let $: any;
   selector: 'app-nav',
   templateUrl: './nav.component.html',
   styleUrls: ['./nav.component.css'],
-  providers: [MissionService, UserService],
+  providers: [MissionService, UserService, NoticationService],
   // host: {
   //   '(window:scroll)': 'onScroll($event)'
   // }
@@ -31,31 +32,16 @@ export class NavComponent implements OnInit {
   public point: any;
   public name: any;
   public rwd: Boolean = false;
-  public data: any[] =
-    [{ type: '任務', name: '', content: '2018 Wonder Foto Day 台北國際攝影藝術交流展 報名成功', status: true },
-    { type: '點數', name: '黎卋軒', content: '給予您點數100點', status: false },
-    { type: '心得', name: '黎卉軒', content: '心得已繳交', status: true },
-    { type: '活動', name: '王小明', content: '已參加台北國際攝影藝術交流展', status: true },
-    { type: '任務', name: '王大明', content: '2018/04/12(四)『一日易經班』課程《6小時教你如何讀懂易經》#第237場 報名成功', status: false },
-    { type: '任務', name: '陳曉明', content: 'NLP讀懂你的心_假日版 報名成功', status: false },
-    { type: '任務', name: '陳大明', content: 'NLP讀懂你的心_假日版 報名成功', status: true },
-    { type: '點數', name: '林老師', content: '給予您點數100點', status: true },
-    { type: '點數', name: '陳老師', content: '給予您點數100點', status: false },
-    { type: '點數', name: '王老師', content: '給予您點數100點', status: true },
-    { type: '點數', name: '楊老師', content: '給予您點數100點', status: false },
-    { type: '心得', name: '王小明', content: '心得已繳交', status: false },
-    { type: '心得', name: '林小明', content: '心得已繳交', status: false },
-    { type: '心得', name: '陳曉明', content: '心得已繳交', status: true },
-    { type: '活動', name: '林好', content: '已參加NLP讀懂你的心_假日版', status: false },
-    { type: '活動', name: '王明', content: '已參加台北國際攝影藝術交流展', status: false },
-    { type: '活動', name: '楊明', content: '已參加NLP讀懂你的心_假日版', status: true }];
+  public data: any[];
   public datacount = 0;
 
   constructor(
     private router: ActivatedRoute,
     private route: Router,
     private missionService: MissionService,
-    private userService: UserService
+    private userService: UserService,
+    private noticationService: NoticationService
+
   ) { }
   @HostListener('window:resize', ['$event'])
   onResize(event) {
@@ -82,7 +68,6 @@ export class NavComponent implements OnInit {
       this.checkLogin();
       window.scroll(0, 0);
     });
-    this.count(this.data);
   }
 
   public reset() {
@@ -111,6 +96,7 @@ export class NavComponent implements OnInit {
             this.img = this.userData.picture;
             this.point = this.userData.point;
             this.name = this.userData.username;
+            this.notice();
           } else {
             Cookie.delete('userCookie', '/');
           }
@@ -165,13 +151,48 @@ export class NavComponent implements OnInit {
   //   this.swalDialogWarning.show();
   // }
 
-  public async count(data) {
-    data.forEach(e => {
-      switch (e.status) {
-        case true:
-          this.datacount++;
-          break;
+  // public async count(data) {
+  //   data.forEach(e => {
+  //     switch (e.status) {
+  //       case true:
+  //         this.datacount++;
+  //         break;
+  //     }
+  //   })
+  // }  
+
+  /**
+   * 最新通知轉先前通知
+   * @memberof NavComponent
+   */
+  // public async turnstatus(id) {
+  //   console.log(id);
+  //   this.data[id].status = 1;
+  //   console.log(this.data[0]);
+  //   this.notice();
+  // }
+
+  /**
+   * 取得使用者通知
+   * @memberof NavComponent
+   */
+  public async notice() {
+    const body = {
+      username: this.userData.username
+    }
+    console.log(this.userData);
+    console.log(this.userData.username);
+    console.log(body);
+    await this.noticationService.getNoti(body).subscribe(
+      result => {
+        if (result.length > 0) {
+          this.data = result;
+          this.datacount = result.length;
+          console.log(result);
+        } else {
+          console.log('length=0');
+        }
       }
-    })
+    )
   }
 }
