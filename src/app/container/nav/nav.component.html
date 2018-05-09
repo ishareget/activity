@@ -83,7 +83,7 @@
 
             <div class="list-group">
               <div *ngFor="let value of data;let i = index">
-                <a *ngIf="value.status == 0 && i >= 0" class="list-group-item" (click)="turnstatus(value.id)">
+                <a *ngIf="value.status == 0 && i >= 0" class="list-group-item" (click)="turnstatus(value)">
                   <span class="my-2" [ngClass]="{
                         'btn-red': value.type=='任務',
                         'btn-blue': value.type=='點數',

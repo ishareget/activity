@@ -165,12 +165,18 @@ export class NavComponent implements OnInit {
    * 最新通知轉先前通知
    * @memberof NavComponent
    */
-  // public async turnstatus(id) {
-  //   console.log(id);
-  //   this.data[id].status = 1;
-  //   console.log(this.data[0]);
-  //   this.notice();
-  // }
+  public async turnstatus(data) {
+    data.status = 1;
+    console.log(data);
+    const body = {
+      id: data.id
+    }
+    await this.noticationService.updateNoti(body).subscribe(
+      result => {
+        console.log(result);
+      }
+    )
+  }
 
   /**
    * 取得使用者通知

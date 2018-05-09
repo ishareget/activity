@@ -50,4 +50,17 @@ export class NoticationService {
   //     });
   // }
 
+  /**
+  * 更新通知 
+  *
+  * @param body
+  * @memberof NotiService
+  */
+ public updateNoti(id:Object) {
+  return this.http.post('/api/notification/update', id)
+    .map((res) => {
+      // return res._body;
+      return res.json() || {}
+    });
+}
 }
