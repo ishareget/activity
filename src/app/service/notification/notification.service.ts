@@ -57,7 +57,7 @@ export class NoticationService {
   * @memberof NotiService
   */
   public updateNoti(id: Object) {
-    return this.http.post('/api/notification/update', id)
+    return this.http.post('/api/notification/update', id, this.packToken())
       .map((res) => {
         // return res._body;
         return res.json() || {}

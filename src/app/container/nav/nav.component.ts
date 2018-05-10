@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewChild, HostListener } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-
+import { TimeAgoPipe } from 'time-ago-pipe';
+import _ from 'lodash';
+import * as moment from 'moment';
 import { SwalComponent } from '@toverux/ngsweetalert2';
 import { UserService } from '../../service/user/user.service';
 import { MissionService } from '../../service/mission/mission.service';
@@ -32,9 +34,10 @@ export class NavComponent implements OnInit {
   public point: any;
   public name: any;
   public rwd: Boolean = false;
-  public data: any[];
-  // public datacount = 0;
-  public unread: any = 0;
+  public data: any = [];
+  public unRead: any = 0;
+  public notiTime: any = [];
+  public time: any = [];
 
   constructor(
     private router: ActivatedRoute,
@@ -70,6 +73,24 @@ export class NavComponent implements OnInit {
       window.scroll(0, 0);
     });
   }
+
+  /**
+ * 將任務執行時間格式化
+ *
+ * @memberof CreateComponent
+ */
+  // public formatDate(data) {
+  //   if (data) {
+  //     data = {
+  //       date: {
+  //         year: moment(data).format('YYYY'),
+  //         month: moment(data).format('M'),
+  //         day: moment(data).format('D'),
+  //       }
+  //     }
+  //   }
+  //   return data;
+  // }
 
   public reset() {
     this.userData = undefined;
@@ -152,11 +173,15 @@ export class NavComponent implements OnInit {
   //   this.swalDialogWarning.show();
   // }
 
-  public async unreadcount(data) {
+  /**
+   * 計算最新通知筆數
+   * @memberof NavComponent
+   */
+  public async unReadcount(data) {
     data.forEach(e => {
       switch (e.status) {
         case 0:
-          this.unread++;
+          this.unRead++;
           break;
       }
     })
@@ -167,8 +192,8 @@ export class NavComponent implements OnInit {
    * @memberof NavComponent
    */
   public async turnstatus(data) {
-    data.status = 1;
-    console.log(data);
+    // data.status = 1;
+    // console.log(data);
     const body = {
       id: data.id
     }
@@ -185,21 +210,76 @@ export class NavComponent implements OnInit {
    */
   public async notice() {
     const body = {
-      username: this.userData.username
+      username: this.userData.username,
     }
-    console.log(this.userData);
-    console.log(this.userData.username);
-    console.log(body);
     await this.noticationService.getNoti(body).subscribe(
       result => {
         if (result.length > 0) {
+          // this.data = [];
+          // _.map(result, (value) => {
+          //   value['noti_time'] = moment(value.noti_time).format('YYYYMMDDHHmmss');
+          //   this.data.push(value);
+          // })
+
+          _.map(result, (value) => {
+            value = moment(value.noti_time);
+            this.notiTime.push(value);
+          })
+
+          console.log(this.notiTime);
           this.data = result;
-          this.unread = 0;
-          this.unreadcount(result);
+          this.unRead = 0;
+          console.log(this.data);
+          this.unReadcount(result);
+          this.setNotiTime(this.notiTime);
         } else {
           console.log('length=0');
         }
       }
     )
   }
+
+  /**
+   * 取得使用者通知
+   * @memberof NavComponent
+   */
+  public setNotiTime(value) {
+    // _.map(data, (value) => {
+    //   value = moment(value.noti_time);
+    //   this.notiTime.push(value);
+    // })
+    // console.log(this.notiTime);
+
+    // console.log(this.data);
+    value.forEach(e => {
+      var now = new Date().getTime();
+      var notitime = e;
+      var test = e.format('YYYY/MM/DD HH時 mm分 ss秒');
+      console.log(test);
+      // time since message was sent in seconds
+      var detime = (now - e) / 1000;
+      console.log(e);
+
+      // format string
+      if (detime < 10) {
+        value = '數秒前';
+      }
+      else if (detime < 60) { // sent in last minute
+        value = '在 ' + Math.floor(detime) + '秒前';
+      }
+      else if (detime < 3600) { // sent in last hour
+        value = '在 ' + Math.floor(detime / 60) + '分鐘前';
+      }
+      else if (detime < 86400) { // sent on last day
+        value = '在 ' + Math.floor(detime / 3600) + '小時前';
+      }
+      else { // sent more than one day ago
+        value = notitime.format('MM月DD日 mm:ss');
+      }
+      console.log(value);
+      this.time.push(value);
+      return value;
+    })
+  }
 }
+

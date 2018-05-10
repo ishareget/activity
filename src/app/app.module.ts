@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+import { TimeAgoPipe } from 'time-ago-pipe';
 import { HttpModule, JsonpModule } from '@angular/http';
 import { AppRoutingModule } from './app-routing.module';
 import { QRCodeModule } from 'angular2-qrcode';
@@ -54,6 +55,7 @@ enableProdMode();
 
 @NgModule({
   declarations: [
+    TimeAgoPipe,
     AppComponent,
     NavComponent,
     HomeComponent,

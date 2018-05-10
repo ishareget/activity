@@ -6,26 +6,26 @@
       <a *ngIf="isLogin" class="nav-item dropdown btn btn-nav text-white pr-1">
         <button type="button" class="btn btn-nav text-white fa fa-bell fa-lg" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" (click)="notice();">
           <span class="sr-only">Toggle Dropdown</span>
-          <span *ngIf="unread > 0" class="unread">{{unread}}</span>
+          <span *ngIf="unRead > 0" class="unRead">{{unRead}}</span>
         </button>
         <div class="dropdown-menu dropdown-menu-right menuopacity notifications py-0">
           <div *ngIf="isLogin">
             <h6 class="pl-3 py-2 noti">通知</h6>
           </div>
-          <div *ngIf="unread > 0">
+          <div *ngIf="unRead > 0">
             <div class="dropdown-divider my-0"></div>
-            <a class="pl-3 py-1 notice" *ngIf="unread > 0">最新通知</a>
+            <a class="pl-3 py-1 notice" *ngIf="unRead > 0">最新通知</a>
           </div>
           <div class="list-group">
             <div *ngFor="let value of data;let i = index">
-              <a *ngIf="value.status == 0" class="list-group-item" (click)="turnstatus(value.id);">
+              <a *ngIf="value.status == 0" class="list-group-item" (click)="turnstatus(value);" href="">
                 <div class="dropdown-divider my-0"></div>
                 <span class="my-2" [ngClass]="{
                         'btn-red': value.type=='任務',
                         'btn-blue': value.type=='點數',
                         'btn-sky': value.type=='活動',
                         'btn-green': value.type=='心得'
-                      }">{{value.type}}</span><a>{{value.description}}<a class="notitime">{{value.noti_time | date: 'yyyy/MM/dd'}}</a></a></a>
+                      }">{{value.type}}</span><a class="noticontent">{{value.description}}<a class="notitime">{{time[i]}}</a></a></a>
                     </div>
           </div>
           <div class="dropdown-divider my-0"></div>
@@ -39,7 +39,7 @@
                     'btn-blue': value.type=='點數',
                     'btn-sky': value.type=='活動',
                     'btn-green': value.type=='心得'
-                  }">{{value.type}}</span><a>{{value.description}}<a class="notitime">{{value.noti_time | date: 'yyyy/MM/dd'}}</a></a></a>
+                  }">{{value.type}}</span><a  class="noticontent">{{value.description}}<a class="notitime">{{time[i]}}</a></a></a>
                 </div>
           </div>
         </div>
@@ -73,13 +73,13 @@
         <li class="nav-item dropdown" *ngIf="isLogin &&  !rwd" (click)="notice();">
           <button type="button" class="btn btn-nav text-white fa fa-bell fa-lg" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <span class="sr-only">Toggle Dropdown</span>
-            <span *ngIf="unread > 0" class="unread">{{unread}}</span>
+            <span *ngIf="unRead > 0" class="unRead">{{unRead}}</span>
           </button>
           <div class="dropdown-menu dropdown-menu-right menuopacity notifications py-0">
             <div *ngIf="isLogin">
               <h6 class="pl-3 py-2 noti">通知</h6>
             </div>
-            <div *ngIf="unread > 0">
+            <div *ngIf="unRead > 0">
               <div class="dropdown-divider my-0"></div>
               <a class="pl-3 py-1 notice">最新通知</a>
               <div class="dropdown-divider my-0"></div>
@@ -87,13 +87,13 @@
 
             <div class="list-group">
               <div *ngFor="let value of data;let i = index">
-                <a *ngIf="value.status == 0 " class="list-group-item" (click)="turnstatus(value)">
+                <a *ngIf="value.status == 0 " class="list-group-item" (click)="turnstatus(value);" href="">
                   <span class="my-2" [ngClass]="{
                         'btn-red': value.type=='任務',
                         'btn-blue': value.type=='點數',
                         'btn-sky': value.type=='活動',
                         'btn-green': value.type=='心得'
-                      }">{{value.type}}</span><a>{{value.description}}<a class="notitime">{{value.noti_time | date: 'yyyy/MM/dd'}}</a></a></a>
+                      }">{{value.type}}</span><a class="noticontent">{{value.description}}<a class="notitime">{{time[i]}}</a></a></a>
                     </div>
             </div>
             <div class="dropdown-divider my-0"></div>
@@ -107,7 +107,7 @@
                     'btn-blue': value.type=='點數',
                     'btn-sky': value.type=='活動',
                     'btn-green': value.type=='心得'
-                    }">{{value.type}}</span><a>{{value.description}}<a class="notitime">{{value.noti_time | date: 'yyyy/MM/dd'}}</a></a></a>
+                    }">{{value.type}}</span><a class="noticontent">{{value.description}}<a class="notitime">{{time[i]}}</a></a></a>
               </div>
             </div>
           </div>

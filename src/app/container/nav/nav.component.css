@@ -148,7 +148,7 @@ table.content {
   cursor: pointer;
 }
 
-.unread {
+.unRead {
   position: absolute;
   padding: 1px 3px;
   font-size: 12px;
@@ -178,7 +178,7 @@ table.content {
     overflow: hidden;
 } */
 
-.notifications .list-group .list-group-item {
+.notifications .list-group .list-group-item{
   width: 100%;
   display: block;
   margin: 0px;
@@ -186,9 +186,7 @@ table.content {
   border: 0px;
   border-top: 1px solid #ccc;
   border-radius: 0;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
+  white-space: nowrap;  
   background-color: #EDF2FA;
 }
 
@@ -227,11 +225,14 @@ table.content {
   background-color: #F6F7F9;
 }
 
-.list-group .list-group-item a{
+.list-group .list-group-item .noticontent{
   display: inline-block;
   position: relative;
-  top: 10px;
-  height: 25px;
+  top: 12px;
+  width: 90%;
+  height: 33px;
+  text-overflow: ellipsis;  
+  overflow: hidden;
 }
 
 .list-group .list-group-item a .notitime{
