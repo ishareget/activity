@@ -33,7 +33,8 @@ export class NavComponent implements OnInit {
   public name: any;
   public rwd: Boolean = false;
   public data: any[];
-  public datacount = 0;
+  // public datacount = 0;
+  public unread: any = 0;
 
   constructor(
     private router: ActivatedRoute,
@@ -96,10 +97,10 @@ export class NavComponent implements OnInit {
             this.img = this.userData.picture;
             this.point = this.userData.point;
             this.name = this.userData.username;
-            this.notice();
           } else {
             Cookie.delete('userCookie', '/');
           }
+          this.notice();
         }
       },
       err => {
@@ -151,15 +152,15 @@ export class NavComponent implements OnInit {
   //   this.swalDialogWarning.show();
   // }
 
-  // public async count(data) {
-  //   data.forEach(e => {
-  //     switch (e.status) {
-  //       case true:
-  //         this.datacount++;
-  //         break;
-  //     }
-  //   })
-  // }  
+  public async unreadcount(data) {
+    data.forEach(e => {
+      switch (e.status) {
+        case 0:
+          this.unread++;
+          break;
+      }
+    })
+  }
 
   /**
    * 最新通知轉先前通知
@@ -193,8 +194,7 @@ export class NavComponent implements OnInit {
       result => {
         if (result.length > 0) {
           this.data = result;
-          this.datacount = result.length;
-          console.log(result);
+          this.unread = 0;
         } else {
           console.log('length=0');
         }
