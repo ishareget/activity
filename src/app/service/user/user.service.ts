@@ -46,6 +46,19 @@ export class UserService {
   }
 
   /**
+   * 學童資料取得
+   *
+   * @returns
+   * @memberof UserService
+   */
+  public GetStudent() {
+    return this.http.get('/api/student', this.packToken())
+      .map((res) => {
+        return res.json() || {}
+      });
+  }
+
+  /**
    * 取得單位
    *
    * @param uid

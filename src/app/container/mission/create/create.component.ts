@@ -60,6 +60,8 @@ export class CreateComponent implements OnInit {
   public specialBody: any;
   public userData: any;
   public userPermission: any = [];
+  public studentDatas: any = []; // 所有學生資料
+  public studentGroupdata: any = []; // 該群組所有學生資料
 
   public typeId: Number = 1;
   public type: String;
@@ -173,7 +175,7 @@ export class CreateComponent implements OnInit {
         if (result[0]) {
           this.userData = result[0];
           if (this.userData) {
-            this.getUserPermission();
+            this.GetStudent();
           } else {
             this.router.navigate(['/home']);
           }
@@ -187,6 +189,33 @@ export class CreateComponent implements OnInit {
         Cookie.delete('userCookie', '/');
       }
     )
+  }
+
+  /**
+   * 取得學生資料 all
+   *
+   * @memberof StudentComponent
+   */
+  public async GetStudent() {
+    await this.userService.GetStudent().subscribe(
+      result => {
+        this.studentDatas = result;
+        this.userGetPersonnalGroup();
+      });
+  }
+
+  /**
+   * 取得單位資料 個人
+   *
+   * @memberof StudentComponent
+   */
+  public async userGetPersonnalGroup() {
+    this.studentDatas.forEach(element => {
+      if (element.groupid === this.userData.groupid) {
+        this.studentGroupdata.push(element);
+      }
+    });
+    this.getUserPermission();
   }
 
   /**
@@ -423,6 +452,11 @@ export class CreateComponent implements OnInit {
     }
   }
 
+  /**
+   *  更新任務圖片
+   *
+   * @memberof CreateComponent
+   */
   public async updatePicture() {
     const body = {
       url: this.file,
@@ -467,7 +501,7 @@ export class CreateComponent implements OnInit {
     await this.missionService.POST_addMission(body).subscribe(
       result => {
         if (result.affectedRows > 0 && this.checking === true) {
-          this.createNotification(moment().format('YYYY-M-DD'), result.insertId);
+          this.createNotification(moment().format('YYYY-MM-DD HH:mm:ss'), result.insertId);
         } else {
           this.swalDialogError.show();
         }
@@ -480,28 +514,22 @@ export class CreateComponent implements OnInit {
    * @memberof CreateComponent
    */
   public async createNotification(createtime, missionId) {
-    const body = {
-      username: this.userData.username,
-      type: '任務',
-      groupid: this.userData.groupid,
-      mission_id: missionId,
-      noti_time: createtime,
-      description: `${this.userData.name} 建立新任務-- ${this.mission.missionname}`,
-      status: 0
-    }
-    await this.notificationService.createNoti(body).subscribe(
-      result => {
-        console.log(result);
-        if (result.affectedRows === 1) {
-          this.swalDialogSuccess.show();
-          setTimeout(() => {
-            this.router.navigate([`mission/introduce`], { queryParams: { id: missionId } });
-          }, 1200);
-        } else {
-          this.swalDialogError.show();
-        }
+    for (let i = 0; i < this.studentGroupdata.length; i++) {
+      const body = {
+        username: this.studentGroupdata[i].username,
+        type: '任務',
+        groupid: this.userData.groupid,
+        mission_id: missionId,
+        noti_time: createtime,
+        description: `${this.userData.name} 建立新任務-- ${this.mission.missionname}`,
+        status: 0
       }
-    )
+      await this.notificationService.createNoti(body).subscribe()
+    }
+    this.swalDialogSuccess.show();
+    setTimeout(() => {
+      this.router.navigate([`mission/introduce`], { queryParams: { id: missionId } });
+    }, 1200);
   }
 
   /**
