@@ -175,7 +175,7 @@ export class CreateComponent implements OnInit {
         if (result[0]) {
           this.userData = result[0];
           if (this.userData) {
-            this.GetStudent();
+            this.GetAllStudent();
           } else {
             this.router.navigate(['/home']);
           }
@@ -196,7 +196,7 @@ export class CreateComponent implements OnInit {
    *
    * @memberof StudentComponent
    */
-  public async GetStudent() {
+  public async GetAllStudent() {
     await this.userService.GetStudent().subscribe(
       result => {
         this.studentDatas = result;
@@ -205,7 +205,7 @@ export class CreateComponent implements OnInit {
   }
 
   /**
-   * 取得單位資料 個人
+   * 取得同單位學生資料
    *
    * @memberof StudentComponent
    */
