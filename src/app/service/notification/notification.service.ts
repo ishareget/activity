@@ -18,7 +18,7 @@ export class NoticationService {
   */
   public packToken() {
     const headers = new Headers({ 'Content-Type': 'application/json' });
-    headers.append('Authorization', 'Bearer' + Cookie.get('userCookie'));
+    headers.append('Authorization', 'Bearer ' + Cookie.get('userCookie'));
     const options = new RequestOptions({ headers: headers });
     return options;
   }
@@ -29,8 +29,8 @@ export class NoticationService {
   * @param username
   * @memberof NoticationService
   */
-  public getNoti(body:Object) {
-    return this.http.post('/api/notification/username', body)
+  public getNoti(body: Object) {
+    return this.http.post('/api/notification/username', body, this.packToken())
       .map((res) => {
         // return res._body;
         return res.json() || {}
@@ -44,9 +44,9 @@ export class NoticationService {
   * @memberof NotiService
   */
   public createNoti(body) {
-    return this.http.post('/api/notification/create', body)
+    return this.http.post('/api/notification/create', body, this.packToken())
       .map((res: any) => {
-        return res._body;
+        return res.json() || {}
       });
   }
 
@@ -56,11 +56,11 @@ export class NoticationService {
   * @param body
   * @memberof NotiService
   */
- public updateNoti(id:Object) {
-  return this.http.post('/api/notification/update', id)
-    .map((res) => {
-      // return res._body;
-      return res.json() || {}
-    });
-}
+  public updateNoti(id: Object) {
+    return this.http.post('/api/notification/update', id)
+      .map((res) => {
+        // return res._body;
+        return res.json() || {}
+      });
+  }
 }

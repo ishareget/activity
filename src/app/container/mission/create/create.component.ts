@@ -491,7 +491,8 @@ export class CreateComponent implements OnInit {
     }
     await this.notificationService.createNoti(body).subscribe(
       result => {
-        if (result.affectedRows == 1) {
+        console.log(result);
+        if (result.affectedRows === 1) {
           this.swalDialogSuccess.show();
           setTimeout(() => {
             this.router.navigate([`mission/introduce`], { queryParams: { id: missionId } });
