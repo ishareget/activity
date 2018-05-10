@@ -25,8 +25,8 @@
                         'btn-blue': value.type=='點數',
                         'btn-sky': value.type=='活動',
                         'btn-green': value.type=='心得'
-                        }">{{value.type}}</span> {{value.description}}</a>
-            </div>
+                      }">{{value.type}}</span><a>{{value.description}}<a class="notitime">{{value.noti_time | date: 'yyyy/MM/dd'}}</a></a></a>
+                    </div>
           </div>
           <div class="dropdown-divider my-0"></div>
           <a class="pl-3 py-1 notice">先前通知</a>
@@ -39,8 +39,8 @@
                     'btn-blue': value.type=='點數',
                     'btn-sky': value.type=='活動',
                     'btn-green': value.type=='心得'
-                    }">{{value.type}}</span>{{value.description}}</a>
-            </div>
+                  }">{{value.type}}</span><a>{{value.description}}<a class="notitime">{{value.noti_time | date: 'yyyy/MM/dd'}}</a></a></a>
+                </div>
           </div>
         </div>
       </a>
@@ -93,8 +93,8 @@
                         'btn-blue': value.type=='點數',
                         'btn-sky': value.type=='活動',
                         'btn-green': value.type=='心得'
-                        }">{{value.type}}</span> {{value.description}}</a>
-              </div>
+                      }">{{value.type}}</span><a>{{value.description}}<a class="notitime">{{value.noti_time | date: 'yyyy/MM/dd'}}</a></a></a>
+                    </div>
             </div>
             <div class="dropdown-divider my-0"></div>
             <a class="pl-3 py-1 notice">先前通知</a>
@@ -107,7 +107,7 @@
                     'btn-blue': value.type=='點數',
                     'btn-sky': value.type=='活動',
                     'btn-green': value.type=='心得'
-                    }">{{value.type}}</span><a>{{value.description}}<a class="notitime">111111111</a></a></a>
+                    }">{{value.type}}</span><a>{{value.description}}<a class="notitime">{{value.noti_time | date: 'yyyy/MM/dd'}}</a></a></a>
               </div>
             </div>
           </div>
