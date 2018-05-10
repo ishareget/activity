@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, EventEmitter } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MissionService } from '../../../service/mission/mission.service';
 import { UserService } from '../../../service/user/user.service';
+import { NoticationService } from '../../../service/notification/notification.service';
 
 import { SwalComponent } from '@toverux/ngsweetalert2';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
@@ -26,7 +27,7 @@ declare let $: any;
   selector: 'app-create',
   templateUrl: './create.component.html',
   styleUrls: ['./create.component.css'],
-  providers: [MissionService, UserService]
+  providers: [MissionService, UserService, NoticationService]
 })
 export class CreateComponent implements OnInit {
   @ViewChild('dialogPassError') private swalDialogPassError: SwalComponent;
@@ -90,6 +91,7 @@ export class CreateComponent implements OnInit {
     private router: Router,
     private missionService: MissionService,
     private userService: UserService,
+    private notificationService: NoticationService,
     private _location: Location
   ) {
     this.cropperSettings = new CropperSettings();
@@ -465,15 +467,40 @@ export class CreateComponent implements OnInit {
     await this.missionService.POST_addMission(body).subscribe(
       result => {
         if (result.affectedRows > 0 && this.checking === true) {
-          this.swalDialogSuccess.show();
-          setTimeout(() => {
-            this.router.navigate([`mission/introduce`], { queryParams: { id: result.insertId } });
-          }, 1200);
-
+          this.createNotification(moment().format('YYYY-M-DD'), result.insertId);
         } else {
           this.swalDialogError.show();
         }
       });
+  }
+
+  /**
+   *  新增通知
+   * 
+   * @memberof CreateComponent
+   */
+  public async createNotification(createtime, missionId) {
+    const body = {
+      username: this.userData.username,
+      type: '任務',
+      groupid: this.userData.groupid,
+      mission_id: missionId,
+      noti_time: createtime,
+      description: `${this.userData.name} 建立新任務-- ${this.mission.missionname}`,
+      status: 0
+    }
+    await this.notificationService.createNoti(body).subscribe(
+      result => {
+        if (result.affectedRows == 1) {
+          this.swalDialogSuccess.show();
+          setTimeout(() => {
+            this.router.navigate([`mission/introduce`], { queryParams: { id: missionId } });
+          }, 1200);
+        } else {
+          this.swalDialogError.show();
+        }
+      }
+    )
   }
 
   /**

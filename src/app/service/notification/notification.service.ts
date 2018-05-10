@@ -43,12 +43,12 @@ export class NoticationService {
   * @param body
   * @memberof NotiService
   */
-  // public createNoti(body) {
-  //   return this.http.post('/api/notification/create', body)
-  //     .map((res: any) => {
-  //       return res._body;
-  //     });
-  // }
+  public createNoti(body) {
+    return this.http.post('/api/notification/create', body)
+      .map((res: any) => {
+        return res._body;
+      });
+  }
 
   /**
   * 更新通知 
