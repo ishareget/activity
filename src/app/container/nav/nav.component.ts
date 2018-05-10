@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild, HostListener } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import { TimeAgoPipe } from 'time-ago-pipe';
 import _ from 'lodash';
 import * as moment from 'moment';
 import { SwalComponent } from '@toverux/ngsweetalert2';
@@ -73,24 +72,6 @@ export class NavComponent implements OnInit {
       window.scroll(0, 0);
     });
   }
-
-  /**
- * 將任務執行時間格式化
- *
- * @memberof CreateComponent
- */
-  // public formatDate(data) {
-  //   if (data) {
-  //     data = {
-  //       date: {
-  //         year: moment(data).format('YYYY'),
-  //         month: moment(data).format('M'),
-  //         day: moment(data).format('D'),
-  //       }
-  //     }
-  //   }
-  //   return data;
-  // }
 
   public reset() {
     this.userData = undefined;
@@ -169,10 +150,6 @@ export class NavComponent implements OnInit {
     evt.target.value === '' ? this.route.navigate(['/search']) : this.route.navigate(['/search'], { queryParams: { name: evt.target.value } });
   }
 
-  // public warning() {
-  //   this.swalDialogWarning.show();
-  // }
-
   /**
    * 計算最新通知筆數
    * @memberof NavComponent
@@ -181,7 +158,7 @@ export class NavComponent implements OnInit {
     data.forEach(e => {
       switch (e.status) {
         case 0:
-          this.unRead++;
+          this.unRead += 1;
           break;
       }
     })
@@ -192,8 +169,6 @@ export class NavComponent implements OnInit {
    * @memberof NavComponent
    */
   public async turnstatus(data) {
-    // data.status = 1;
-    // console.log(data);
     const body = {
       id: data.id
     }
@@ -215,21 +190,12 @@ export class NavComponent implements OnInit {
     await this.noticationService.getNoti(body).subscribe(
       result => {
         if (result.length > 0) {
-          // this.data = [];
-          // _.map(result, (value) => {
-          //   value['noti_time'] = moment(value.noti_time).format('YYYYMMDDHHmmss');
-          //   this.data.push(value);
-          // })
-
           _.map(result, (value) => {
             value = moment(value.noti_time);
             this.notiTime.push(value);
           })
-
-          console.log(this.notiTime);
           this.data = result;
           this.unRead = 0;
-          console.log(this.data);
           this.unReadcount(result);
           this.setNotiTime(this.notiTime);
         } else {
@@ -244,21 +210,10 @@ export class NavComponent implements OnInit {
    * @memberof NavComponent
    */
   public setNotiTime(value) {
-    // _.map(data, (value) => {
-    //   value = moment(value.noti_time);
-    //   this.notiTime.push(value);
-    // })
-    // console.log(this.notiTime);
-
-    // console.log(this.data);
     value.forEach(e => {
       var now = new Date().getTime();
       var notitime = e;
-      var test = e.format('YYYY/MM/DD HH時 mm分 ss秒');
-      console.log(test);
-      // time since message was sent in seconds
       var detime = (now - e) / 1000;
-      console.log(e);
 
       // format string
       if (detime < 10) {
@@ -276,7 +231,6 @@ export class NavComponent implements OnInit {
       else { // sent more than one day ago
         value = notitime.format('MM月DD日 mm:ss');
       }
-      console.log(value);
       this.time.push(value);
       return value;
     })
