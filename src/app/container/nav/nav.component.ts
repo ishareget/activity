@@ -195,6 +195,7 @@ export class NavComponent implements OnInit {
         if (result.length > 0) {
           this.data = result;
           this.unread = 0;
+          this.unreadcount(result);
         } else {
           console.log('length=0');
         }
