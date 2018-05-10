@@ -148,7 +148,7 @@ table.content {
   cursor: pointer;
 }
 
-.datacount {
+.unread {
   position: absolute;
   padding: 1px 3px;
   font-size: 12px;
@@ -210,12 +210,12 @@ table.content {
 
 .list-group .list-group-item span {
   display: inline-block;
+  width: 39px;
+  height: 33px;
   margin: 0px 2px;
   padding: 7px;
   font-size: 12px;
-  /* background-color: #0088D2; */
   color: #fff;
-  /* border-radius: 8px; */
 }
 
 .notice {
@@ -225,4 +225,20 @@ table.content {
   font-size: 0.875rem;
   color: #90949c !important;
   background-color: #F6F7F9;
+}
+
+.list-group .list-group-item a{
+  display: inline-block;
+  position: relative;
+  top: 10px;
+  height: 25px;
+}
+
+.list-group .list-group-item a .notitime{
+  display: block;
+  width: 240px;
+  top: 3px;
+  text-align: right;
+  font-size: 0.5rem;
+  color: #90949c !important;
 }

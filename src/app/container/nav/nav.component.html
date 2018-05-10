@@ -4,19 +4,21 @@
     <div class="ml-auto" *ngIf="rwd">
       <a href="#" *ngIf="readyLogin" class="btn btn-nav text-white" data-toggle="modal" data-target="#loginModal">登入</a>
       <a *ngIf="isLogin" class="nav-item dropdown btn btn-nav text-white pr-1">
-        <button type="button" class="btn btn-nav text-white fa fa-bell fa-lg" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <button type="button" class="btn btn-nav text-white fa fa-bell fa-lg" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" (click)="notice();">
           <span class="sr-only">Toggle Dropdown</span>
-          <span *ngIf="datacount> 0" class="datacount">{{datacount}}</span>
+          <span *ngIf="unread > 0" class="unread">{{unread}}</span>
         </button>
         <div class="dropdown-menu dropdown-menu-right menuopacity notifications py-0">
           <div *ngIf="isLogin">
             <h6 class="pl-3 py-2 noti">通知</h6>
           </div>
-          <div class="dropdown-divider my-0"></div>
-          <a class="pl-3 py-1 notice">最新通知</a>
+          <div *ngIf="unread > 0">
+            <div class="dropdown-divider my-0"></div>
+            <a class="pl-3 py-1 notice" *ngIf="unread > 0">最新通知</a>
+          </div>
           <div class="list-group">
             <div *ngFor="let value of data;let i = index">
-              <a *ngIf="value.status == 0 && i >= 0" class="list-group-item" (click)="turnstatus(value.id)">
+              <a *ngIf="value.status == 0" class="list-group-item" (click)="turnstatus(value.id);">
                 <div class="dropdown-divider my-0"></div>
                 <span class="my-2" [ngClass]="{
                         'btn-red': value.type=='任務',
@@ -68,22 +70,24 @@
             <input type="search" id="search" placeholder="Search..." (keyup.enter)="onSubmit($event)" />
           </div>
         </li>
-        <li class="nav-item dropdown" *ngIf="isLogin &&  !rwd">
+        <li class="nav-item dropdown" *ngIf="isLogin &&  !rwd" (click)="notice();">
           <button type="button" class="btn btn-nav text-white fa fa-bell fa-lg" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <span class="sr-only">Toggle Dropdown</span>
-            <span *ngIf="datacount> 0" class="datacount">{{datacount}}</span>
+            <span *ngIf="unread > 0" class="unread">{{unread}}</span>
           </button>
           <div class="dropdown-menu dropdown-menu-right menuopacity notifications py-0">
             <div *ngIf="isLogin">
               <h6 class="pl-3 py-2 noti">通知</h6>
             </div>
-            <div class="dropdown-divider my-0"></div>
-            <a class="pl-3 py-1 notice">最新通知</a>
-            <div class="dropdown-divider my-0"></div>
+            <div *ngIf="unread > 0">
+              <div class="dropdown-divider my-0"></div>
+              <a class="pl-3 py-1 notice">最新通知</a>
+              <div class="dropdown-divider my-0"></div>
+            </div>
 
             <div class="list-group">
               <div *ngFor="let value of data;let i = index">
-                <a *ngIf="value.status == 0 && i >= 0" class="list-group-item" (click)="turnstatus(value)">
+                <a *ngIf="value.status == 0 " class="list-group-item" (click)="turnstatus(value)">
                   <span class="my-2" [ngClass]="{
                         'btn-red': value.type=='任務',
                         'btn-blue': value.type=='點數',
@@ -103,7 +107,7 @@
                     'btn-blue': value.type=='點數',
                     'btn-sky': value.type=='活動',
                     'btn-green': value.type=='心得'
-                    }">{{value.type}}</span> {{value.description}}</a>
+                    }">{{value.type}}</span><a>{{value.description}}<a class="notitime">111111111</a></a></a>
               </div>
             </div>
           </div>
