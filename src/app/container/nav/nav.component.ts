@@ -190,7 +190,7 @@ export class NavComponent implements OnInit {
     await this.noticationService.getNoti(body).subscribe(
       result => {
         if (result.length > 0) {
-          /*陣列取得通知時間*/ 
+          /**陣列取得通知時間*/ 
           _.map(result, (value) => {
             value = moment(value.noti_time);
             this.notiTime.push(value);
