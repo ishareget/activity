@@ -73,9 +73,9 @@
     color: #0088D2;
   }
   .dropdown-menu-right {
-    width: 415px;
     right: 0;
     left: -150px;
+    width: 415px;
   }
 }
 
@@ -230,9 +230,9 @@ table.content {
 .list-group .list-group-item .noticontent{
   display: inline-block;
   position: relative;
-  top: 12px;
+  top: 14px;
   width: 83%;
-  height: 35px;
+  height: 37px;
   text-overflow: ellipsis;  
   overflow: hidden;
 }
