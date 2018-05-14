@@ -190,6 +190,7 @@ export class NavComponent implements OnInit {
     await this.noticationService.getNoti(body).subscribe(
       result => {
         if (result.length > 0) {
+          /*陣列取得通知時間*/ 
           _.map(result, (value) => {
             value = moment(value.noti_time);
             this.notiTime.push(value);
@@ -206,7 +207,7 @@ export class NavComponent implements OnInit {
   }
 
   /**
-   * 取得使用者通知
+   * 設定通知時間格式
    * @memberof NavComponent
    */
   public setNotiTime(value) {
@@ -229,7 +230,7 @@ export class NavComponent implements OnInit {
         value = '在 ' + Math.floor(detime / 3600) + '小時前';
       }
       else { // sent more than one day ago
-        value = notitime.format('MM月DD日 mm:ss');
+        value = notitime.format('MM月DD日 HH:mm');
       }
       this.time.push(value);
       return value;
