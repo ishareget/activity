@@ -524,7 +524,7 @@ export class CreateComponent implements OnInit {
         description: `${this.userData.name} 建立新任務-- ${this.mission.missionname}`,
         status: 0
       }
-      console.log(body);
+      console.log('TS'+typeof body);
       this.notificationService.createNoti(body).subscribe(
         result => {
           console.log('result:',result);

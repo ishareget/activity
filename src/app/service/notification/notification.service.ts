@@ -43,7 +43,8 @@ export class NoticationService {
   * @param body
   * @memberof NotiService
   */
-  public createNoti(body) {
+  public createNoti(body) {    
+    console.log('service'+typeof body);
     return this.http.post('/api/notification/create', body, this.packToken())
       .map((res: any) => {
         console.log('res:',res);
