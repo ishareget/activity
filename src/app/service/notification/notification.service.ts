@@ -46,6 +46,8 @@ export class NoticationService {
   public createNoti(body) {
     return this.http.post('/api/notification/create', body, this.packToken())
       .map((res: any) => {
+        console.log('res:',res);
+        console.log('res._body',res._body);
         return res.json() || {}
       });
   }

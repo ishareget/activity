@@ -514,7 +514,6 @@ export class CreateComponent implements OnInit {
    * @memberof CreateComponent
    */
   public async createNotification(createtime, missionId) {
-    console.log(this.studentGroupdata);
     this.studentGroupdata.forEach(element => {
       const body = {
         username: element.username,
@@ -528,6 +527,7 @@ export class CreateComponent implements OnInit {
       console.log(body);
       this.notificationService.createNoti(body).subscribe(
         result => {
+          console.log('result:',result);
           if (result.affectedRows === 1) {
             console.log('ok');
           }
