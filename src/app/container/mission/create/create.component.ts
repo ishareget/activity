@@ -514,9 +514,10 @@ export class CreateComponent implements OnInit {
    * @memberof CreateComponent
    */
   public async createNotification(createtime, missionId) {
-    for (let i = 0; i < this.studentGroupdata.length; i++) {
+    console.log(this.studentGroupdata);
+    this.studentGroupdata.forEach(element => {
       const body = {
-        username: this.studentGroupdata[i].username,
+        username: element.username,
         type: '任務',
         groupid: this.userData.groupid,
         mission_id: missionId,
@@ -524,8 +525,17 @@ export class CreateComponent implements OnInit {
         description: `${this.userData.name} 建立新任務-- ${this.mission.missionname}`,
         status: 0
       }
-      await this.notificationService.createNoti(body).subscribe()
-    }
+      console.log(body);
+      this.notificationService.createNoti(body).subscribe(
+        result => {
+          if (result.affectedRows === 1) {
+            console.log('ok');
+          }
+        }
+      )
+    });
+    // for (let i = 0; i < this.studentGroupdata.length; i++) {
+    // }
     this.swalDialogSuccess.show();
     setTimeout(() => {
       this.router.navigate([`mission/introduce`], { queryParams: { id: missionId } });
