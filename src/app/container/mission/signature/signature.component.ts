@@ -123,11 +123,7 @@ export class SignatureComponent implements OnInit {
   }
 
   /**
-<<<<<<< HEAD
-   * 取得簽到人數
-=======
    * 取得以參加任務的學生簽到狀況
->>>>>>> 84dad348b3db25c19746625289fae025fb997727
    *
    * @memberof SignatureComponent
    */

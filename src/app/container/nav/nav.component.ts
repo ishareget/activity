@@ -37,6 +37,8 @@ export class NavComponent implements OnInit {
   public unRead: any = 0;
   public notiTime: any = [];
   public time: any = [];
+  public notiHref: any = [];
+  public noti: any = [];
 
   constructor(
     private router: ActivatedRoute,
@@ -174,7 +176,18 @@ export class NavComponent implements OnInit {
     }
     await this.noticationService.updateNoti(body).subscribe(
       result => {
-        console.log(result);
+        if (result.affectedRows === 1) {
+          this.data.forEach(e => {
+            if (e.id === body.id) {
+              if (e.type === '任務') {
+                this.route.navigate([`mission/introduce`], { queryParams: { id: e.mission_id } });
+              }
+              else {
+                this.route.navigate(['user/point']);
+              }
+            }
+          });
+        }
       }
     )
   }
@@ -190,7 +203,7 @@ export class NavComponent implements OnInit {
     await this.noticationService.getNoti(body).subscribe(
       result => {
         if (result.length > 0) {
-          /**陣列取得通知時間*/ 
+          /**陣列取得通知時間*/
           _.map(result, (value) => {
             value = moment(value.noti_time);
             this.notiTime.push(value);
@@ -198,7 +211,6 @@ export class NavComponent implements OnInit {
           this.data = result;
           this.unRead = 0;
           this.unReadcount(result);
-          this.setNotiTime(this.notiTime);
         } else {
           console.log('length=0');
         }
@@ -206,35 +218,6 @@ export class NavComponent implements OnInit {
     )
   }
 
-  /**
-   * 設定通知時間格式
-   * @memberof NavComponent
-   */
-  public setNotiTime(value) {
-    value.forEach(e => {
-      var now = new Date().getTime();
-      var notitime = e;
-      var detime = (now - e) / 1000;
-
-      // format string
-      if (detime < 10) {
-        value = '數秒前';
-      }
-      else if (detime < 60) { // sent in last minute
-        value = '在 ' + Math.floor(detime) + '秒前';
-      }
-      else if (detime < 3600) { // sent in last hour
-        value = '在 ' + Math.floor(detime / 60) + '分鐘前';
-      }
-      else if (detime < 86400) { // sent on last day
-        value = '在 ' + Math.floor(detime / 3600) + '小時前';
-      }
-      else { // sent more than one day ago
-        value = notitime.format('MM月DD日 HH:mm');
-      }
-      this.time.push(value);
-      return value;
-    })
-  }
 }
+
 
