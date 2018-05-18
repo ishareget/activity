@@ -211,10 +211,13 @@ export class CreateComponent implements OnInit {
    */
   public async userGetPersonnalGroup() {
     this.studentDatas.forEach(element => {
-      if (element.groupid === this.userData.groupid) {
+      if (element.groupid === this.userData.groupid && this.userData.groupid !== 1) {
+        this.studentGroupdata.push(element);
+      } else {
         this.studentGroupdata.push(element);
       }
     });
+    console.log(this.studentGroupdata);
     this.getUserPermission();
   }
 
