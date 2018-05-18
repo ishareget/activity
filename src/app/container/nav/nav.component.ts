@@ -167,30 +167,60 @@ export class NavComponent implements OnInit {
   }
 
   /**
-   * 最新通知轉先前通知
-   * @memberof NavComponent
-   */
-  public async turnstatus(data) {
+    * 最新通知轉先前通知
+    * @memberof NavComponent
+    */
+  public async turnstatus() {
     const body = {
-      id: data.id
+      username: this.userData.username
+    }
+    console.log(body);
+    await this.noticationService.updateNoti(body).subscribe(
+      result => {
+        console.log(result);
+      }
+    )
+  }
+
+  /**
+  * 最新通知轉先前通知&通知跳轉連結頁面
+  * @memberof NavComponent
+  */
+  public async turnurl(data) {
+    // console.log(data);
+    const body = {
+      id: data.id,
+      username: data.username
     }
     await this.noticationService.updateNoti(body).subscribe(
       result => {
-        if (result.affectedRows === 1) {
-          this.data.forEach(e => {
-            if (e.id === body.id) {
-              if (e.type === '任務') {
-                this.route.navigate([`mission/introduce`], { queryParams: { id: e.mission_id } });
-              }
-              else {
-                console.log(2);
-                this.route.navigate(['user/point']);
-              }
+        console.log(body);
+        console.log(result);
+        this.data.forEach(e => {
+          console.log(e);
+          if (e.id === body.id) {
+            if (e.type === '任務') {
+              this.route.navigate([`mission/introduce`], { queryParams: { id: e.mission_id } });
             }
-          });
-        }
+            else {
+              console.log(2);
+              this.route.navigate(['user/point']);
+            }
+          }
+        });
       }
     )
+    // console.log(data.type);
+    // console.log(data.mission_id);
+    // console.log(data.id);
+    // if (data.type === '任務') {
+    //   console.log(1);
+    //   this.route.navigate([`mission/introduce`], { queryParams: { id: data.mission_id } });
+    // }
+    // else {
+    //   console.log(2);
+    //   this.route.navigate(['user/point'], { skipLocationChange: true });
+    // }
   }
 
   /**
@@ -203,6 +233,7 @@ export class NavComponent implements OnInit {
     }
     await this.noticationService.getNoti(body).subscribe(
       result => {
+        // this.turnstatus();
         if (result.length > 0) {
           /**陣列取得通知時間*/
           _.map(result, (value) => {
@@ -213,6 +244,7 @@ export class NavComponent implements OnInit {
           this.unRead = 0;
           this.unReadcount(result);
           this.setNotiTime(this.notiTime);
+
         } else {
           console.log('length=0');
         }

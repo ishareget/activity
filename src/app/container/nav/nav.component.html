@@ -19,7 +19,7 @@
           </div>
           <div class="list-group">
             <div *ngFor="let value of data;let i = index">
-              <a *ngIf="value.status == 0" class="list-group-item" (click)="turnstatus(value);" href="#" >
+              <a *ngIf="value.status == 0" class="list-group-item" (click)="turnurl(value);" href="#" >
                 <div class="dropdown-divider my-0"></div>
                 <span class="my-2" [ngClass]="{
                         'btn-red': value.type=='任務',
@@ -37,7 +37,7 @@
           <a class="pl-3 py-1 notice">先前通知</a>
           <div class="list-group">
             <div *ngFor="let value of data;let i=index">
-              <a *ngIf="value.status == 1" class="list-group-item item2" href="#" >
+              <a *ngIf="value.status == 1" class="list-group-item item2" (click)="turnurl(value);" href="#" >
                 <div class="dropdown-divider my-0"></div>
                 <span class="my-2" [ngClass]="{
                     'btn-red': value.type=='任務',
@@ -80,7 +80,7 @@
           </div>
         </li>
         <li class="nav-item dropdown" *ngIf="isLogin &&  !rwd" (click)="notice();">
-          <button type="button" class="btn btn-nav text-white fa fa-bell fa-lg" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <button type="button" class="btn btn-nav text-white fa fa-bell fa-lg" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" (click)="notice();">
             <span class="sr-only">Toggle Dropdown</span>
             <span *ngIf="unRead > 0" class="unRead">{{unRead}}</span>
           </button>
@@ -96,7 +96,7 @@
 
             <div class="list-group">
               <div *ngFor="let value of data;let i = index">
-                <a *ngIf="value.status == 0 " class="list-group-item" (click)="turnstatus(value);" href="#" >
+                <a *ngIf="value.status == 0 " class="list-group-item" (click)="turnurl(value);" href="#" >
                   <span class="my-2" [ngClass]="{
                         'btn-red': value.type=='任務',
                         'btn-blue': value.type=='點數',
@@ -114,7 +114,7 @@
             <div class="dropdown-divider my-0"></div>
             <div class="list-group">
               <div *ngFor="let value of data;let i=index">
-                <a *ngIf="value.status == 1" class="list-group-item item2" href="#" >
+                <a *ngIf="value.status == 1" class="list-group-item item2" (click)="turnurl(value);" href="#" >
                   <span class="my-2" [ngClass]="{
                     'btn-red': value.type=='任務',
                     'btn-blue': value.type=='點數',
