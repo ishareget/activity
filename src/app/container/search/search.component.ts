@@ -49,6 +49,7 @@ export class SearchComponent implements OnInit {
   public dist: any = ''; // 區
   public missionname: any = ''; // 欲搜尋之任務名稱
   public missionShow: any = [];
+  public unloginMission:any = []; //未登入使用者可看到之任務
 
   public aaa: any;
 
@@ -182,6 +183,7 @@ export class SearchComponent implements OnInit {
       });
     }
     this.searchType === 0 && this.missionname === '' ? this.missionShow = this.missions : this.missionShow = show;
+    console.log(this.missionShow);
     this.isLoading = false;
   }
 
@@ -206,7 +208,12 @@ export class SearchComponent implements OnInit {
   public async GET_allMission() {
     await this.missionService.GET_allMission().subscribe(
       result => {
-        this.putIntoMission(result);
+        result.forEach(element => {
+          if(element.missiongroup === 1){
+            this.unloginMission.push(element);
+          }
+        });
+        this.putIntoMission(this.unloginMission);
       }
     )
   }
