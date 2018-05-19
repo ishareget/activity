@@ -11,9 +11,9 @@ export class NoticationService {
     private http: Http
   ) { }
 
-  /** 
+  /**
    * Token打包
-   * 
+   *
    * @memberof NoticationService
   */
   public packToken() {
@@ -24,7 +24,7 @@ export class NoticationService {
   }
 
   /**
-  * 取得通知 
+  * 取得通知
   *
   * @param username
   * @memberof NoticationService
@@ -38,13 +38,13 @@ export class NoticationService {
   }
 
   /**
-  * 新增通知 
+  * 新增通知
   *
   * @param body
   * @memberof NotiService
   */
-  public createNoti(body) {    
-    console.log('service'+typeof body);
+  public createNoti(body) {
+    console.log('service' + typeof body);
     return this.http.post('/api/notification/create', body, this.packToken())
       .map((res: any) => {
         return res.json() || {}
@@ -52,7 +52,7 @@ export class NoticationService {
   }
 
   /**
-  * 更新通知 
+  * 更新通知
   *
   * @param body
   * @memberof NotiService

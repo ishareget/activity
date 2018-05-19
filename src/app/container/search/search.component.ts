@@ -183,7 +183,7 @@ export class SearchComponent implements OnInit {
    * @memberof SearchComponent
    */
   public async GET_mission() {
-    if (this.userData != undefined) {
+    if (this.userData !== undefined) {
       await this.missionService.GET_groupMission(this.userData.groupid).subscribe(
         result => {
           this.putIntoMission(result);
