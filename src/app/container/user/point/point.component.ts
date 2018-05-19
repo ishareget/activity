@@ -1,10 +1,12 @@
 import { Component, OnInit, ViewChild, HostListener } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { MissionService } from '../../../service/mission/mission.service';
-import { PointService } from '../../../service/point/point.service';
+
 import { SwalComponent } from '@toverux/ngsweetalert2';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
+
 import { UserService } from 'app/service/user/user.service';
+import { MissionService } from '../../../service/mission/mission.service';
+import { PointService } from '../../../service/point/point.service';
 
 @Component({
   selector: 'app-point',
@@ -21,7 +23,7 @@ export class PointComponent implements OnInit {
 
   public userData: any;
   public isLoading: Boolean = true;
-  public recordstatus: any;
+  public recordStatus: any;
   public size = 0;
   constructor(
     private router: Router,
@@ -162,13 +164,13 @@ export class PointComponent implements OnInit {
       default:
         if ((parseInt(x, 10) >= 11) && (parseInt(x, 10) <= 13)) {
           data = 'bg-success text-white font-weight-bold first';
-          this.recordstatus = '午餐兌換';
+          this.recordStatus = '午餐兌換';
         } else if ((parseInt(x, 10) >= 17) && (parseInt(x, 10) <= 19)) {
           data = 'bg-info text-white font-weight-bold first';
-          this.recordstatus = '晚餐兌換';
+          this.recordStatus = '晚餐兌換';
         } else {
           data = 'bg-danger text-white font-weight-bold first';
-          this.recordstatus = '時段錯誤';
+          this.recordStatus = '時段錯誤';
         }
         break;
     }

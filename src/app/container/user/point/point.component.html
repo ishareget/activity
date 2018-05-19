@@ -91,7 +91,7 @@
                                             </div>
                                         </div>
                                         <tr *ngFor="let data of data2 | paginate: { itemsPerPage: 10, currentPage: page } ; let i = index">
-                                            <td [ngClass]="color(data.recordtime | date: 'HH')">{{recordstatus}}</td>
+                                            <td [ngClass]="color(data.recordtime | date: 'HH')">{{recordStatus}}</td>
                                             <td class="secocnd">
                                                 <p class="mb-0 name">{{data.name}}</p>
                                                 <p class="mb-0 text-secondary">兌換時間：{{data.recordtime | date: 'yyyy-MM-dd HH:mm:ss'}}</p>

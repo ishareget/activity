@@ -1,22 +1,22 @@
 <div id="home" class="pb-4">
 
   <!-- 輪播圖 -->
-  <div class="container text-center" *ngIf="!isLoading && iscarousel">
+  <div class="container text-center" *ngIf="!isLoading && isCarousel">
     <div id="carouselSlider" class="carousel slide" data-ride="carousel">
       <ol class="carousel-indicators">
-        <li data-target="#carouselSlider" class="active" [attr.data-slide-to]="i" *ngFor="let carousels of carouseldata | slice:0:1 ;let i =index"
+        <li data-target="#carouselSlider" class="active" [attr.data-slide-to]="i" *ngFor="let carousels of carouselData | slice:0:1 ;let i =index"
           data-target="#carouselSlider"></li>
-        <li data-target="#carouselSlider" [attr.data-slide-to]="i+1" *ngFor="let carousels of carouseldata | slice:1:carouseldata.length  ;let i =index"
+        <li data-target="#carouselSlider" [attr.data-slide-to]="i+1" *ngFor="let carousels of carouselData | slice:1:carouselData.length  ;let i =index"
           data-target="#carouselSlider"></li>
       </ol>
 
       <div class="carousel-inner ">
-        <div class="carousel-item active" *ngFor="let carousels of carouseldata | slice:0:1 ;let i =index">
+        <div class="carousel-item active" *ngFor="let carousels of carouselData | slice:0:1 ;let i =index">
           <a href="{{carousels.picturelink}}" target="_blank">
             <img src="{{carousels.pictureurl}}" class="img-set" data-id="{{i}}" alt="{{carousels.picturecontent}}" title="{{carousels.picturecontent}}">
           </a>
         </div>
-        <div class="carousel-item" *ngFor="let carousels of carouseldata | slice:1:carouseldata.length ;let i =index">
+        <div class="carousel-item" *ngFor="let carousels of carouselData | slice:1:carouselData.length ;let i =index">
           <a href="{{carousels.picturelink}}" target="_blank">
             <img src="{{carousels.pictureurl}}" class="img-set" data-id="{{i+1}}" alt="{{carousels.picturecontent}}" title="{{carousels.picturecontent}}">
           </a>

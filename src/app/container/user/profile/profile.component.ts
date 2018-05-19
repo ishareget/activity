@@ -1,14 +1,16 @@
 import { Component, OnInit, ViewChild, HostListener } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { Event } from '@angular/router/src/events';
+
 import { Cookie } from 'ng2-cookies/ng2-cookies';
 import { SwalComponent } from '@toverux/ngsweetalert2';
-import { Event } from '@angular/router/src/events';
-import { UserService } from '../../../service/user/user.service';
 import { resource } from 'selenium-webdriver/http';
 import * as moment from 'moment';
 import { error } from 'selenium-webdriver';
 import { Location } from '@angular/common';
 import { ImageCropperComponent, CropperSettings, Bounds } from 'ng2-img-cropper';
+
+import { UserService } from '../../../service/user/user.service';
 
 declare let jquery: any;
 declare let $: any;
@@ -37,11 +39,11 @@ export class ProfileComponent implements OnInit {
   public errorData: String = '';
 
   private url = '';
-  private urlboolean: Boolean = true;
+  private urlBoolean: Boolean = true;
   private file: any;
-  private filename: any;
+  private fileName: any;
   public isLoading: Boolean = true;
-  public changepicture: Boolean = false;
+  public changePicture: Boolean = false;
   public size = 0;
   uploadedImage: File;
   data: any;
@@ -68,11 +70,11 @@ export class ProfileComponent implements OnInit {
     const image: any = new Image();
     const file: File = $event.target.files[0];
     if (file !== undefined) {
-      this.filename = file.name.split('.')[1];
+      this.fileName = file.name.split('.')[1];
       const reader = new FileReader();
       reader.onload = (x: any) => {
         image.src = x.target.result;
-        { this.urlboolean = false; }
+        { this.urlBoolean = false; }
         this.cropper.setImage(image);
       }
       reader.readAsDataURL(file);
@@ -164,7 +166,7 @@ export class ProfileComponent implements OnInit {
   public async saveUserInformation() {
     this.bodyCheck();
     if (!this.errorData) {
-      this.changepicture ? this.updatePicture() : this.updateProfile();
+      this.changePicture ? this.updatePicture() : this.updateProfile();
 
     } else {
       this.swalDialogErrorCkeck.html = `<ul class="text-center">${this.errorData}</ul>`;
@@ -218,7 +220,7 @@ export class ProfileComponent implements OnInit {
     const body = {
       url: this.file,
       username: this.userData.username,
-      filetype: this.filename
+      filetype: this.fileName
     }
     await this.userService.POST_uploadBase64(body).subscribe(
       result => {
@@ -234,7 +236,7 @@ export class ProfileComponent implements OnInit {
    * @memberof ProfileComponent
    */
   public async readUrl(data) {
-    this.changepicture = true;
+    this.changePicture = true;
     this.userData.picture = data;
     this.file = data;
     $('#changephoto').modal('hide');

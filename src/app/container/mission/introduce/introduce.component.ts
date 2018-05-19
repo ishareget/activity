@@ -1,17 +1,17 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { async } from '@angular/core/testing';
-
 import { DomSanitizer } from '@angular/platform-browser';
-import { MissionService } from '../../../service/mission/mission.service';
+
 import { Cookie } from 'ng2-cookies/ng2-cookies';
 import { SwalComponent } from '@toverux/ngsweetalert2';
-import { UserService } from '../../../service/user/user.service';
-
 import * as moment from 'moment';
 import * as R from 'ramda';
 import { ConfirmationService } from 'primeng/components/common/confirmationservice';
+
 import { Mission } from '../../../class/mission/mission';
+import { MissionService } from '../../../service/mission/mission.service';
+import { UserService } from '../../../service/user/user.service';
 
 @Component({
   selector: 'app-introduce',
@@ -37,7 +37,7 @@ export class IntroduceComponent implements OnInit {
   public missions: any = [];
   public missionJoin: any = [];
 
-  public qrcodewebsite: String;
+  public qrcodeWebsite: String;
 
   public isExpOpen: Boolean = true;
   public isJoin: Boolean = false;
@@ -136,7 +136,7 @@ export class IntroduceComponent implements OnInit {
               }
             });
             if (this.missions.signature === 1) {
-              this.qrcodewebsite = `http://www.ishareget.org/#/mission/punchin?id=${this.missions.id}`;
+              this.qrcodeWebsite = `http://www.ishareget.org/#/mission/punchin?id=${this.missions.id}`;
             }
             this.isLoading = false;
             this.checkApply();

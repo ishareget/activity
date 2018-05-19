@@ -66,7 +66,7 @@
         <li class="nav-item">
           <a href="#" *ngIf="readyLogin" class="btn btn-nav text-white" data-toggle="modal" data-target="#loginModal">登入</a>
         </li>
-        <li class="nav-item" *ngIf="(isLogin && logingroup === 3 || logingroup === 2) && !rwd">
+        <li class="nav-item" *ngIf="(isLogin && loginGroup === 3 || loginGroup === 2) && !rwd">
           <a href="#" class="btn btn-nav text-white" [routerLink]="['/user/management']" [queryParams]="{ tab: 0 }">
             <i class="fa fa-edit fa-lg"></i>
           </a>
@@ -148,7 +148,7 @@
               </div>
             </div>
         </li> -->
-        <li class="nav-item" *ngIf="isLogin && logingroup == 1">
+        <li class="nav-item" *ngIf="isLogin && loginGroup == 1">
           <a href="#" class="btn btn-nav text-warning" [routerLink]="['/user/point']">
             <i class="fa fa-copyright fa-lg" aria-hidden="true"></i>({{point}})
           </a>
@@ -164,14 +164,14 @@
           </button>
           <div class="dropdown-menu dropdown-menu-right menuopacity">
             <!-- 學生區塊 -->
-            <div *ngIf="isLogin && logingroup == 1">
+            <div *ngIf="isLogin && loginGroup == 1">
               <h6 class="dropdown-header">參加任務</h6>
               <a class="dropdown-item pl-5" href="#" [routerLink]="['/user']">個人主頁</a>
               <a class="dropdown-item pl-5" href="#" [routerLink]="['/user/point']">任務點數</a>
             </div>
 
             <!-- 老師區塊 -->
-            <div *ngIf="isLogin && ( logingroup == 3 || logingroup == 2 )">
+            <div *ngIf="isLogin && ( loginGroup == 3 || loginGroup == 2 )">
               <h6 class="dropdown-header">管理任務</h6>
               <a class="dropdown-item pl-5" href="#" [routerLink]="['/user/management']" [queryParams]="{ tab: 0 }">任務管理</a>
               <a class="dropdown-item pl-5" href="#" [routerLink]="['/user/expmanagement']" [queryParams]="{ tab: 0 }">心得管理</a>
@@ -183,7 +183,7 @@
             <a class="dropdown-item pl-5" href="#" [routerLink]="['/user/profile']">個人資料</a>
 
             <!-- 老師志工區塊 -->
-            <div *ngIf="isLogin && logingroup == 3 || logingroup == 2">
+            <div *ngIf="isLogin && loginGroup == 3 || loginGroup == 2">
               <div class="dropdown-divider"></div>
               <h6 class="dropdown-header">平台服務</h6>
               <a class="dropdown-item pl-5" href="http://admin.ishareget.org/" target="_blank">後台系統</a>
@@ -192,24 +192,24 @@
             <a class="dropdown-item" (click)="logout()" id="logout">登出</a>
           </div>
         </li>
-        <li class="nav-item" *ngIf="isLogin && logingroup == 3 || logingroup == 2">
+        <li class="nav-item" *ngIf="isLogin && loginGroup == 3 || loginGroup == 2">
           <a href="#" class="btn btn-create text-white" [routerLink]="['/mission/create']">建立任務</a>
         </li>
       </ul>
       <ul class="navbar-nav ml-auto" *ngIf="rwd">
-        <li *ngIf="isLogin && logingroup == 1">
+        <li *ngIf="isLogin && loginGroup == 1">
           <a href="#" class="btn btn-nav" [routerLink]="['/user']" (click)="onNavClick()">　個人主頁</a>
         </li>
-        <li *ngIf="isLogin && logingroup == 3 || logingroup == 2">
+        <li *ngIf="isLogin && loginGroup == 3 || loginGroup == 2">
           <a href="#" class="btn btn-nav" [routerLink]="['/mission/create']" (click)="onNavClick()">　建立任務</a>
         </li>
-        <li *ngIf="isLogin && ( logingroup == 3 || logingroup == 2 )">
+        <li *ngIf="isLogin && ( loginGroup == 3 || loginGroup == 2 )">
           <a href="#" class="btn btn-nav" [routerLink]="['/user/management']" [queryParams]="{ tab: 0 }" (click)="onNavClick()">　任務管理</a>
         </li>
-        <li *ngIf="isLogin && ( logingroup == 3 || logingroup == 2 )">
+        <li *ngIf="isLogin && ( loginGroup == 3 || loginGroup == 2 )">
           <a href="#" class="btn btn-nav" [routerLink]="['/user/expmanagement']" [queryParams]="{ tab: 0 }" (click)="onNavClick()">　心得管理</a>
         </li>
-        <li *ngIf="isLogin && logingroup == 1">
+        <li *ngIf="isLogin && loginGroup == 1">
           <a href="#" class="btn btn-nav" [routerLink]="['/user/point']" (click)="onNavClick()">　任務點數</a>
         </li>
         <li *ngIf="isLogin">
@@ -218,7 +218,7 @@
         <li *ngIf="isLogin">
           <a href="#" class="btn btn-nav" [routerLink]="['/user/profile']" (click)="onNavClick()">　個人資料</a>
         </li>
-        <li *ngIf="isLogin && logingroup == 3 || logingroup == 2">
+        <li *ngIf="isLogin && loginGroup == 3 || loginGroup == 2">
           <a href="http://admin.ishareget.org/" class="btn btn-nav" target="_blank" (click)="onNavClick()">　後台系統</a>
         </li>
         <li *ngIf="isLogin">

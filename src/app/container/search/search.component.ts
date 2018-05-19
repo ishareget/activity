@@ -1,21 +1,21 @@
 import { Component, OnInit, ViewChild, transition } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MissionService } from '../../service/mission/mission.service';
+import { DomSanitizer } from '@angular/platform-browser';
+import { defaultUrlMatcher } from '@angular/router/src/shared';
+import { ngControlStatusHost } from '@angular/forms/src/directives/ng_control_status';
+
+import { ConfirmationService } from 'primeng/components/common/confirmationservice';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
 import { IMyDpOptions } from 'mydatepicker';
-import * as moment from 'moment';
 import { element } from 'protractor';
 import { SwalComponent } from '@toverux/ngsweetalert2';
-import { ngControlStatusHost } from '@angular/forms/src/directives/ng_control_status';
-import { ConfirmationService } from 'primeng/components/common/confirmationservice';
+import { resource } from 'selenium-webdriver/http';
 import { BPClient } from 'blocking-proxy/built/lib/client';
-import * as R from 'ramda';
-import { defaultUrlMatcher } from '@angular/router/src/shared';
+import * as moment from 'moment';
+
 import { Area } from '../../class/mission/area';
 import { UserService } from '../../service/user/user.service';
-import { resource } from 'selenium-webdriver/http';
-import { DomSanitizer } from '@angular/platform-browser';
-
+import { MissionService } from '../../service/mission/mission.service';
 
 declare let jquery: any;
 declare let $: any;
@@ -31,10 +31,6 @@ export class SearchComponent implements OnInit {
   @ViewChild('dialogErrorAll') private swalDialogErrorAll: SwalComponent;
   @ViewChild('dialogPassError') private swalDialogPassError: SwalComponent;
 
-  modelValue = ''; // 綁定ngModel的部份
-  modelValue1 = '';
-  searchresult = '';
-
   public distList: Array<String> = [];
   public area: any = new Area();
   public cityArea: any = this.area['city'];
@@ -47,13 +43,8 @@ export class SearchComponent implements OnInit {
   public missionFinalDate: any;
   public city: any = ''; // 市
   public dist: any = ''; // 區
-  public missionname: any = ''; // 欲搜尋之任務名稱
+  public missionName: any = ''; // 欲搜尋之任務名稱
   public missionShow: any = [];
-  public unloginMission:any = []; //未登入使用者可看到之任務
-
-  public aaa: any;
-
-  // public isdata: Boolean = false;
 
   public isLoading: Boolean = true;
   public page: Number = 1;
@@ -92,10 +83,10 @@ export class SearchComponent implements OnInit {
     this.GET_missionType();
     this.router.queryParams.forEach(params => {
       this.searchType = Number(params['type']) || 0;
-      this.missionname = params['name'] || '';
+      this.missionName = params['name'] || '';
       $('#searchBtn').click();
     });
-    Cookie.get('userCookie') ? this.GET_userInfo() : this.GET_allMission();
+    Cookie.get('userCookie') ? this.GET_userInfo() : this.GET_mission();
   }
 
   /**
@@ -176,14 +167,13 @@ export class SearchComponent implements OnInit {
         if (this.searchType === e.missiontype) { show.push(e) }
       });
     }
-    if (this.missionname !== '') {
+    if (this.missionName !== '') {
       this.missions.forEach(e => {
-        if (e.missionname.indexOf(this.missionname) > -1) { show.push(e) }
-        // this.missionname ? e.missionname.indexOf(this.missionname) > -1 ? show.push(e) : null : null;
+        if (e.missionName.indexOf(this.missionName) > -1) { show.push(e) }
+        // this.missionName ? e.missionName.indexOf(this.missionName) > -1 ? show.push(e) : null : null;
       });
     }
-    this.searchType === 0 && this.missionname === '' ? this.missionShow = this.missions : this.missionShow = show;
-    console.log(this.missionShow);
+    this.searchType === 0 && this.missionName === '' ? this.missionShow = this.missions : this.missionShow = show;
     this.isLoading = false;
   }
 
@@ -193,29 +183,19 @@ export class SearchComponent implements OnInit {
    * @memberof SearchComponent
    */
   public async GET_mission() {
-    await this.missionService.GET_groupMission(this.userData.groupid).subscribe(
-      result => {
-        this.putIntoMission(result);
-      }
-    )
-  }
-
-  /**
-   * 取得所有任務
-   *
-   * @memberof SearchComponent
-   */
-  public async GET_allMission() {
-    await this.missionService.GET_allMission().subscribe(
-      result => {
-        result.forEach(element => {
-          if(element.missiongroup === 1){
-            this.unloginMission.push(element);
-          }
-        });
-        this.putIntoMission(this.unloginMission);
-      }
-    )
+    if (this.userData != undefined) {
+      await this.missionService.GET_groupMission(this.userData.groupid).subscribe(
+        result => {
+          this.putIntoMission(result);
+        }
+      )
+    } else {
+      await this.missionService.GET_groupMission(1).subscribe(
+        result => {
+          this.putIntoMission(result);
+        }
+      )
+    }
   }
 
   /**
@@ -237,7 +217,7 @@ export class SearchComponent implements OnInit {
         success = true : success = false;
       success ? this.dist ? e.missionlocation.indexOf(this.dist) > -1 ? success = true : success = false :
         success = true : success = false;
-      success ? this.missionname ? e.missionname.indexOf(this.missionname) > -1 ? success = true : success = false :
+      success ? this.missionName ? e.missionName.indexOf(this.missionName) > -1 ? success = true : success = false :
         success = true : success = false
       if (success) { show.push(e) }
       success = true;

@@ -55,7 +55,7 @@
         <div class="col-md-8 p-0 btn-group">
           <button class="btn btn-title">　任務名稱　</button>
           <div class="btn-group w-100">
-            <input type="text" class="w-100 form-control btn-selection" placeholder="請輸入搜尋名稱" [(ngModel)]="missionname" aria-describedby="basic-addon3">
+            <input type="text" class="w-100 form-control btn-selection" placeholder="請輸入搜尋名稱" [(ngModel)]="missionName" aria-describedby="basic-addon3">
           </div>
         </div>
         <div class="col-md-1 pt-3"></div>
@@ -91,7 +91,7 @@
         </a>
         <div class="card-block">
           <a [routerLink]="['../mission/introduce']" [queryParams]="{id:mission.id}" target="_blank">
-            <h5 class="card-title">{{mission.missionname}}</h5>
+            <h5 class="card-title">{{mission.missionName}}</h5>
           </a>
           <div class="card-text">
             <p>活動時間：{{mission.missionstartdate | date: 'yyyy/MM/dd'}}~{{mission.missionfinaldate | date: 'yyyy/MM/dd'}}</p>

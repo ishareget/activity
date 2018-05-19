@@ -1,11 +1,13 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Router, Params } from '@angular/router';
+import { async } from '@angular/core/testing';
+
 import swal from 'sweetalert2';
 import * as moment from 'moment';
-import { Router, Params } from '@angular/router';
+import { Cookie } from 'ng2-cookies/ng2-cookies';
+
 import { UserService } from '../../../service/user/user.service';
 import { MissionService } from '../../../service/mission/mission.service';
-import { async } from '@angular/core/testing';
-import { Cookie } from 'ng2-cookies/ng2-cookies';
 
 @Component({
   selector: 'app-punchinstatus',
@@ -18,7 +20,7 @@ export class PunchinstatusComponent implements OnInit {
   public userData: any;
   public name: any;
   public missions: any = [];
-  public signaturedate: any;
+  public signatureDate: any;
   constructor(
     private router: Router,
     private userService: UserService,
@@ -76,10 +78,10 @@ export class PunchinstatusComponent implements OnInit {
    *
    * @memberof PunchinstatusComponent
    */
-  public bodyMaker(signaturedata) {
+  public bodyMaker(signatureData) {
     const body = {
       signaturestatus: '已簽到',
-      signaturedate: signaturedata,
+      signaturedate: signatureData,
       missionid: this.missions.id,
       studentname: this.userData.username
     };
@@ -92,8 +94,8 @@ export class PunchinstatusComponent implements OnInit {
    * @memberof PunchinstatusComponent
    */
   public async punchin() {
-    this.signaturedate = moment().format('YYYY-MM-DD HH:mm:ss');
-    const body = this.bodyMaker(this.signaturedate);
+    this.signatureDate = moment().format('YYYY-MM-DD HH:mm:ss');
+    const body = this.bodyMaker(this.signatureDate);
     await this.missionService.POST_punchinMission(body).subscribe();
   }
 

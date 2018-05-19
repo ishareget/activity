@@ -1,23 +1,22 @@
 import { Component, OnInit, ViewChild, EventEmitter } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { MissionService } from '../../../service/mission/mission.service';
-import { UserService } from '../../../service/user/user.service';
-import { NoticationService } from '../../../service/notification/notification.service';
+import { and } from '@angular/router/src/utils/collection';
+import { Location } from '@angular/common';
+import { constructDependencies } from '@angular/core/src/di/reflective_provider';
+import { BootstrapOptions } from '@angular/core/src/application_ref';
 
 import { SwalComponent } from '@toverux/ngsweetalert2';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
 import { IMyDpOptions } from 'mydatepicker';
 import * as moment from 'moment';
-
-import { Mission } from '../.././../class/mission/mission';
-import { constructDependencies } from '@angular/core/src/di/reflective_provider';
-import { BootstrapOptions } from '@angular/core/src/application_ref';
-
-import { Location } from '@angular/common';
-import { isUndefined } from 'util';
-import { and } from '@angular/router/src/utils/collection';
 import { ImageCropperComponent, CropperSettings, Bounds } from 'ng2-img-cropper';
+import { isUndefined } from 'util';
 import { Window } from 'selenium-webdriver';
+
+import { MissionService } from '../../../service/mission/mission.service';
+import { UserService } from '../../../service/user/user.service';
+import { NoticationService } from '../../../service/notification/notification.service';
+import { Mission } from '../.././../class/mission/mission';
 import { Area } from '../../../class/mission/area';
 
 declare let jquery: any;
@@ -67,12 +66,11 @@ export class CreateComponent implements OnInit {
   public type: String;
 
   public file: any;
-  public filename: any;
+  public fileName: any;
   public andited: Boolean = false; // 判斷是否已審核
-  public changepicture: Boolean = false;
-  public ErrorData: any = '';
+  public changePicture: Boolean = false;
+  public errorData: any = '';
   public step: any = 0;
-  public screenwidth = false;
   public DatePickerOption: IMyDpOptions = {
     dateFormat: 'yyyy-m-dd',
     satHighlight: true,
@@ -113,7 +111,7 @@ export class CreateComponent implements OnInit {
     const image: any = new Image();
     const file: File = $event.target.files[0];
     if (file !== undefined) {
-      this.filename = file.name.split('.')[1];
+      this.fileName = file.name.split('.')[1];
       const reader = new FileReader();
       reader.onload = (x: any) => {
         image.src = x.target.result;
@@ -372,40 +370,40 @@ export class CreateComponent implements OnInit {
    */
   public bodyCheck() {
     const nowdate = moment().format('YYYY-M-DD');
-    this.ErrorData = '';
+    this.errorData = '';
     this.mission.missionlocation = this.city + this.dist + this.road;
-    this.city ? this.ErrorData += '' : this.ErrorData += '<li>請填寫縣市</li>';
-    this.dist ? this.ErrorData += '' : this.ErrorData += '<li>請填寫所在區</li></li>';
+    this.city ? this.errorData += '' : this.errorData += '<li>請填寫縣市</li>';
+    this.dist ? this.errorData += '' : this.errorData += '<li>請填寫所在區</li></li>';
     if (this.road) {
-      (this.road.trim().length !== 0) ? this.ErrorData += '' : this.ErrorData += '<li>請填寫地址</li>';
+      (this.road.trim().length !== 0) ? this.errorData += '' : this.errorData += '<li>請填寫地址</li>';
     } else {
-      this.ErrorData += '<li>請填寫地址</li>';
+      this.errorData += '<li>請填寫地址</li>';
     }
-    this.mission.missionstartdate ? this.ErrorData += '' : this.ErrorData += '<li>請輸入任務開始日期</li>';
-    this.mission.missionfinaldate ? this.ErrorData += '' : this.ErrorData += '<li>請輸入任務結束日期</li>';
-    this.mission.missionexperiencedate ? this.ErrorData += '' : this.ErrorData += '<li>請輸入開放填寫心得日期</li>';
-    this.mission.missionname ? this.ErrorData += '' : this.ErrorData += '<li>請輸入任務標題</li>';
-    this.mission.missioncontent ? this.ErrorData += '' : this.ErrorData += '<li>請輸入任務內容</li>';
-    this.mission.missionpoint ? this.ErrorData += '' : this.ErrorData += '<li>請輸入任務點數</li>';
-    this.mission.missionpicture === undefined ? this.ErrorData += '<li>圖片尚未上傳</li>' : this.ErrorData += '';
+    this.mission.missionstartdate ? this.errorData += '' : this.errorData += '<li>請輸入任務開始日期</li>';
+    this.mission.missionfinaldate ? this.errorData += '' : this.errorData += '<li>請輸入任務結束日期</li>';
+    this.mission.missionexperiencedate ? this.errorData += '' : this.errorData += '<li>請輸入開放填寫心得日期</li>';
+    this.mission.missionname ? this.errorData += '' : this.errorData += '<li>請輸入任務標題</li>';
+    this.mission.missioncontent ? this.errorData += '' : this.errorData += '<li>請輸入任務內容</li>';
+    this.mission.missionpoint ? this.errorData += '' : this.errorData += '<li>請輸入任務點數</li>';
+    this.mission.missionpicture === undefined ? this.errorData += '<li>圖片尚未上傳</li>' : this.errorData += '';
 
     // 防呆
     if ((this.mission.missionfinaldate && this.mission.missionstartdate)
       && this.mission.missionfinaldate.formatted < this.mission.missionstartdate.formatted) {
-      this.ErrorData += '<li>結束日期不可在開始日期之前</li>';
+      this.errorData += '<li>結束日期不可在開始日期之前</li>';
     }
     if ((this.mission.missionexperiencedate && this.mission.missionstartdate)
       && this.mission.missionexperiencedate.formatted < this.mission.missionstartdate.formatted) {
-      this.ErrorData += '<li>撰寫心得日期不可在任務開始日期之前</li>';
+      this.errorData += '<li>撰寫心得日期不可在任務開始日期之前</li>';
     }
     if ((this.mission.missionexperiencedate && nowdate > this.mission.missionexperiencedate.formatted)) {
-      this.ErrorData += '<li>開放心得填寫日期不可在今天以前</li>';
+      this.errorData += '<li>開放心得填寫日期不可在今天以前</li>';
     }
-    this.mission.missionpoint > 0 ? this.ErrorData += '' : this.ErrorData += '<li>點數不可小於0</li>';
+    this.mission.missionpoint > 0 ? this.errorData += '' : this.errorData += '<li>點數不可小於0</li>';
 
     // 特殊欄位
-    this.type === '旅遊任務' ? this.missionTrans ? this.ErrorData += '' : this.ErrorData += '<li>請輸入交通工具</li>' : this.ErrorData += '';
-    this.type === '影片任務' ? this.missionLink ? this.ErrorData += '' : this.ErrorData += '<li>請輸入影片網址</li>' : this.ErrorData += '';
+    this.type === '旅遊任務' ? this.missionTrans ? this.errorData += '' : this.errorData += '<li>請輸入交通工具</li>' : this.errorData += '';
+    this.type === '影片任務' ? this.missionLink ? this.errorData += '' : this.errorData += '<li>請輸入影片網址</li>' : this.errorData += '';
   }
 
   /**
@@ -443,14 +441,14 @@ export class CreateComponent implements OnInit {
    */
   public async saveMission() {
     this.bodyCheck();
-    if (this.ErrorData === '') {
+    if (this.errorData === '') {
       this.specialBody = {
         'Transportation': this.missionTrans ? this.missionTrans : null,
         'Link': this.missionLink ? this.missionLink : null
       };
-      this.changepicture ? this.updatePicture() : this.mission.missioncreater ? this.POST_updateMission() : this.createMission();
+      this.changePicture ? this.updatePicture() : this.mission.missioncreater ? this.POST_updateMission() : this.createMission();
     } else {
-      this.swalDialogErrorAll.html = `<ul class="text-center">${this.ErrorData}</ul>`;
+      this.swalDialogErrorAll.html = `<ul class="text-center">${this.errorData}</ul>`;
       this.swalDialogErrorAll.show();
     }
   }
@@ -464,7 +462,7 @@ export class CreateComponent implements OnInit {
     const body = {
       url: this.file,
       username: this.userData.username,
-      filetype: this.filename
+      filetype: this.fileName
     }
     await this.missionService.POST_uploadMissionPicture(body).subscribe(
       result => {
@@ -558,7 +556,7 @@ export class CreateComponent implements OnInit {
    * @memberof ProfileComponent
    */
   public async readUrl(data) {
-    this.changepicture = true;
+    this.changePicture = true;
     this.mission.missionpicture = data;
     this.urlBoolean = false;
     this.file = data;

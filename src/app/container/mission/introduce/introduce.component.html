@@ -88,7 +88,7 @@
             </button>
           </div>
           <div *ngIf="(userData.logingroup === 2 || userData.logingroup === 3) && missions.signature === 1" class="mt-2 mb-3 text-center intro-action">
-            <button type="button" *ngIf="missions.signature === 1" class="btn btn-primary form-control" [value]="qrcodewebsite" data-toggle="modal"
+            <button type="button" *ngIf="missions.signature === 1" class="btn btn-primary form-control" [value]="qrcodeWebsite" data-toggle="modal"
               data-target="#modelGET_missionQRcode">QR Code</button>
             <button type="button" *ngIf="missions.signature === 1" [routerLink]="['/mission/signature']" [queryParams]="{id:missions.id}"
               class="btn btn-info form-control">簽到表</button>
@@ -111,7 +111,7 @@
       </div>
       <div class="modal-body">
         <div class="text-center">
-          <qr-code [value]='qrcodewebsite' [size]="250" [canvas]="true"></qr-code>
+          <qr-code [value]='qrcodeWebsite' [size]="250" [canvas]="true"></qr-code>
         </div>
       </div>
     </div>

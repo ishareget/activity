@@ -1,16 +1,17 @@
 import { Component, ViewChild, OnInit, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
-import { MissionService } from '../../service/mission/mission.service';
-import { Cookie } from 'ng2-cookies/ng2-cookies';
 import { async } from '@angular/core/testing';
-import { element } from 'protractor';
-import { UserService } from '../../service/user/user.service';
-import { SwalComponent } from '@toverux/ngsweetalert2';
 import { Location } from '@angular/common';
-
-import * as R from 'ramda';
 import { JSONPBackend } from '@angular/http/src/backends/jsonp_backend';
+
+import { Cookie } from 'ng2-cookies/ng2-cookies';
+import { element } from 'protractor';
+import { SwalComponent } from '@toverux/ngsweetalert2';
+import * as R from 'ramda';
 import * as moment from 'moment';
+
+import { MissionService } from '../../service/mission/mission.service';
+import { UserService } from '../../service/user/user.service';
 
 declare let jquery: any;
 declare let $: any;
@@ -37,8 +38,7 @@ export class UserComponent implements OnInit {
   public missionVerify: any = [];
   public missionReject: any = [];
   public missionAll: any = [];
-  public missionintime: any = []; // 期限內的任務
-  public userdata: any;
+  public missioninTime: any = []; // 期限內的任務
   public img: any;
   public isLoading: Boolean = true;
   public size = 0;
@@ -145,30 +145,30 @@ export class UserComponent implements OnInit {
         if (result.length > 0) {
           result.forEach(e => {
             if (this.formatDate(e.missionfinaldate) > this.formatDate(moment())) {
-              this.missionintime.push(e);
+              this.missioninTime.push(e);
             }
           });
         }
-        for (let i = 0; i < this.missionintime.length; i++) {
-          if (this.missionintime[i].missioncontent) {
-            this.missionintime[i].missioncontent = this.missionintime[i].missioncontent.replace(/<br>/g, '\n');
+        for (let i = 0; i < this.missioninTime.length; i++) {
+          if (this.missioninTime[i].missioncontent) {
+            this.missioninTime[i].missioncontent = this.missioninTime[i].missioncontent.replace(/<br>/g, '\n');
           }
-          switch (this.missionintime[i].status) {
+          switch (this.missioninTime[i].status) {
             case '已參加':
-              this.missionApply.push(this.missionintime[i]);
+              this.missionApply.push(this.missioninTime[i]);
               break;
             case '已提交':
-              this.missionSubmit.push(this.missionintime[i]);
+              this.missionSubmit.push(this.missioninTime[i]);
               break;
             case '已審核':
             case '已發送':
-              this.missionVerify.push(this.missionintime[i]);
+              this.missionVerify.push(this.missioninTime[i]);
               break;
             case '已退回':
-              this.missionReject.push(this.missionintime[i]);
+              this.missionReject.push(this.missioninTime[i]);
               break;
           }
-          this.missionAll.push(this.missionintime[i]);
+          this.missionAll.push(this.missioninTime[i]);
         }
         this.isLoading = false;
       });

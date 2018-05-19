@@ -1,11 +1,13 @@
 import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
-import * as moment from 'moment';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import { SwalComponent } from '@toverux/ngsweetalert2';
-import { UserService } from '../../../service/user/user.service';
-import { Cookie } from 'ng2-cookies/ng2-cookies'
 import { async } from '@angular/core/testing';
+
+import * as moment from 'moment';
+import { SwalComponent } from '@toverux/ngsweetalert2';
+import { Cookie } from 'ng2-cookies/ng2-cookies'
+
 import { MissionService } from '../../../service/mission/mission.service';
+import { UserService } from '../../../service/user/user.service';
 
 
 @Component({
@@ -21,7 +23,6 @@ export class PunchinComponent implements OnInit {
   @ViewChild('dialogIdError') private swalDialogIdError: SwalComponent;
   @ViewChild('dialogSignatureFinish') private dialogSignatureFinish: SwalComponent;
   public userData: any;
-  public logingroup: any = 0;
   public userAccount: String = '';
   public userPassword: String = '';
   public missions: any = [];

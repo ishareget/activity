@@ -1,18 +1,20 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Params, Router, RouterState } from '@angular/router';
-import { SwalComponent } from '@toverux/ngsweetalert2';
-import { MissionService } from '../../service/mission/mission.service';
-import { Cookie } from 'ng2-cookies/ng2-cookies';
 import { Body } from '@angular/http/src/body';
 import { async } from '@angular/core/testing';
 import { ngControlStatusHost } from '@angular/forms/src/directives/ng_control_status';
+import { ResourceLoader } from '@angular/compiler';
+
+import { SwalComponent } from '@toverux/ngsweetalert2';
+import { Cookie } from 'ng2-cookies/ng2-cookies';
 import { clearTimeout, setTimeout } from 'timers';
 import { ConfirmationService } from 'primeng/components/common/confirmationservice';
-import * as R from 'ramda';
-import { UserService } from '../../service/user/user.service';
 import { resource } from 'selenium-webdriver/http';
-import { ResourceLoader } from '@angular/compiler';
+import * as R from 'ramda';
 import * as moment from 'moment';
+
+import { UserService } from '../../service/user/user.service';
+import { MissionService } from '../../service/mission/mission.service';
 
 declare let jquery: any;
 declare let $: any;
@@ -34,12 +36,10 @@ export class HomeComponent implements OnInit {
 
   public loadingFalse: any = false;
   public isLoading: any = true;
-  public iscarousel: any = true;
+  public isCarousel: any = true;
   public missions: any = [];
-  public carouseldata: Object[] = [];
-  public carousellength: any;
-  public nowtime: any;
-  public errorstatus: any = false;
+  public carouselData: Object[] = [];
+  public carouselLength: any;
 
   constructor(
     private router: ActivatedRoute,
@@ -70,8 +70,8 @@ export class HomeComponent implements OnInit {
     this.loadingFalse = false;
     this.isLoading = true;
     this.missions = [];
-    this.carouseldata = [] = [];
-    this.carousellength = undefined;
+    this.carouselData = [] = [];
+    this.carouselLength = undefined;
   }
 
   public async error() {
@@ -228,13 +228,13 @@ export class HomeComponent implements OnInit {
       result => {
 
         if (result) {
-          this.iscarousel = true;
+          this.isCarousel = true;
         } else {
-          this.iscarousel = false;
+          this.isCarousel = false;
         }
 
-        this.carouseldata = result;
-        this.carousellength = result.length;
+        this.carouselData = result;
+        this.carouselLength = result.length;
         this.isLoading = false;
       }
     )

@@ -4,12 +4,12 @@ import { async } from '@angular/core/testing';
 
 import { Cookie } from 'ng2-cookies/ng2-cookies';
 import { SwalComponent } from '@toverux/ngsweetalert2';
-import { UserService } from '../../../service/user/user.service';
-import { MissionService } from '../../../service/mission/mission.service';
-
 import * as moment from 'moment';
 import * as R from 'ramda';
 import { $ } from 'protractor';
+
+import { UserService } from '../../../service/user/user.service';
+import { MissionService } from '../../../service/mission/mission.service';
 
 @Component({
   selector: 'app-signature',
@@ -35,7 +35,6 @@ export class SignatureComponent implements OnInit {
 
   public isLoading: Boolean = true;
   public size = 0; // 判斷視窗大小
-  public dropdownenter: Boolean = false;
 
   constructor(
     private router: Router,

@@ -1,14 +1,16 @@
 import { Component, OnInit, ViewChild, DoCheck, HostListener } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MissionService } from '../../../service/mission/mission.service';
+import { Location } from '@angular/common';
+
 import { SwalComponent } from '@toverux/ngsweetalert2';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
 import { IMyDpOptions } from 'mydatepicker';
 import * as moment from 'moment';
 import * as R from 'ramda';
 
-import { Location } from '@angular/common';
 import { UserService } from 'app/service/user/user.service';
+import { MissionService } from '../../../service/mission/mission.service';
+
 @Component({
   selector: 'app-expmanagement',
   templateUrl: './expmanagement.component.html',
@@ -25,16 +27,16 @@ export class ExpmanagementComponent implements OnInit {
   @ViewChild('dialogRevertError') private swalDialogRevertError: SwalComponent;
   @ViewChild('dialogPassError2') private swalDialogPassError2: SwalComponent;
 
-  public userdata: any = null;
+  public userData: any = null;
   public datas: any = [];
   public tab = 0;
   public page = 1;
   public isLoading: Boolean = true;
   public size = 0; // 判斷視窗大小
-  public sentdatas: any = [];
-  public auditeddatas: any = [];
-  public unauditeddatas: any = [];
-  public turnbackdatas: any = [];
+  public sentDatas: any = [];
+  public auditedDatas: any = [];
+  public unauditedDatas: any = [];
+  public turnbackDatas: any = [];
   public missionType: any = [];
 
   constructor(
@@ -67,8 +69,8 @@ export class ExpmanagementComponent implements OnInit {
     await this.userService.GET_userInfo().subscribe(
       result => {
         if (result[0]) {
-          this.userdata = result[0];
-          switch (Number(this.userdata.logingroup)) {
+          this.userData = result[0];
+          switch (Number(this.userData.logingroup)) {
             case 2:
             case 3:
               this.GET_missionType();
@@ -125,7 +127,7 @@ export class ExpmanagementComponent implements OnInit {
    */
   public async GET_mission() {
     this.datas = [];
-    await this.missionService.GET_joinMission(`groupid=${this.userdata.groupid}`).subscribe(
+    await this.missionService.GET_joinMission(`groupid=${this.userData.groupid}`).subscribe(
       result => {
         if (result[0] === undefined) {
           this.isLoading = false;
@@ -139,19 +141,19 @@ export class ExpmanagementComponent implements OnInit {
             switch (e.status) {
               case '已提交':
                 this.datas.push(e);
-                this.unauditeddatas.push(e);
+                this.unauditedDatas.push(e);
                 break;
               case '已退回':
                 this.datas.push(e);
-                this.turnbackdatas.push(e);
+                this.turnbackDatas.push(e);
                 break;
               case '已審核':
                 this.datas.push(e);
-                this.auditeddatas.push(e);
+                this.auditedDatas.push(e);
                 break;
               case '已發送':
                 this.datas.push(e);
-                this.sentdatas.push(e);
+                this.sentDatas.push(e);
                 break;
             }
             this.isLoading = false;
@@ -196,11 +198,11 @@ export class ExpmanagementComponent implements OnInit {
    * @memberof ExpmanagementComponent
    */
   public async PassMission(mid: Number, cuid: String) {
-    if (this.userdata) {
+    if (this.userData) {
       const body = {
         status: '已審核',
         verifytime: moment().format('YYYY-MM-DD hh:mm:ss'),
-        verifyusername: this.userdata.username,
+        verifyusername: this.userData.username,
         missionid: mid,
         studentusername: cuid
       };
@@ -217,11 +219,11 @@ export class ExpmanagementComponent implements OnInit {
    * @memberof ExpmanagementComponent
    */
   public async RejectMission(mid: Number, cuid: String) {
-    if (this.userdata) {
+    if (this.userData) {
       const body = {
         status: '已退回',
         verifytime: moment().format('YYYY-MM-DD hh:mm:ss'),
-        verifyusername: this.userdata.username,
+        verifyusername: this.userData.username,
         missionid: mid,
         studentusername: cuid
       };
@@ -238,11 +240,11 @@ export class ExpmanagementComponent implements OnInit {
    * @memberof ExpmanagementComponent
    */
   public async RevertMission(mid: Number, cuid: String) {
-    if (this.userdata) {
+    if (this.userData) {
       const body = {
         status: '已提交',
         verifytime: moment().format('YYYY-MM-DD hh:mm:ss'),
-        verifyusername: this.userdata.username,
+        verifyusername: this.userData.username,
         missionid: mid,
         studentusername: cuid
       };

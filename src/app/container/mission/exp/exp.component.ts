@@ -1,22 +1,23 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router, ActivatedRoute } from '@angular/router';
-import { MissionService } from '../../../service/mission/mission.service';
+import { validateConfig } from '@angular/router/src/config';
+import { errorHandler } from '@angular/platform-browser/src/browser';
+import { formDirectiveProvider } from '@angular/forms/src/directives/ng_form';
 
 import { SwalComponent } from '@toverux/ngsweetalert2';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
 import { IMyDpOptions } from 'mydatepicker';
 import * as moment from 'moment';
 import * as R from 'ramda';
-import { validateConfig } from '@angular/router/src/config';
-import { UserService } from '../../../service/user/user.service';
 import { lang } from 'moment';
 import { isNullOrUndefined } from 'util';
-import { formDirectiveProvider } from '@angular/forms/src/directives/ng_form';
 import { resource } from 'selenium-webdriver/http';
-import { errorHandler } from '@angular/platform-browser/src/browser';
 import { error } from 'selenium-webdriver';
 import Sweetalert2 from 'sweetalert2';
+
+import { MissionService } from '../../../service/mission/mission.service';
+import { UserService } from '../../../service/user/user.service';
 import { Area } from '../../../class/mission/area';
 
 declare let jquery: any;
@@ -53,16 +54,16 @@ export class ExpComponent implements OnInit {
   public picture: any = [];
 
   public specialBody: any;
-  public importtext = '';
-  public returntext = '';
+  public importText = '';
+  public returnText = '';
   public expLocate: any;
 
   public expMember: Object = {}
   public expCost: any;
 
   public expType: Object = {};
-  public tempcheck: any;
-  public importtype: Boolean;
+  public tempCheck: any;
+  public importType: Boolean;
 
   public returnexplist: any = [];
   public isLoading: any = true;
@@ -82,7 +83,7 @@ export class ExpComponent implements OnInit {
   public missionPhotoList: any = [];
   public arttypeimport: any;
   public filesPhoto: FileList;
-  public viewtime: any;
+  public viewTime: any;
   public myDatePickerOptions: IMyDpOptions = {
     dateFormat: 'yyyy-mm-dd',
     satHighlight: true,
@@ -240,7 +241,7 @@ export class ExpComponent implements OnInit {
           } catch (e) {
             console.error(e);
           }
-          this.viewtime = moment(this.missionDetail.executedate).format('YYYY-MM-DD');
+          this.viewTime = moment(this.missionDetail.executedate).format('YYYY-MM-DD');
           if (this.missionDetail.missionspecial) {
             this.expLocate = this.missionDetail.missionspecial.Locate;
           }
@@ -434,10 +435,10 @@ export class ExpComponent implements OnInit {
         this.filesPhoto || this.missionPhotoList.length > 0 ? this.errorData += '' : this.errorData += '<li>請上傳圖片</li>';
         break;
       case '美術任務':
-        if (this.importtext) {
+        if (this.importText) {
           this.expType['自行輸入'] = {
             'click': true,
-            'text': this.importtext
+            'text': this.importText
           }
         }
         this.specialBody = {
@@ -495,10 +496,10 @@ export class ExpComponent implements OnInit {
 
   // type檢查
   public typeclick() {
-    if (this.importtype) {
-      this.importtype = false;
+    if (this.importType) {
+      this.importType = false;
     } else {
-      this.importtype = true;
+      this.importType = true;
     }
   }
 
@@ -622,12 +623,12 @@ export class ExpComponent implements OnInit {
    * @param cuid 學童帳號
    */
   public async RejectMission(mid: Number, cuid: String) {
-    if (!this.returntext) {
+    if (!this.returnText) {
       Sweetalert2('資料不完整', '請輸入退回原因', 'error');
     } else {
       const returndata = {
         'returnusername': this.userData.name,
-        'returnexp': this.returntext,
+        'returnexp': this.returnText,
         'returntime': moment().format('YYYY-MM-DD HH:mm:ss')
       }
       this.returnexplist.push(returndata);
@@ -720,14 +721,14 @@ export class ExpComponent implements OnInit {
     this.dist = '';
     this.road = '';
     this.specialBody = undefined;
-    this.importtext = '';
-    this.returntext = '';
+    this.importText = '';
+    this.returnText = '';
     this.expLocate = '';
     this.expMember = {};
     this.expCost = undefined;
     this.expType = {};
-    this.tempcheck = {};
-    this.importtype = false;
+    this.tempCheck = {};
+    this.importType = false;
     this.returnexplist = [];
     this.isLoading = true;
     this.userData = [];

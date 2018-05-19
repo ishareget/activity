@@ -43,7 +43,7 @@ export class MissionService {
    * @memberof MissionService
    */
   public GET_mission(id) {
-    return this.http.get(`/api/mission/id/${id}`, this.packToken())
+    return this.http.get(`/api/mission/id/${id}`)
       .map((res) => {
         return res.json() || {}
       });
@@ -68,7 +68,7 @@ export class MissionService {
    * @memberof MissionService
    */
   public GET_groupMission(uid) {
-    return this.http.get(`/api/mission/group/${uid}`, this.packToken())
+    return this.http.get(`/api/mission/group/${uid}`)
       .map(res => {
         return res.json() || {}
       });
@@ -80,7 +80,7 @@ export class MissionService {
    * @memberof MissionService
    */
   public GET_missionType() {
-    return this.http.get(`/api/mission/type`, this.packToken())
+    return this.http.get(`/api/mission/type`)
       .map((res) => {
         return res.json() || {}
       });

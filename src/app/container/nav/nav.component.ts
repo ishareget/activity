@@ -1,12 +1,14 @@
 import { Component, OnInit, ViewChild, HostListener } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
+
 import _ from 'lodash';
 import * as moment from 'moment';
 import { SwalComponent } from '@toverux/ngsweetalert2';
+import { Cookie } from 'ng2-cookies/ng2-cookies';
+
 import { UserService } from '../../service/user/user.service';
 import { MissionService } from '../../service/mission/mission.service';
 import { NoticationService } from '../../service/notification/notification.service';
-import { Cookie } from 'ng2-cookies/ng2-cookies';
 
 declare let jquery: any;
 declare let $: any;
@@ -28,7 +30,7 @@ export class NavComponent implements OnInit {
   public userData: any; // 存放使用者資料
   public isLogin: Boolean = false;
   public readyLogin: Boolean = true;
-  public logingroup: any = 0;
+  public loginGroup: any = 0;
   public img: any = '';
   public point: any;
   public name: any;
@@ -79,7 +81,7 @@ export class NavComponent implements OnInit {
     this.userData = undefined;
     this.isLogin = false;
     this.readyLogin = true;
-    this.logingroup = 0;
+    this.loginGroup = 0;
     this.img = '';
     this.point = undefined;
     this.name = undefined;
@@ -97,7 +99,7 @@ export class NavComponent implements OnInit {
           this.isLogin = true;
           if (this.userData !== result[0]) { this.swalDialogPass.show() }
           if (this.userData && (this.userData.logingroup !== 4 || this.userData.logingroup !== 5)) {
-            this.logingroup = this.userData.logingroup;
+            this.loginGroup = this.userData.logingroup;
             this.img = this.userData.picture;
             this.point = this.userData.point;
             this.name = this.userData.username;

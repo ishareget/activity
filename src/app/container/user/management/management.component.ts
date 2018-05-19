@@ -1,16 +1,17 @@
 import { Component, OnInit, ViewChild, DoCheck, HostListener } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MissionService } from '../../../service/mission/mission.service';
+import { Location } from '@angular/common';
+import { DELEGATE_CTOR } from '@angular/core/src/reflection/reflection_capabilities';
+
 import { SwalComponent } from '@toverux/ngsweetalert2';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
 import { IMyDpOptions } from 'mydatepicker';
 import * as moment from 'moment';
 import * as R from 'ramda';
-
-import { Location } from '@angular/common';
-import { UserService } from 'app/service/user/user.service';
-import { DELEGATE_CTOR } from '@angular/core/src/reflection/reflection_capabilities';
 import { all } from 'q';
+
+import { MissionService } from '../../../service/mission/mission.service';
+import { UserService } from 'app/service/user/user.service';
 
 @Component({
   selector: 'app-management',
@@ -29,7 +30,7 @@ export class ManagementComponent implements OnInit {
   @ViewChild('dialogPassError2') private swalDialogPassError2: SwalComponent;
 
 
-  public userdata: any = null;
+  public userData: any = null;
   public datas: any = [];
   public tab: any = 0;
   public page: any = 1;
@@ -91,8 +92,8 @@ export class ManagementComponent implements OnInit {
     await this.userService.GET_userInfo().subscribe(
       result => {
         if (result[0]) {
-          this.userdata = result[0];
-          switch (Number(this.userdata.logingroup)) {
+          this.userData = result[0];
+          switch (Number(this.userData.logingroup)) {
             case 2:
             case 3:
               this.GET_group();
@@ -131,7 +132,7 @@ export class ManagementComponent implements OnInit {
    */
   public async GET_mission() {
     this.isLoading = true;
-    const body = this.userdata.groupid;
+    const body = this.userData.groupid;
     this.datas = [];
     await this.missionService.GET_groupByMission(body).
       subscribe(result => {

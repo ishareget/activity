@@ -13,22 +13,22 @@
           </li>
           <li class="nav-item" [ngClass]="{ 'active': tab == 1 }">
             <a class="nav-link" (click)="tab = 1">待審核
-              <span class="text-danger">({{ unauditeddatas.length }})</span>
+              <span class="text-danger">({{ unauditedDatas.length }})</span>
             </a>
           </li>
           <li class="nav-item" [ngClass]="{ 'active': tab == 2 }">
             <a class="nav-link" (click)="tab = 2">轉退回
-              <span class="text-danger">({{ turnbackdatas.length }})</span>
+              <span class="text-danger">({{ turnbackDatas.length }})</span>
             </a>
           </li>
           <li class="nav-item" [ngClass]="{ 'active': tab == 3 }">
             <a class="nav-link" (click)="tab = 3">已審核
-              <span class="text-danger">({{ auditeddatas.length }})</span>
+              <span class="text-danger">({{ auditedDatas.length }})</span>
             </a>
           </li>
           <li class="nav-item" [ngClass]="{ 'active': tab == 4 }">
             <a class="nav-link" (click)="tab = 4">已發送
-              <span class="text-danger">({{ sentdatas.length }})</span>
+              <span class="text-danger">({{ sentDatas.length }})</span>
             </a>
           </li>
         </ul>
@@ -45,22 +45,22 @@
         </li>
         <li class="nav-item" [ngClass]="{ 'active': tab == 1 }">
           <a class="nav-link" (click)="tab = 1">待審核
-            <span class="text-danger">({{ unauditeddatas.length }})</span>
+            <span class="text-danger">({{ unauditedDatas.length }})</span>
           </a>
         </li>
         <li class="nav-item" [ngClass]="{ 'active': tab == 2 }">
           <a class="nav-link" (click)="tab = 2">轉退回
-            <span class="text-danger">({{ turnbackdatas.length }})</span>
+            <span class="text-danger">({{ turnbackDatas.length }})</span>
           </a>
         </li>
         <li class="nav-item" [ngClass]="{ 'active': tab == 3 }">
           <a class="nav-link" (click)="tab = 3">已審核
-            <span class="text-danger">({{ auditeddatas.length }})</span>
+            <span class="text-danger">({{ auditedDatas.length }})</span>
           </a>
         </li>
         <li class="nav-item" [ngClass]="{ 'active': tab == 4 }">
           <a class="nav-link" (click)="tab = 4">已發送
-            <span class="text-danger">({{ sentdatas.length }})</span>
+            <span class="text-danger">({{ sentDatas.length }})</span>
           </a>
         </li>
       </ul>
@@ -145,15 +145,15 @@
 
     <!-- Mission-Verify -->
     <div class="container-fluid pt-4 pb-4" *ngIf="tab == 1">
-      <div class="row justify-content-center" *ngIf="unauditeddatas.length === 0">
+      <div class="row justify-content-center" *ngIf="unauditedDatas.length === 0">
         <div class="col-md-3 text-center mt-3">
           <i class="fa fa-search fa-2x" aria-hidden="true"></i>
           <span class="data-set"> 尚無資料</span>
         </div>
       </div>
-      <div class="card mb-2" *ngIf="unauditeddatas.length !== 0">
+      <div class="card mb-2" *ngIf="unauditedDatas.length !== 0">
         <div class="card-footer small text-muted">
-          共 {{ unauditeddatas.length }} 筆資料
+          共 {{ unauditedDatas.length }} 筆資料
         </div>
         <div class="card-body table-responsive">
           <table class="table table-striped table-border table-button text-center">
@@ -175,7 +175,7 @@
                   <div class="loader">Loading...</div>
                 </td>
               </tr>
-              <tr *ngFor="let data of unauditeddatas | paginate: { itemsPerPage: 10, currentPage: page } ; let i = index">
+              <tr *ngFor="let data of unauditedDatas | paginate: { itemsPerPage: 10, currentPage: page } ; let i = index">
                 <th scope="row">{{ i + ( page - 1 ) * 10 + 1 }}</th>
                 <td>
                   <span class="badge p-2" [ngClass]="{
@@ -224,16 +224,16 @@
 
     <!-- Mission-Reject -->
     <div class="container-fluid pt-4 pb-4" *ngIf="tab == 2">
-      <div class="row justify-content-center" *ngIf="turnbackdatas.length === 0">
+      <div class="row justify-content-center" *ngIf="turnbackDatas.length === 0">
         <div class="col-md-3 text-center mt-3">
           <i class="fa fa-search fa-2x" aria-hidden="true"></i>
           <span class="data-set"> 尚無資料</span>
         </div>
       </div>
-      <div class="card mb-2" *ngIf="turnbackdatas.length !== 0">
+      <div class="card mb-2" *ngIf="turnbackDatas.length !== 0">
 
         <div class="card-footer small text-muted">
-          共 {{ turnbackdatas.length }} 筆資料
+          共 {{ turnbackDatas.length }} 筆資料
         </div>
         <div class="card-body table-responsive">
           <table class="table table-striped table-border table-button">
@@ -256,7 +256,7 @@
                   <div class="loader">Loading...</div>
                 </td>
               </tr>
-              <tr *ngFor="let data of turnbackdatas | paginate: { itemsPerPage: 10, currentPage: page } ; let i = index">
+              <tr *ngFor="let data of turnbackDatas | paginate: { itemsPerPage: 10, currentPage: page } ; let i = index">
 
                 <th scope="row">{{ i + ( page - 1 ) * 10 + 1 }}</th>
                 <td>
@@ -302,16 +302,16 @@
 
     <!-- Mission-Finish -->
     <div class="container-fluid pt-4 pb-4" *ngIf="tab == 3">
-      <div class="row justify-content-center" *ngIf="auditeddatas.length === 0">
+      <div class="row justify-content-center" *ngIf="auditedDatas.length === 0">
         <div class="col-md-3 text-center mt-3">
           <i class="fa fa-search fa-2x" aria-hidden="true"></i>
           <span class="data-set"> 尚無資料</span>
         </div>
       </div>
-      <div class="card mb-2" *ngIf="auditeddatas.length !== 0">
+      <div class="card mb-2" *ngIf="auditedDatas.length !== 0">
 
         <div class="card-footer small text-muted">
-          共 {{ auditeddatas.length }} 筆資料
+          共 {{ auditedDatas.length }} 筆資料
 
         </div>
         <div class="card-body table-responsive">
@@ -334,7 +334,7 @@
                   <div class="loader">Loading...</div>
                 </td>
               </tr>
-              <tr *ngFor="let data of auditeddatas | paginate: { itemsPerPage: 10, currentPage: page } ; let i = index">
+              <tr *ngFor="let data of auditedDatas | paginate: { itemsPerPage: 10, currentPage: page } ; let i = index">
                 <th scope="row">{{ i + ( page - 1 ) * 10 + 1 }}</th>
                 <td>
                   <span class="badge p-2" [ngClass]="{
@@ -371,16 +371,16 @@
 
     <!-- sent -->
     <div class="container-fluid pt-4 pb-4" *ngIf="tab == 4">
-      <div class="row justify-content-center" *ngIf="sentdatas.length === 0">
+      <div class="row justify-content-center" *ngIf="sentDatas.length === 0">
         <div class="col-md-3 text-center mt-3">
           <i class="fa fa-search fa-2x" aria-hidden="true"></i>
           <span class="data-set"> 尚無資料</span>
         </div>
       </div>
-      <div class="card mb-2" *ngIf="sentdatas.length !== 0">
+      <div class="card mb-2" *ngIf="sentDatas.length !== 0">
 
         <div class="card-footer small text-muted">
-          共 {{ sentdatas.length }} 筆資料
+          共 {{ sentDatas.length }} 筆資料
 
         </div>
         <div class="card-body table-responsive">
@@ -403,7 +403,7 @@
                   <div class="loader">Loading...</div>
                 </td>
               </tr>
-              <tr *ngFor="let data of sentdatas | paginate: { itemsPerPage: 10, currentPage: page } ; let i = index">
+              <tr *ngFor="let data of sentDatas | paginate: { itemsPerPage: 10, currentPage: page } ; let i = index">
                 <th scope="row">{{ i + ( page - 1 ) * 10 + 1 }}</th>
                 <td>
                   <span class="badge p-2" [ngClass]="{
