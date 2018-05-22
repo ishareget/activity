@@ -172,8 +172,9 @@ export class NavComponent implements OnInit {
     * 最新通知轉先前通知
     * @memberof NavComponent
     */
-  public async turnstatus() {
+  public async turnstatus(data) {
     const body = {
+      id: data.id,
       username: this.userData.username
     }
     console.log(body);
@@ -185,7 +186,7 @@ export class NavComponent implements OnInit {
   }
 
   /**
-  * 最新通知轉先前通知&通知跳轉連結頁面
+  * 通知跳轉連結頁面
   * @memberof NavComponent
   */
   public async turnurl(data) {
@@ -194,7 +195,7 @@ export class NavComponent implements OnInit {
       id: data.id,
       username: data.username
     }
-    await this.noticationService.updateNoti(body).subscribe(
+    await this.noticationService.getNoti(body).subscribe(
       result => {
         console.log(body);
         console.log(result);
@@ -232,7 +233,7 @@ export class NavComponent implements OnInit {
     const body = {
       username: this.userData.username,
     }
-    await this.noticationService.getNoti(body).subscribe(
+    await this.noticationService.getAllNoti(body).subscribe(
       result => {
         // this.turnstatus();
         if (result.length > 0) {

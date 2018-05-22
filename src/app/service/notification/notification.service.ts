@@ -24,18 +24,32 @@ export class NoticationService {
   }
 
   /**
-  * 取得通知
+  * 取得全部通知
   *
   * @param username
   * @memberof NoticationService
   */
-  public getNoti(body: Object) {
+  public getAllNoti(body: Object) {
     return this.http.post('/api/notification/username', body, this.packToken())
       .map((res) => {
         // return res._body;
         return res.json() || {}
       });
   }
+
+  /**
+  * 取得通知
+  *
+  * @param username
+  * @memberof NoticationService
+  */
+ public getNoti(body: Object) {
+  return this.http.post('/api/notification/id', body, this.packToken())
+    .map((res) => {
+      // return res._body;
+      return res.json() || {}
+    });
+}
 
   /**
   * 新增通知
