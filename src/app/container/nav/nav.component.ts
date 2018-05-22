@@ -260,10 +260,10 @@ export class NavComponent implements OnInit {
    */
   public setNotiTime(value) {
     value.forEach(e => {
-      const now = new Date().getTime() - 480/**Online*/;
+      const now = new Date().getTime() - 8*60 * 60 * 1000/**Online*/;
       const notitime = e;
-      const detime = (now - e) / 1000;
-
+      const detime = ((now - e) / 1000);
+      console.log(detime);
       // format string
       if (detime < 10) {
         value = '數秒前';
