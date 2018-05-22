@@ -245,3 +245,15 @@ table.content {
   font-size: 0.875rem;
   color: #90949c !important;
 }
+
+.clearnoti{
+  margin-left: 55%;
+  font-size: 0.875rem;
+  background: #ffffff;
+  outline: none;
+  border: none;
+}
+
+.clearnoti:visited{
+  color: #90949c
+}
