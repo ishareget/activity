@@ -324,10 +324,12 @@ export class ExpComponent implements OnInit {
     switch (this.missionData.missiontype) {
       case '展演任務':
         if (this.missionDetail.executedate) {
-          if (this.missionDetail.executedate.formatted === moment().format('YYYY-MM-DD')) {
+          if (this.missionDetail.executedate.formatted < moment(this.missionData.missioncreatedate).format('YYYY-MM-DD')) {
+            this.errorData += '<li>日期不能在創立任務之前</li>';
+          } else if (this.missionDetail.executedate.formatted <= moment().format('YYYY-MM-DD')) {
             this.errorData += ''
           } else {
-            this.errorData += '<li>不能填寫未來日期</li>'
+            this.errorData += '<li>不能填寫今天之後的日期</li>'
           }
         } else {
           this.errorData += '<li>請選擇日期</li>';
@@ -341,10 +343,12 @@ export class ExpComponent implements OnInit {
         break;
       case '影片任務':
         if (this.missionDetail.executedate) {
-          if (this.missionDetail.executedate.formatted === moment().format('YYYY-MM-DD')) {
+          if (this.missionDetail.executedate.formatted < moment(this.missionData.missioncreatedate).format('YYYY-MM-DD')) {
+            this.errorData += '<li>日期不能在創立任務之前</li>';
+          } else if (this.missionDetail.executedate.formatted <= moment().format('YYYY-MM-DD')) {
             this.errorData += ''
           } else {
-            this.errorData += '<li>不能填寫未來日期</li>'
+            this.errorData += '<li>不能填寫今天之後的日期</li>'
           }
         } else {
           this.errorData += '<li>請選擇日期</li>';
@@ -383,10 +387,12 @@ export class ExpComponent implements OnInit {
         // }
         this.specialBody['Locate'] ? this.errorData += '' : this.errorData += '<li>請填寫旅遊地點</li>';
         if (this.missionDetail.executedate) {
-          if (this.missionDetail.executedate.formatted === moment().format('YYYY-MM-DD')) {
+          if (this.missionDetail.executedate.formatted < moment(this.missionData.missioncreatedate).format('YYYY-MM-DD')) {
+            this.errorData += '<li>日期不能在創立任務之前</li>';
+          } else if (this.missionDetail.executedate.formatted <= moment().format('YYYY-MM-DD')) {
             this.errorData += ''
           } else {
-            this.errorData += '<li>不能填寫未來日期</li>'
+            this.errorData += '<li>不能填寫今天之後的日期</li>'
           }
         } else {
           this.errorData += '<li>請選擇日期</li>';
@@ -419,10 +425,12 @@ export class ExpComponent implements OnInit {
         // this.specialBody['Locate'] ? this.errorData += '' : this.errorData += '<li>請填寫運動場域</li>';
 
         if (this.missionDetail.executedate) {
-          if (this.missionDetail.executedate.formatted === moment().format('YYYY-MM-DD')) {
+          if (this.missionDetail.executedate.formatted < moment(this.missionData.missioncreatedate).format('YYYY-MM-DD')) {
+            this.errorData += '<li>日期不能在創立任務之前</li>';
+          } else if (this.missionDetail.executedate.formatted <= moment().format('YYYY-MM-DD')) {
             this.errorData += ''
           } else {
-            this.errorData += '<li>不能填寫未來日期</li>'
+            this.errorData += '<li>不能填寫今天之後的日期</li>'
           }
         } else {
           this.errorData += '<li>請選擇日期</li>';
@@ -474,10 +482,12 @@ export class ExpComponent implements OnInit {
 
         this.specialBody['Locate'] ? this.errorData += '' : this.errorData += '<li>請填寫環保地點</li>';
         if (this.missionDetail.executedate) {
-          if (this.missionDetail.executedate.formatted === moment().format('YYYY-MM-DD')) {
+          if (this.missionDetail.executedate.formatted < moment(this.missionData.missioncreatedate).format('YYYY-MM-DD')) {
+            this.errorData += '<li>日期不能在創立任務之前</li>';
+          } else if (this.missionDetail.executedate.formatted <= moment().format('YYYY-MM-DD')) {
             this.errorData += ''
           } else {
-            this.errorData += '<li>不能填寫未來日期</li>'
+            this.errorData += '<li>不能填寫今天之後的日期</li>'
           }
         } else {
           this.errorData += '<li>請選擇日期</li>';
