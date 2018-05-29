@@ -299,6 +299,8 @@ export class ExpComponent implements OnInit {
             this.expType = this.missionDetail.missionspecial['Type'];
           }
           if (this.missionDetail.returnexp) {
+            console.log(typeof this.missionDetail.returnexp);
+            console.log(this.missionDetail.returnexp);
             this.missionDetail.returnexp.forEach(element => {
               this.returnexplist.push(element);
             });
