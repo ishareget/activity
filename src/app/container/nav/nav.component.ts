@@ -41,6 +41,7 @@ export class NavComponent implements OnInit {
   public time: any = [];
   public notiHref: any = [];
   public noti: any = [];
+  public untime: any = [];
 
   constructor(
     private router: ActivatedRoute,
@@ -238,13 +239,17 @@ export class NavComponent implements OnInit {
         // this.turnstatus();
         if (result.length > 0) {
           /**陣列取得通知時間*/
+          this.data = [];
           _.map(result, (value) => {
-            value = moment(value.noti_time);
-            this.notiTime.push(value);
+            this.untime = moment(value.noti_time);
+            /**判斷七日內通知 */
+            if (this.untime.format('YYYY年MM月DD日') >= moment().add('days', -7).format('YYYY年MM月DD日')) {
+              this.data.push(value);
+              this.notiTime.push(this.untime);
+            }
           })
-          this.data = result;
           this.unRead = 0;
-          this.unReadcount(result);
+          this.unReadcount(this.data);
           this.setNotiTime(this.notiTime);
 
         } else {
@@ -262,7 +267,7 @@ export class NavComponent implements OnInit {
     value.forEach(e => {
       const now = new Date().getTime();
       const notitime = e;
-      const detime = ((now - e) / 1000) + 8 * 60 * 60 /**Online*/;
+      const detime = ((now - e) / 1000) /**+ 8 * 60 * 60 Online*/;
       // format string
       if (detime < 10) {
         value = '數秒前';
