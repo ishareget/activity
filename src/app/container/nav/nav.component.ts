@@ -213,17 +213,6 @@ export class NavComponent implements OnInit {
         });
       }
     )
-    // console.log(data.type);
-    // console.log(data.mission_id);
-    // console.log(data.id);
-    // if (data.type === '任務') {
-    //   console.log(1);
-    //   this.route.navigate([`mission/introduce`], { queryParams: { id: data.mission_id } });
-    // }
-    // else {
-    //   console.log(2);
-    //   this.route.navigate(['user/point'], { skipLocationChange: true });
-    // }
   }
 
   /**

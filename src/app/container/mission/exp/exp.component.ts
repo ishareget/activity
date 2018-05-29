@@ -232,8 +232,6 @@ export class ExpComponent implements OnInit {
       await this.missionService.GET_joinByMission(query).subscribe(
         result => {
           this.missionDetail = result[0];
-          console.log(this.missionDetail);
-          console.log(typeof this.missionDetail.returnexp);
           try {
             if (typeof this.missionDetail.missionspecial === 'string') {
               // online 為 string
@@ -245,7 +243,6 @@ export class ExpComponent implements OnInit {
           }
 
           try {
-            console.log('returnexp有跑進trycatch');
             if (typeof this.missionDetail.returnexp === 'string') {
               // online 為 string
               // Local 為 object
@@ -312,9 +309,6 @@ export class ExpComponent implements OnInit {
             this.expType = this.missionDetail.missionspecial['Type'];
           }
           if (this.missionDetail.returnexp.length !== 0) {
-            console.log('有跑進取得退回心得函式');
-            console.log(typeof this.missionDetail.returnexp);
-            console.log(this.missionDetail.returnexp);
             this.missionDetail.returnexp.forEach(element => {
               this.returnexplist.push(element);
             });
