@@ -241,6 +241,17 @@ export class ExpComponent implements OnInit {
           } catch (e) {
             console.error(e);
           }
+
+          try {
+            console.log(typeof this.missionDetail.returnexp);
+            if (typeof this.missionDetail.returnexp === 'string') {
+              // online 為 string
+              // Local 為 object
+              this.missionDetail.returnexp = JSON.parse(this.missionDetail.returnexp);
+            }
+          } catch (e) {
+            console.error(e);
+          }
           this.viewTime = moment(this.missionDetail.executedate).format('YYYY-MM-DD');
           if (this.missionDetail.missionspecial) {
             this.expLocate = this.missionDetail.missionspecial.Locate;
