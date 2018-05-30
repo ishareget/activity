@@ -308,7 +308,7 @@ export class ExpComponent implements OnInit {
             this.expMember = this.missionDetail.missionspecial['Member'];
             this.expType = this.missionDetail.missionspecial['Type'];
           }
-          if (this.missionDetail.returnexp.length !== 0) {
+          if (this.missionDetail.returnexp) {
             this.missionDetail.returnexp.forEach(element => {
               this.returnexplist.push(element);
             });
