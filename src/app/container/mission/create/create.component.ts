@@ -211,11 +211,8 @@ export class CreateComponent implements OnInit {
     this.studentDatas.forEach(element => {
       if (element.groupid === this.userData.groupid && this.userData.groupid !== 1) {
         this.studentGroupdata.push(element);
-      } else {
-        this.studentGroupdata.push(element);
       }
     });
-    console.log(this.studentGroupdata);
     this.getUserPermission();
   }
 
@@ -532,8 +529,6 @@ export class CreateComponent implements OnInit {
         }
       )
     });
-    // for (let i = 0; i < this.studentGroupdata.length; i++) {
-    // }
     this.swalDialogSuccess.show();
     setTimeout(() => {
       this.router.navigate([`mission/introduce`], { queryParams: { id: missionId } });
