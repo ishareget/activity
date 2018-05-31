@@ -5,6 +5,7 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { HttpModule, JsonpModule } from '@angular/http';
 import { AppRoutingModule } from './app-routing.module';
 import { QRCodeModule } from 'angular2-qrcode';
+import { Ng2DeviceDetectorModule } from 'ng2-device-detector';
 
 
 import { enableProdMode } from '@angular/core';
@@ -49,6 +50,7 @@ import { PunchinstatusComponent } from './container/mission/punchinstatus/punchi
 import { SignatureComponent } from './container/mission/signature/signature.component';
 import { CutURL } from './class/mission/punchinstatuscutUrl';
 import { ErrorComponent } from './container/error/error.component';
+import { BrowsercheckComponent } from './container/browsercheck/browsercheck.component';
 
 enableProdMode();
 
@@ -72,6 +74,7 @@ enableProdMode();
     PunchinComponent,
     PunchinstatusComponent,
     SignatureComponent,
+    BrowsercheckComponent,
     ErrorComponent
   ],
   imports: [
@@ -87,6 +90,7 @@ enableProdMode();
       // confirmButtonClass: 'btn btn-lg btn-primary',
       // cancelButtonClass: 'btn btn-lg'
     }),
+    Ng2DeviceDetectorModule.forRoot(),
     AccordionModule,
     FileUploadModule,
     MyDatePickerModule,

@@ -1,4 +1,4 @@
-<div *ngIf="checkPunchin()">
+<div *ngIf="isCheck">
     <app-nav></app-nav>
 </div>
 
@@ -7,6 +7,6 @@
 <label *ngIf="isScrolled" class="scroll-to-top rounded btn-outline-primary" (click)="scrolltop()">
     <i class="fa fa-chevron-up fa-2x"></i>
 </label>
-<div *ngIf="checkPunchin()">
+<div *ngIf="isCheck">
     <app-footer></app-footer>
 </div>

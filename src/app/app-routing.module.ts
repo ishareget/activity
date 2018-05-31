@@ -1,10 +1,11 @@
-import { NgModule } from '@angular/core';
+import { NgModule, Component } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { CutURL } from './class/mission/punchinstatuscutUrl';
 
 // Component
 import { HomeComponent } from './container/home/home.component';
 import { ErrorComponent } from './container/error/error.component';
+import { BrowsercheckComponent } from './container/browsercheck/browsercheck.component';
 
 // Component - User
 import { UserComponent } from './container/user/user.component';
@@ -28,6 +29,7 @@ import { ExpComponent } from './container/mission/exp/exp.component';
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'error', component: ErrorComponent },
+  { path: 'browsercheck', component: BrowsercheckComponent },
 
   // 使用者組件
   { path: 'user', component: UserComponent },
