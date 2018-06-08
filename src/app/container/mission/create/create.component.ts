@@ -209,7 +209,7 @@ export class CreateComponent implements OnInit {
    */
   public async userGetPersonnalGroup() {
     this.studentDatas.forEach(element => {
-      if (element.groupid === this.userData.groupid && this.userData.groupid !== 1) {
+      if (element.groupid === this.userData.groupid || this.userData.groupid === 1) {
         this.studentGroupdata.push(element);
       }
     });
