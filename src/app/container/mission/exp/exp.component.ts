@@ -106,7 +106,11 @@ export class ExpComponent implements OnInit {
   ngOnInit() {
     // this.selectCity();
     this.GET_missionType();
-    if (Cookie.get('userCookie')) { this.GET_userInfo() }
+    if (Cookie.get('userCookie')) {
+      this.GET_userInfo()
+    } else {
+      this.router.navigate(['/home']);
+    }
   }
 
   /**

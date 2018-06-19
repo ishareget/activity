@@ -169,8 +169,8 @@ export class SearchComponent implements OnInit {
     }
     if (this.missionName !== '') {
       this.missions.forEach(e => {
-        if (e.missionName.indexOf(this.missionName) > -1) { show.push(e) }
-        // this.missionName ? e.missionName.indexOf(this.missionName) > -1 ? show.push(e) : null : null;
+        if (e.missionname.indexOf(this.missionName) > -1) { show.push(e) }
+        // this.missionName ? e.missionname.indexOf(this.missionName) > -1 ? show.push(e) : null : null;
       });
     }
     this.searchType === 0 && this.missionName === '' ? this.missionShow = this.missions : this.missionShow = show;
@@ -217,7 +217,7 @@ export class SearchComponent implements OnInit {
         success = true : success = false;
       success ? this.dist ? e.missionlocation.indexOf(this.dist) > -1 ? success = true : success = false :
         success = true : success = false;
-      success ? this.missionName ? e.missionName.indexOf(this.missionName) > -1 ? success = true : success = false :
+      success ? this.missionName ? e.missionname.indexOf(this.missionName) > -1 ? success = true : success = false :
         success = true : success = false
       if (success) { show.push(e) }
       success = true;
