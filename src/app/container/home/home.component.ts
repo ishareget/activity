@@ -49,15 +49,15 @@ export class HomeComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-      this.error();
-      this.router.queryParams.forEach(params => {
-        // 登入後 首頁重取資料
-        this.reset();
-        $('.carousel').carousel({
-          interval: 2500
-        });
-        this.GET_missionType();
+    this.error();
+    this.router.queryParams.forEach(params => {
+      // 登入後 首頁重取資料
+      this.reset();
+      $('.carousel').carousel({
+        interval: 2500
       });
+      this.GET_missionType();
+    });
   }
 
 
@@ -120,11 +120,16 @@ export class HomeComponent implements OnInit {
     const self = this;
     await this.missionService.GET_groupMission(this.userData.groupid).subscribe(
       result => {
+        if (result.length === 0) { return; }
         result.forEach(e => {
-          if (this.formatDate(e.missionfinaldate) > this.formatDate(moment())) {
-            if (e.status === '已上架') {
-              this.missions.push(e);
-            }
+          // 暫時先把過期的顯示出來
+          // if (this.formatDate(e.missionfinaldate) > this.formatDate(moment())) {
+          //   if (e.status === '已上架') {
+          //     this.missions.push(e);
+          //   }
+          // }
+          if (e.status === '已上架') {
+            this.missions.push(e);
           }
         });
         Promise.all([this.missionType.forEach(element => {
@@ -172,10 +177,14 @@ export class HomeComponent implements OnInit {
     await this.missionService.GET_allMission().subscribe(
       result => {
         result.forEach(e => {
-          if (this.formatDate(e.missionfinaldate) > this.formatDate(moment())) {
-            if (e.status === '已上架' && e.missiongroup === 1) {
-              this.missions.push(e);
-            }
+          // 先顯示過期的任務
+          // if (this.formatDate(e.missionfinaldate) > this.formatDate(moment())) {
+          //   if (e.status === '已上架' && e.missiongroup === 1) {
+          //     this.missions.push(e);
+          //   }
+          // }
+          if (e.status === '已上架' && e.missiongroup === 1) {
+            this.missions.push(e);
           }
         });
 
@@ -205,7 +214,6 @@ export class HomeComponent implements OnInit {
     const self = this;
     await this.missionService.GET_missionType().subscribe(
       result => {
-
         Promise.all([result.forEach(e => {
           self.missionType.push(e);
         })]).then(function (value) {
